@@ -8,12 +8,28 @@ import {
   Card,
   Form,
   Button,
+  Alert,
 } from "react-bootstrap";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
       const [showPassword, setShowPassword] = useState(false);
+           const [showAlert, setShowAlert] = useState(false);
+        const router = useRouter();
+      
+          const handleClick = () => {
+          if (!showAlert) {
+            // First click → alert show
+            setShowAlert(true);
+          } else {
+            // Second click → redirect
+            router.push("/signup/profile-step"); // apna route daal dena
+          }
+        };
   return (
      <>
-          <section className="auth_flow_area d-flex align-items-center min-vh-100">
+          <section className="auth_flow_area forgot_password_area d-flex align-items-center min-vh-100">
       <Container fluid>
         <Row className=" "> 
           <Col xl={6} className="auth_flow_left d-flex flex-column justify-content-center px-xl-5 px-0">
@@ -61,11 +77,21 @@ export default function LoginPage() {
             <Card className="auth_form_box   w-100  ">
 
               <Card.Body>
-                <h5 className="fw-bold">Activate Your Account</h5>
+                <h5 className="fw-bold">Login</h5>
                 <p className="small text-muted">
-                  Enter your details to activate your secure account.
+                  Enter your details to log in.
                 </p>
-
+       {showAlert && (
+        <Alert  
+          variant="danger"
+          className="auth_alert d-flex align-items-center gap-3"
+        >
+          <img src="/icn/red_alert_icn.svg" alt="" />
+          <span>
+            That email doesn’t look right. Please try again.
+          </span>
+        </Alert>
+      )}
                 <Form>
 
                   {/* EMAIL */}
@@ -81,34 +107,31 @@ export default function LoginPage() {
 
                   {/* PASSWORD */}
                   <Form.Group className="mb-3 position-relative">
-                    <Form.Label>Create Password</Form.Label>
+                    <Form.Label>Password</Form.Label>
+                     <div className="form_bx">
                     <Form.Control
                       type={showPassword ? "text" : "password"}
                       className="border-danger"
                       placeholder="••••••••"
                     />
-                    <span
+                   
+                   <span
                       className="auth_eye"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      👁️
+                        <img src="/icn/eye_icn.svg" alt="" />
                     </span>
+                    </div>
+                   
                   </Form.Group>
 
-                  {/* CONFIRM PASSWORD */}
-                  <Form.Group className="mb-3">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password"
-                      placeholder="••••••••"
-                     />
-                  </Form.Group>
-
+                 
                   {/* CHECKLIST */}
-                  <div className="auth_checklist    mb-3">
+                  <div className="auth_checklist ">
                     <h6>Security Checklist</h6>
                     <ul>
                         <li>
-                           <img src="/icn/auth_dcorrect_icn.svg" alt="" /> Password must be at least 8 characters
+                           <img src="/icn/auth_correct_icn.svg" alt="" /> Password must be at least 8 characters
                         </li>
                           <li>
                            <img src="/icn/auth_correct_icn.svg" alt="" /> Include 1 uppercase, 1 Lowercase
@@ -121,9 +144,14 @@ export default function LoginPage() {
                    
                   </div>
 
-                  <Button className="auth_btn w-100">
-                    Continue
+                 
+                    <Button className="auth_btn w-100" onClick={handleClick}>
+                    Login
                   </Button>
+                  <div className="forget_btn">
+                     
+                  <Link href="/forgot-password"> Forgot Password? </Link>
+                  </div>
 
                 </Form>
 
