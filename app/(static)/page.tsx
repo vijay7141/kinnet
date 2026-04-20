@@ -124,18 +124,18 @@ export default function HomePage() {
                 <p>Quickly connect with Kin's skilled emergency and specialty teams.</p>
 
                 <div className="d-grid gap-3">
-                    <div className="px-3 py-3 d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-top gap-3">
                         <img src="icn/real-time.svg" alt="Real-time Comms" />
-                        <div>
+                        <div className="care-bx">
                         <h4>Real-time Comms</h4>
-                          <p className="mb-0 text-dark fw-medium">Instant messaging between referring vets and hospital <br />teams ensures zero-delay consultation.</p>
+                          <p className="mb-0">Instant messaging between referring vets and hospital <br />teams ensures zero-delay consultation.</p>
                         </div>
                     </div>
-                    <div className="px-3 py-3 d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-top gap-3">
                         <img src="icn/edu-hub.svg" alt="Real-time Comms" />
                         <div>
                         <h4>Education Hub</h4>
-                          <p className="mb-0 text-dark fw-medium">Access Kin's past and upcoming CE webinars.</p>
+                          <p className="mb-0 ">Access Kin's past and upcoming CE webinars.</p>
                         </div>
                     </div>
                 </div>
