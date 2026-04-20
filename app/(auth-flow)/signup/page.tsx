@@ -9,7 +9,7 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 export default function LoginPage() {
       const [showPassword, setShowPassword] = useState(false);
   return (
