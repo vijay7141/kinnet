@@ -1,0 +1,202 @@
+
+.container-fluid{
+  padding:0px !important;
+}
+
+.kinnect-home {
+    color: #14212b;
+}
+.kinnect-shell{
+    background:#FBF6F1;
+    border-radius: 0px 0px 100px 100px;
+    padding: 0 100px;
+    position: relative;
+    z-index: 1;
+}
+header{
+    background:#FBF6F1;
+    padding: 0 100px;
+}
+.kinnect-shell h1{
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 76px;
+}
+.nav-link{
+    font-size: 18px;
+}
+.kinnect-logo {
+    height: auto;
+}
+
+.kinnect-btn-primary {
+    background-color: var(--red_color) !important;
+    border-color: var(--red_color) !important;
+    color: var(--white) !important;
+}
+
+.kinnect-btn-primary:hover {
+    background-color: #cc341f !important;
+    border-color: #cc341f !important;
+}
+
+.kinnect-badge {
+    background-color: rgba(228, 67, 45, 0.12);
+    color: var(--red_color);
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+}
+
+.kinnect-text-accent {
+    color: var(--red_color);
+}
+
+.kinnect-hero {
+    min-height: 560px;
+}
+.kinnect-banner{
+    padding: 150px 100px 80px;
+    margin-top: -80px;
+    position: relative;
+    z-index: 0;
+}
+.kinnect-banner h2{
+    color: #000;
+    font-size: 76px;
+    font-weight: 600;
+    line-height: normal;
+}
+.get-startd{
+    border-radius: 8px;
+    background: #033E4F;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    padding: 12px 24px;
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.kinnect-photo-card {
+    min-height: 240px;
+    border-radius: 28px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: end;
+    color: #183642;
+    box-shadow: 0 20px 50px rgba(3, 62, 79, 0.12);
+    background-size: cover;
+    background-position: center;
+}
+.journey{
+    padding: 100px;
+}
+.seam-card{
+    border-radius: 25px;
+    border: 1px solid #033E4F;
+    background: #FFF;
+    padding: 30px;
+    margin-top: 24px;
+}
+.journey h2{
+    color:#000;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+.journey p{
+    color:#000;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 35px;
+}
+.kinnect-banner {
+    background: linear-gradient(90deg, #98f0f0 0%, #a7f0ef 55%, #7adddd 100%);
+}
+
+.kinnect-silhouette {
+   
+}
+
+.kinnect-clinic-panel {
+    background: #f6ede2;
+}
+
+.kinnect-clinic-photo {
+    min-height: 360px;
+    background:
+        linear-gradient(180deg, rgba(20, 33, 43, 0.05), rgba(20, 33, 43, 0.65)),
+        linear-gradient(135deg, #d6c1ac 0%, #9bb7c9 48%, #7c99ad 100%);
+}
+
+.kinnect-step-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background-color: #e8f9fb;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.kinnect-story {
+    background:#F7F5EA;
+    padding: 0px 0px 0 100px;
+}
+.kinnect-story h2{
+    color: #000;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 48px;
+}
+.kinnect-story p{
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 48px;
+}
+
+
+.kinnect-care-photo {
+    min-height: 420px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.22)),
+        linear-gradient(135deg, #f3d1a7 0%, #f7b88e 35%, #f7efe5 100%);
+}
+
+.kinnect-quote-card {
+    background: linear-gradient(180deg, #f6fbff 0%, #eef6fb 100%);
+}
+
+.kinnect-cta {
+    background:
+        linear-gradient(180deg, rgba(3, 62, 79, 0.6), rgba(3, 62, 79, 0.92)),
+        linear-gradient(135deg, #8f6a49 0%, #4a3424 100%);
+}
+
+@media (max-width: 991.98px) {
+    .container-fluid {
+        padding: 0 20px !important;
+    }
+
+    .kinnect-photo-card {
+        min-height: 200px;
+    }
+
+    .kinnect-silhouette {
+        width: 110px;
+        min-height: 150px;
+    }
+
+    .kinnect-care-photo,
+    .kinnect-clinic-photo {
+        min-height: 300px;
+    }
+}
