@@ -1,5 +1,6 @@
 import "./user.css";
 import { ReactNode } from "react";
+ 
 export default function UserLayout({
   children,
 }: {
@@ -8,7 +9,7 @@ export default function UserLayout({
   return (
     <>
       <header className="user_header">
-        <h2>User Dashboard Header</h2>
+ 
       </header>
 
       <main>{children}</main>

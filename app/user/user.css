@@ -1,11 +1,393 @@
-.user_header {
-  background: blue;
-  color: white;
-  padding: 20px;
+ 
+/*==============================
+	Fonts
+==============================*/
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+/*==============================
+	root variable
+==============================*/
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --white_color: #ffffff;
+    --commen_black: #000014;
+    --primary: #033E4F;
+    --red_color:#E4432D;
+    --light_primary:#E5F6FF; 
+    --manrope_font: "Manrope", sans-serif; 
+
+} 
+
+
+/*==============================
+	Common styles
+==============================*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.user_footer {
-  background: darkblue;
-  color: white;
-  padding: 20px;
+div {
+    transition: all ease 0.5s;
 }
+
+body {
+    font-family: var(--manrope_font);
+    font-optical-sizing: auto;
+    background-color: var(--white);
+    width: 100%;
+    height: 100%;
+    color: var(--black) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important; 
+}
+
+html,
+body {
+    overflow-x: hidden !important;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+    background: var(--primary_gradient);
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #DDC081;
+    background: var(--primary_gradient);
+
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    margin-bottom: 0;
+}
+
+
+nav ul li a {
+    color: white !important;
+}
+
+.container-fluid{
+  padding:0 40px !important;
+}
+
+
+
+ /*--------------------------- auth flow ------------------------- */
+
+
+
+  
+ .auth_flow_area{
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 40px 0;
+ }
+
+ .auth_flow_area::before{
+    content: "";
+    opacity: 0.5;
+    background: var(--light_primary);
+    filter: blur(120px);
+    border-radius: 9999px;
+    width: 512px;
+    height: 643.19px;
+   position: absolute;
+right: -216px;
+top: -313px;
+    Z-INDEX: -1;
+ }
+.auth_title { 
+font-size: 42px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+color: var(--primary);
+margin-top: 40px;
+}
+.auth_title span{ 
+font-size: 42px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+.auth_subtitle {
+color: #41484B; 
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 32.5px;  
+}
+
+.auth_card {
+border-radius: 12px;
+background: var(--light_primary);
+padding: 24px;
+  height: 100%;
+}
+
+.auth_form_box {
+ 
+width: 100%;
+padding: 40px;
+max-width: 608px;
+border-radius: 12px;
+border: 1px solid rgba(192, 199, 204, 0.15) !important;
+background: #FFF;
+box-shadow: 0 12px 32px -4px rgba(0, 31, 41, 0.06) !important;
+
+}
+.form-control{
+  border-radius: 8px;
+background: rgba(0, 0, 0, 0.08);
+display: flex;
+padding: 12px 16px;
+justify-content: center;
+align-items: flex-start;
+align-self: stretch;
+}
+.form-control:focus{
+  box-shadow: none;
+}
+label{
+  color: #41484B; 
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px;  
+margin-bottom: 8px;
+}
+ 
+
+.auth_btn {
+border-radius: 8px;
+background: var(--red_color);
+color: var(--white);
+text-align: center; 
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px; 
+height: 56px;
+padding: 16px 25px;
+border: 0;
+}
+.auth_btn:hover{
+  border: 0;
+background: var(--red_color);
+
+}
+
+.auth_checklist { 
+  padding: 20px;
+  font-size: 13px;
+  border-radius: 16px;
+background: rgba(0, 0, 0, 0.05);
+
+}
+.auth_checklist ul{
+  padding-left: 0;
+}
+.auth_checklist ul li{
+  display: flex;
+  align-items: center;
+    gap: 12px;
+    color: #41484B; 
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px;  
+margin-bottom: 16px;
+}
+
+.auth_eye {
+  position: absolute;
+  right: 12px;
+  top: 38px;
+  cursor: pointer;
+}
+
+.auth_flow_left .logo{
+  width: 100%;
+  max-width: 287px;
+} 
+.auth_form_box p{    
+}
+.auth_form_box p span{
+  color: var(--primary); 
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+
+line-height: normal;
+}
+
+
+.auth_card .card-body .h5{
+  color: var(--primary);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px;  
+}
+.auth_card .card-body img{
+  width: 25px;
+height: 25px;
+ margin-bottom: 12px;
+}
+.auth_card .card-body p{
+color: #41484B; 
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;  
+}
+
+
+.auth_form_box  h5{  
+  color: var(--primary);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 32px;  
+}
+
+.auth_form_box   p{
+  color: #41484B; 
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;  
+margin-bottom: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*--------------------------- responcive css start ------------------------- */
+
+
+ @media (min-width: 1200px) {
+ 
+}
+
+@media screen and (max-width: 1450px) {}
+
+@media screen and (max-width: 1400px) {}
+
+@media screen and (max-width: 1350px) {}
+
+@media screen and (max-width: 1300px) {}
+
+@media screen and (max-width: 1250px) { 
+}
+
+@media screen and (max-width: 1200px) {
+  .auth_form_box{
+    max-width: 100%;
+  }
+.auth_flow_left {
+  padding: 20px !important;
+}
+}
+
+
+@media screen and (max-width: 1150px) { 
+}
+
+
+
+@media screen and (max-width: 1100px) { 
+  .container-fluid {
+    padding: 0 20px !important;
+}
+}
+
+
+
+@media screen and (max-width: 1098px) { 
+}
+
+
+@media screen and (max-width: 992px) { 
+}
+
+
+@media screen and (max-width: 768px) { 
+}
+
+
+@media screen and (max-width: 550px) { 
+  .auth_title{
+    font-size: 32px;
+    margin-top: 15px !important;
+
+  }
+  .auth_title span{
+    font-size: 32px;
+
+  }
+  .auth_form_box
+  {
+    padding: 12px;
+  }
+  .auth_subtitle{
+    margin-top: 0px !important;
+  }
+  .auth_flow_left .logo{
+    max-width: 180px;
+  }
+}
+
+
+@media screen and (max-width: 450px) { 
+}
+
+@media screen and (max-width: 375px) { 
+      .container-fluid {
+        padding: 0 15px !important;
+    }
+}
+
+
+@media screen and (max-width: 325px) { 
+}
+
+
+
