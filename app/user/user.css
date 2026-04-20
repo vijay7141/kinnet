@@ -1,0 +1,11 @@
+.user_header {
+  background: blue;
+  color: white;
+  padding: 20px;
+}
+
+.user_footer {
+  background: darkblue;
+  color: white;
+  padding: 20px;
+}
