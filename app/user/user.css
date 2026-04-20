@@ -416,7 +416,7 @@ line-height: 30px;
 text-transform: capitalize;
 }
 
-.auth_form_box p{
+.error_expire_sec .auth_form_box p{
   color: #41484B;
 text-align: center; 
 font-size: 14px;
@@ -429,14 +429,14 @@ margin: auto;
 }
 
 
-.auth_form_box p a{
+.error_expire_sec .auth_form_box p a{
   color: var(--primary); 
 font-size: 14px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
 }
-.auth_form_box p.bold{
+.error_expire_sec .auth_form_box p.bold{
   color: var(--primary);  
 font-size: 14px;
 font-style: normal;
