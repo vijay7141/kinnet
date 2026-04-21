@@ -22,6 +22,7 @@ export default function ReferralConfirmModel({
     
             {/* Heading */}
             <h5 className="fw-bold">Confirm Submission?</h5>
+            
     
             {/* Text */}
             <p className="text-muted small mt-2 mb-4">
