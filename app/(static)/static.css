@@ -5,26 +5,90 @@
 
 .kinnect-home {
     color: #14212b;
+    overflow-x: clip;
 }
 .kinnect-shell{
     background:#FBF6F1;
     border-radius: 0px 0px 100px 100px;
-    padding: 0 100px;
+    padding: 0 clamp(20px, 6vw, 100px);
     position: relative;
     z-index: 1;
+    position: relative;
+}
+.kinnect-shell:after{
+    content: "";
+    z-index: -1;
+    background-image: url("/blurred-abstract.png");
+    width: 700px;
+    height: 700px;
+    position: absolute;
+    top: -100px;
+    right: 0;
+    background-size: contain;
 }
 header{
     background:#FBF6F1;
-    padding: 0 100px;
+    padding: 0 clamp(20px, 6vw, 100px);
+    position: relative;
+    z-index: 9;
+    padding-top: 10px;
 }
 .kinnect-shell h1{
-    font-size: 72px;
+    font-size: clamp(42px, 6vw, 72px);
     font-weight: 800;
     letter-spacing: -1px;
-    line-height: 76px;
+    line-height: 1.05;
+}
+.kinnect-shell h3{
+    font-size: 45px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: #E4432D;
+}
+.kinnect-shell p{
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32.5px;
+    margin-bottom: 40px;
 }
 .nav-link{
     font-size: 18px;
+}
+.nav-link:hover{
+   Color: var(--red_color) !important;
+}
+.kinnect-nav-toggle {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 14px;
+    background: #033E4F;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+}
+
+.kinnect-nav-toggle span {
+    width: 18px;
+    height: 2px;
+    background: #fff;
+    border-radius: 999px;
+    display: block;
+}
+
+.kinnect-nav-panel {
+    display: flex;
+    align-items: center;
+}
+
+.kinnect-nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .kinnect-logo {
     height: auto;
@@ -32,13 +96,27 @@ header{
 
 .kinnect-btn-primary {
     background-color: var(--red_color) !important;
-    border-color: var(--red_color) !important;
-    color: var(--white) !important;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 11px 35px;
+    border-radius: 8px;
+}
+.kinnect-btn-secondary {
+    background-color: #033E4F;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 11px 35px;
+    border-radius: 8px;
 }
 
 .kinnect-btn-primary:hover {
     background-color: #cc341f !important;
     border-color: #cc341f !important;
+    Color: #fff;
 }
 
 .kinnect-badge {
@@ -56,28 +134,16 @@ header{
     min-height: 560px;
 }
 .kinnect-banner{
-    padding: 150px 100px 80px;
+    padding: clamp(110px, 12vw, 150px) clamp(20px, 6vw, 100px) clamp(56px, 7vw, 80px);
     margin-top: -80px;
     position: relative;
     z-index: 0;
 }
 .kinnect-banner h2{
     color: #000;
-    font-size: 76px;
+    font-size: clamp(38px, 6vw, 76px);
     font-weight: 600;
-    line-height: normal;
-}
-.get-startd{
-    border-radius: 8px;
-    background: #033E4F;
-    color: #FFF;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    padding: 12px 24px;
-    margin-top: 25px;
-    display: inline-block;
+    margin-bottom: 40px;
 }
 
 .kinnect-photo-card {
@@ -92,7 +158,7 @@ header{
     background-position: center;
 }
 .journey{
-    padding: 100px;
+    padding: clamp(56px, 7vw, 100px) clamp(20px, 6vw, 100px);
 }
 .seam-card{
     border-radius: 25px;
@@ -101,9 +167,12 @@ header{
     padding: 30px;
     margin-top: 24px;
 }
+.seam-card img{
+    margin-bottom: 20px;
+}
 .journey h2{
     color:#000;
-    font-size: 48px;
+    font-size: clamp(34px, 4.5vw, 48px);
     font-weight: 600;
     line-height: normal;
     margin-bottom: 15px;
@@ -148,12 +217,12 @@ header{
 
 .kinnect-story {
     background:#F7F5EA;
-    padding: 0px 0px 0 100px;
+    padding: 0 0 0 clamp(24px, 6vw, 100px);
     border-radius:100px 100px 0px 0px ;
 }
 .kinnect-story h2{
     color: #000;
-    font-size: 48px;
+    font-size: clamp(34px, 4.5vw, 48px);
     font-weight: 600;
     line-height: 48px;
 }
@@ -177,10 +246,10 @@ header{
     line-height: 24px;
 }
 .testi-mon{
-
+    padding: 70px 0px 70px 100px;
 }
 .testi-mon h2{
-    font-size: 48px;
+    font-size: clamp(34px, 4.5vw, 48px);
     font-weight: 600;
     color: #000;
 }
@@ -252,6 +321,7 @@ header{
 
 .kinnect-slider-slide {
     flex: 0 0 var(--testimonial-card-width);
+    cursor: grab;
 }
 
 .kinnect-quote-mark {
@@ -265,11 +335,11 @@ header{
 }
 
 .kinnect-quote-copy {
-    max-width: 88%;
-    color: #111;
-    font-size: 18px;
+    max-width: 94%;
+    color: #000;
+    font-size: 24px;
     font-weight: 400;
-    line-height: 1.55;
+    line-height:39px;
     margin-top: 4px;
 }
 
@@ -281,17 +351,18 @@ header{
 }
 
 .kinnect-quote-name {
-    color: #111;
-    font-size: 15px;
+    color: #000;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 24px;
+
 }
 
 .kinnect-quote-title {
     color: #3d4a50;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 1.35;
+    line-height: 20px;
 }
 
 .kinnect-slider-dots {
@@ -313,14 +384,174 @@ header{
 }
 
 .kinnect-cta {
-    background:
-        linear-gradient(180deg, rgba(3, 62, 79, 0.6), rgba(3, 62, 79, 0.92)),
-        linear-gradient(135deg, #8f6a49 0%, #4a3424 100%);
+    background: url('/start-kin-bg.png') no-repeat;
+    background-size: cover;
+    min-height: 660px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contact h2{
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 400;
+    color: #fff;
+}
+.contact p{
+    font-size: clamp(17px, 2.5vw, 20px);
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 30px;
+    display: block;
+}
+.contact .btn{
+    padding: 11px 50px;
+    margin-top: 0;
+    font-weight: 500;
+}
+footer{
+    background: #033E4F;
+}
+.footer-section{
+    padding: 70px clamp(20px, 6vw, 100px);
+}
+.footer-section p{
+    font-size: 19px;
+    font-weight: 200;
+    color: #fff;
+    margin-bottom: 0;
+}
+.footer-section p span.brand{
+    color: #E4432D;
+    font-weight: 500;
+}
+.footer-section a.footer-link{
+    color: #fff;
+    font-size: 16px;
+    font-weight:300;
+    margin-right: 30px;
+    display: inline-block;
+}
+.footer-section a.social-icon{
+    margin-right: 20px;
+}
+.sign-pgp {
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 10px;
+    color: #41484B;
+}
+
+@media (max-width: 1199.98px) {
+    .kinnect-hero {
+        min-height: auto;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .kinnect-banner {
+        margin-top: -48px;
+    }
+
+    .kinnect-story {
+        border-radius: 64px 64px 0 0;
+    }
+
+    .kinnect-cta {
+        min-height: 520px;
+    }
 }
 
 @media (max-width: 991.98px) {
-    .container-fluid {
+    /* .container-fluid {
         padding: 0 20px !important;
+    } */
+
+    header {
+        padding: 0 20px;
+    }
+
+    .navbar {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .kinnect-logo {
+        max-width: 156px;
+    }
+
+    .navbar-nav {
+        row-gap: 6px;
+    }
+
+    .kinnect-nav-toggle {
+        display: inline-flex;
+    }
+
+    .kinnect-nav-panel {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 20px;
+        right: 20px;
+        display: none;
+        padding: 18px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 24px 50px rgba(3, 62, 79, 0.16);
+        border: 1px solid rgba(3, 62, 79, 0.08);
+        z-index: 20;
+    }
+
+    .kinnect-nav-panel.is-open {
+        display: block;
+    }
+
+    .kinnect-nav-list {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    .kinnect-nav-list .nav-item,
+    .kinnect-nav-list .nav-link,
+    .kinnect-nav-list .btn {
+        width: 100%;
+    }
+
+    .kinnect-nav-list .nav-link {
+        padding: 10px 12px;
+        border-radius: 12px;
+    }
+
+    .kinnect-nav-list .btn {
+        justify-content: center;
+    }
+
+    .kinnect-shell {
+        border-radius: 0 0 56px 56px;
+        padding: 0 20px;
+    }
+
+
+    .kinnect-hero {
+        padding-bottom: 40px !important;
+        text-align: center;
+    }
+
+    .kinnect-hero .lead,
+    .journey p,
+    .kinnect-story p,
+    .contact p {
+        max-width: none;
+    }
+
+    .kinnect-banner {
+        margin-top: -28px;
+        padding: 72px 20px 48px;
+        text-align: center;
+    }
+
+    .kinnect-banner .d-flex {
+        justify-content: center;
     }
 
     .kinnect-photo-card {
@@ -328,8 +559,32 @@ header{
     }
 
     .kinnect-silhouette {
-        width: 110px;
-        min-height: 150px;
+    }
+
+    .journey {
+        padding: 56px 20px;
+    }
+
+    .seam-card {
+        padding: 22px 20px;
+        margin-top: 18px;
+    }
+
+    .kinnect-story {
+        padding: 40px 24px 0;
+        border-radius: 48px 48px 0 0;
+    }
+
+    .kinnect-story .row {
+        row-gap: 28px;
+    }
+
+    .care-bx h4 {
+        font-size: 22px;
+    }
+
+    .testi-mon {
+        padding: 20px 20px 0;
     }
 
     .kinnect-care-photo,
@@ -365,12 +620,94 @@ header{
         top: 16px;
         right: 12px;
     }
+
+    .contact {
+        padding-top: 56px !important;
+    }
+
+    .kinnect-cta {
+        min-height: 420px;
+        padding: 48px 24px !important;
+    }
+
+    .contact .btn {
+        padding: 14px 28px;
+    }
+
+    .footer-section {
+        padding: 40px 20px;
+        row-gap: 18px;
+    }
+
+    .footer-section p,
+    .footer-section a.footer-link {
+        font-size: 15px;
+    }
+    .kinnect-hero .btn{
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 767.98px) {
+    .nav-link {
+        font-size: 16px;
+    }
+
+    .kinnect-nav-panel {
+        left: 0;
+        right: 0;
+        top: calc(100% + 10px);
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    .kinnect-shell h1 {
+        max-width: none;
+    }
+
+    .kinnect-hero h3 {
+        font-size: 24px;
+    }
+
+    .contact .btn {
+        margin: 0 auto;
+    }
+
+    .kinnect-banner h2,
+    .journey h2,
+    .kinnect-story h2,
     .testi-mon h2{
         font-size: 30px;
         line-height: 1.15;
+    }
+
+    .kinnect-silhouette {
+    }
+
+    .journey {
+        padding:48px 20px 0;
+    }
+
+    .journey p {
+        margin-bottom: 24px;
+    }
+
+    .kinnect-story {
+        padding: 32px 18px 0;
+        border-radius: 32px 32px 0 0;
+    }
+
+    .kinnect-story h2 {
+        line-height: 1.12;
+    }
+
+    .kinnect-story .d-flex.align-items-start {
+        gap: 14px !important;
+        margin-top: 20px !important;
+    }
+
+    .care-bx h4 {
+        font-size: 20px;
     }
 
     .kinnect-testimonial-slider {
@@ -390,7 +727,7 @@ header{
     }
 
     .kinnect-quote-card {
-        min-height: 260px;
+        
         padding: 22px 18px 18px !important;
     }
 
@@ -405,5 +742,60 @@ header{
 
     .kinnect-quote-title {
         font-size: 11px;
+    }
+
+    .kinnect-cta {
+        min-height: 360px;
+        padding: 36px 18px !important;
+    }
+    .kinnect-silhouette img{
+        max-width: 100%;
+        height: auto;
+    }
+
+    .contact p {
+        margin-bottom: 24px;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section a.footer-link,
+    .footer-section a.social-icon {
+        margin-right: 14px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .kinnect-shell {
+        border-radius: 0 0 36px 36px;
+    }
+
+    .kinnect-banner {
+        padding-top: 58px;
+        padding-bottom: 40px;
+    }
+
+    .kinnect-banner h2 {
+        font-size: 28px;
+    }
+
+    .seam-card {
+        border-radius: 18px;
+    }
+
+    .kinnect-quote-copy {
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .footer-section {
+        padding: 32px 20px;
+    }
+    .kinnect-cta .d-flex{
+        flex-direction: column;
+        gap: 16px !important;
+
     }
 }

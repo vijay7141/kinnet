@@ -24,21 +24,31 @@ export default function ResetSuccess() {
                 </div>
 
                 {/* Heading */}
-                <h5 className="fw-bold">Password Reset Successfully</h5>
+                <h5 className="fw-bold">Referral submitted</h5>
 
                 {/* Text */}
                 <p className="text-muted small mt-2 mb-4">
-                  Your credentials have been updated. You can now access your clinical dashboard with your new secure password.
+                  Your referral has been submitted successfully.
+                <span className="d-block">Your referral ID is #12345.</span>To track the status, create an account and use this ID under referrals.
                 </p>
 
                 {/* Button */}
+                <div className="d-flex gap-3">
+                <Button
+                  as={Link}
+                  href="/forgot-password/reset-link-expired"
+                  className="auth_btn w-100"
+                >Done
+                </Button>
                 <Button
                   as={Link}
                   href="/forgot-password/reset-link-expired"
                   className="auth_btn w-100"
                 >
-                  Back to Login
+                  Create Account
                 </Button>
+                </div>
+
 
               </Card.Body>
             </Card>

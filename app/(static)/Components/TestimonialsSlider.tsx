@@ -94,7 +94,7 @@ export default function TestimonialsSlider() {
 
   return (
     <div className="kinnect-testimonial-slider">
-      <div className="kinnect-slider-controls" aria-label="Testimonial navigation">
+      {/* <div className="kinnect-slider-controls" aria-label="Testimonial navigation">
         <button
           type="button"
           className="kinnect-slider-button"
@@ -111,7 +111,7 @@ export default function TestimonialsSlider() {
         >
           Next
         </button>
-      </div>
+      </div> */}
 
       <div className="kinnect-slider-viewport">
         <div
@@ -132,7 +132,7 @@ export default function TestimonialsSlider() {
             >
               <div className="card h-100 border-0 shadow-sm rounded-4 p-4 kinnect-quote-card">
                 <div className="kinnect-quote-mark" aria-hidden="true">
-                  &rdquo;
+                  <img src="test-cot.svg" alt="Real-time Comms" />
                 </div>
                 <p className="kinnect-quote-copy mb-4">{testimonial.quote}</p>
                 <div className="mt-auto d-flex gap-3 align-items-center">
@@ -142,7 +142,7 @@ export default function TestimonialsSlider() {
                     className="img-fluid kinnect-quote-avatar"
                   />
                   <div>
-                    <p className="kinnect-quote-name mb-1">{testimonial.name}</p>
+                    <p className="kinnect-quote-name">{testimonial.name}</p>
                     <p className="kinnect-quote-title mb-0">
                       {testimonial.title}
                     </p>
