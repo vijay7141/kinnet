@@ -190,9 +190,9 @@ const [showConfirm, setShowConfirm] = useState(false);
       </div>
 
       <div className="form_footer">
-        <Button className="commen_btn2 cancel_btn">Cancel</Button>
+        <Button className="kinnect-btn-secondary">Cancel</Button>
 <Button
-  className="commen_btn submit_btn"
+  className="kinnect-btn-primary "
   onClick={() => setShowConfirm(true)}
 >
   Submit Referral
