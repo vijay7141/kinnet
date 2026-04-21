@@ -7,8 +7,8 @@ export default function StaticLayout({
   children: React.ReactNode;
 }) {
   return <>
-  <Header />
+  {/* <Header /> */}
   {children}
-  <Footer />
+  {/* <Footer /> */}
   </>;
 }

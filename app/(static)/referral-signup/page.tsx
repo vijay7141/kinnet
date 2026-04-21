@@ -2,6 +2,8 @@
 import "../../user/user.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 import {
   Container,
@@ -17,6 +19,7 @@ import ExternalCompleteModel from "../Components/ExternalCompleteModel";
 export default function ReferralSignup() {
       const [showPassword, setShowPassword] = useState(false);
         const [showAlert, setShowAlert] = useState(false);
+        const [phone, setPhone] = useState("");
  
 
     const handleClick = () => {
@@ -72,6 +75,10 @@ const [showReviewModal, setShowReviewModal] = useState(false);
                   </Card.Body>
                 </Card>
               </Col>
+              <Col md={12}>
+              <p className="sign-pgp">Continuing Education Opportunities and opportunity to grow and provide the best patient care for your patients!</p>
+              <p className="sign-pgp">Practice patient dashboard allows you to keep up with your patients at a glance or link to Instinct Shareville for a deeper dive!</p>
+              </Col>
             </Row>
 
           </Col>
@@ -83,10 +90,8 @@ const [showReviewModal, setShowReviewModal] = useState(false);
               <Card.Body>
 
 
-                <h5 className="fw-bold">Activate Your Account</h5>
-                <p className="small text-muted">
-                  Enter your details to activate your secure account.
-                </p>
+                <h5 className="fw-bold">Sign Up</h5>
+                <p className="small text-muted">Enter your details to create an account.</p>
                  {showAlert && (
         <Alert
           variant="danger"
@@ -101,24 +106,51 @@ const [showReviewModal, setShowReviewModal] = useState(false);
 
                 <Form>
 
+                  {/* NAME */}
+                  <Form.Group className="mb-3">
+                    <Form.Label className="justify-content-start gap-1 form-label">Full name <span className="text-danger">*</span></Form.Label>
+                    <Form.Control type="text" placeholder="Your Name" defaultValue=""/>
+                  </Form.Group>
+
                   {/* EMAIL */}
                   <Form.Group className="mb-3">
-                    <Form.Label>Email  <span><img src="/icn/lock_icn.svg" alt="" />Verified Invite</span></Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="li@email.com"
-                      defaultValue="dr.stephen.strange@vetclinic.com"
-                      
-                    />
+                    <Form.Label className="justify-content-start gap-1 form-label">Email address <span className="text-danger">*</span></Form.Label>
+                    <Form.Control type="text" placeholder="Your Email" defaultValue=""/>
                   </Form.Group>
+
+                  {/* Clinic / Practice name */}
+                  <Form.Group className="mb-3">
+                    <Form.Label className="justify-content-start gap-1 form-label">Clinic / Practice name </Form.Label>
+                    <Form.Control type="text" placeholder="Clinic / Practice name" defaultValue=""/>
+                  </Form.Group>
+                  
+                  {/* Your referral ID */}
+                  <Form.Group className="mb-3">
+                    <Form.Label className="justify-content-start gap-1 form-label">Your referral ID </Form.Label>
+                    <Form.Control type="text" placeholder="Your referral ID" defaultValue=""/>
+                  </Form.Group>
+
+                  {/* ✅ Phone (Working Library) */}
+                    <Form.Group className="mb-4">
+                      <Form.Label>Phone</Form.Label>
+
+                      <PhoneInput
+                        country={"us"}
+                        value={phone}
+                        onChange={(phone) => setPhone(phone)}
+                        inputClass="form-control auth_phone_input"
+                        buttonClass="auth_phone_dropdown"
+                        containerClass="w-100"
+                      />
+                    </Form.Group>
 
                   {/* PASSWORD */}
                   <Form.Group className="mb-3 position-relative">
-                    <Form.Label>Create Password</Form.Label>
+                    <Form.Label className="justify-content-start gap-1 form-label">Create Password <span className="text-danger">*</span></Form.Label>
                       <div className="form_bx">
                          <Form.Control
                       type={showPassword ? "text" : "password"}
-                      className="border-danger"
+                      className=""
                       placeholder="••••••••"
                     />
                     <span
@@ -132,7 +164,7 @@ const [showReviewModal, setShowReviewModal] = useState(false);
 
                   {/* CONFIRM PASSWORD */}
                   <Form.Group className="mb-3 position-relative">
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label className="justify-content-start gap-1 form-label">Confirm Password <span className="text-danger">*</span></Form.Label>
                           <div className="form_bx">
                     <Form.Control type="password"
                       placeholder="••••••••"
@@ -146,34 +178,12 @@ const [showReviewModal, setShowReviewModal] = useState(false);
                      </div>
                   </Form.Group>
 
-                  {/* CHECKLIST */}
-                  <div className="auth_checklist    mb-3">
-                    <h6>Security Checklist</h6>
-                    <ul>
-                        <li className="rong">
-                           <img src="/icn/auth_dcorrect_icn.svg" alt="" /> Password must be at least 8 characters
-                        </li>
-                          <li>
-                           <img src="/icn/auth_correct_icn.svg" alt="" /> Include 1 uppercase, 1 Lowercase
-                        </li>
-
-                          <li>
-                            <img src="/icn/auth_correct_icn.svg" alt="" /> 1 Number, and 1 special character
-                        </li>
-                    </ul>
-                   
-                  </div>
-
-                  <Button className="auth_btn w-100"  onClick={() => setShowReviewModal(true)}>
-                    Continue
+             
+                  <Button className="auth_btn w-100 mt-3"  onClick={() => setShowReviewModal(true)}>
+                    Sign Up
                   </Button>
 
                 </Form>
-
-                <p className="text-center mt-3 small text-muted">
-                    
-                  Having trouble? <br />Contact us at  <span> contact@kinnect.com
-</span>                </p>
               </Card.Body>
 
             </Card>
