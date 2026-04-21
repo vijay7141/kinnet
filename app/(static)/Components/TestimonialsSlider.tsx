@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Testimonial = {
   quote: string;
@@ -45,32 +45,57 @@ export default function TestimonialsSlider() {
   const loopedTestimonials = [...testimonials, ...testimonials, ...testimonials];
   const [activeIndex, setActiveIndex] = useState(testimonialCount);
   const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStateRef = useRef<{
+    startX: number;
+    currentX: number;
+    hasMoved: boolean;
+  } | null>(null);
+  const autoSlideRef = useRef<number | null>(null);
   const visibleIndex =
     ((activeIndex % testimonialCount) + testimonialCount) % testimonialCount;
+  const trackTranslate = `calc(${activeIndex} * -1 * (var(--testimonial-card-width) + var(--testimonial-gap)) + ${dragOffset}px)`;
+
+  const clearAutoSlide = () => {
+    if (autoSlideRef.current !== null) {
+      window.clearInterval(autoSlideRef.current);
+      autoSlideRef.current = null;
+    }
+  };
+
+  const startAutoSlide = useCallback(() => {
+    clearAutoSlide();
+    autoSlideRef.current = window.setInterval(() => {
+      setIsTransitionEnabled(true);
+      setDragOffset(0);
+      setActiveIndex((currentIndex) => currentIndex + 1);
+    }, 4500);
+  }, []);
 
   const goToSlide = (index: number) => {
     setIsTransitionEnabled(true);
+    setDragOffset(0);
     setActiveIndex(testimonialCount + index);
   };
 
   const goToPrevious = () => {
     setIsTransitionEnabled(true);
+    setDragOffset(0);
     setActiveIndex((currentIndex) => currentIndex - 1);
   };
 
   const goToNext = () => {
     setIsTransitionEnabled(true);
+    setDragOffset(0);
     setActiveIndex((currentIndex) => currentIndex + 1);
   };
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIsTransitionEnabled(true);
-      setActiveIndex((currentIndex) => currentIndex + 1);
-    }, 4500);
+    startAutoSlide();
 
-    return () => window.clearInterval(timer);
-  }, []);
+    return () => clearAutoSlide();
+  }, [startAutoSlide]);
 
   const handleTransitionEnd = () => {
     if (activeIndex < testimonialCount) {
@@ -91,6 +116,75 @@ export default function TestimonialsSlider() {
       return () => window.cancelAnimationFrame(frame);
     }
   }, [isTransitionEnabled]);
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    clearAutoSlide();
+    setIsDragging(true);
+    setIsTransitionEnabled(false);
+    setDragOffset(0);
+    dragStateRef.current = {
+      startX: event.clientX,
+      currentX: event.clientX,
+      hasMoved: false,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const dragState = dragStateRef.current;
+    if (!dragState) {
+      return;
+    }
+
+    dragState.currentX = event.clientX;
+    const nextOffset = dragState.currentX - dragState.startX;
+
+    if (Math.abs(nextOffset) > 6) {
+      dragState.hasMoved = true;
+    }
+
+    setDragOffset(nextOffset);
+  };
+
+  const finishDrag = () => {
+    const dragState = dragStateRef.current;
+    if (!dragState) {
+      return;
+    }
+
+    const finalOffset = dragState.currentX - dragState.startX;
+    const threshold = 70;
+
+    dragStateRef.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+    setIsTransitionEnabled(true);
+
+    if (finalOffset <= -threshold) {
+      setActiveIndex((currentIndex) => currentIndex + 1);
+    } else if (finalOffset >= threshold) {
+      setActiveIndex((currentIndex) => currentIndex - 1);
+    }
+
+    startAutoSlide();
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragStateRef.current) {
+      return;
+    }
+
+    event.currentTarget.releasePointerCapture(event.pointerId);
+    finishDrag();
+  };
+
+  const handlePointerCancel = () => {
+    if (!dragStateRef.current) {
+      return;
+    }
+
+    finishDrag();
+  };
 
   return (
     <div className="kinnect-testimonial-slider">
@@ -117,13 +211,22 @@ export default function TestimonialsSlider() {
         <div
           className={
             isTransitionEnabled
-              ? "kinnect-slider-track"
-              : "kinnect-slider-track is-static"
+              ? isDragging
+                ? "kinnect-slider-track is-dragging"
+                : "kinnect-slider-track"
+              : isDragging
+                ? "kinnect-slider-track is-static is-dragging"
+                : "kinnect-slider-track is-static"
           }
           style={{
-            transform: `translateX(calc(${activeIndex} * -1 * (var(--testimonial-card-width) + var(--testimonial-gap))))`,
+            transform: `translateX(${trackTranslate})`,
           }}
           onTransitionEnd={handleTransitionEnd}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+          onPointerLeave={handlePointerCancel}
         >
           {loopedTestimonials.map((testimonial, index) => (
             <div
