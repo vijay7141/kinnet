@@ -1,6 +1,8 @@
 "use client";
 import "../../user/user.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Container,
   Row,
@@ -8,28 +10,30 @@ import {
   Card,
   Form,
   Button,
-  Alert,
 } from "react-bootstrap";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-export default function LoginPage() {
+import { Alert } from "react-bootstrap";
+import { ExclamationCircle } from "react-bootstrap-icons";
+import ExternalCompleteModel from "../Componants/ExternalCompleteModel";
+export default function ReferralSignup() {
       const [showPassword, setShowPassword] = useState(false);
-           const [showAlert, setShowAlert] = useState(false);
-        const router = useRouter();
-      
-          const handleClick = () => {
-          if (!showAlert) {
-            // First click → alert show
-            setShowAlert(true);
-          } else {
-            // Second click → redirect
-            router.push("/login"); // apna route daal dena
-          }
-        };
+        const [showAlert, setShowAlert] = useState(false);
+ 
+
+    const handleClick = () => {
+    if (!showAlert) {
+      // First click → alert show
+      setShowAlert(true);
+    } else {
+      // Second click → redirect
+      router.push("/signup/profile-step"); // apna route daal dena
+    }
+  };
+  const router = useRouter();
+const [showReviewModal, setShowReviewModal] = useState(false);
   return (
+    
      <>
-          <section className="auth_flow_area forgot_password_area d-flex align-items-center min-vh-100">
+          <section className="auth_flow_area d-flex align-items-center min-vh-100">
       <Container fluid>
         <Row className=" "> 
           <Col xl={6} className="auth_flow_left d-flex flex-column justify-content-center px-xl-5 px-0">
@@ -50,7 +54,7 @@ export default function LoginPage() {
                       <img src="/icn/instant_icn.svg" alt="" />
                     <Card.Title className="fw-bold">Referrals</Card.Title>
                     <Card.Text className="small text-muted">
-                      Submit and manage referrals with structured workflows.
+                     Submit and manage referrals with structured workflows, real-time status updates.
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -63,7 +67,7 @@ export default function LoginPage() {
 
                     <Card.Title className="fw-bold">Instant Messages</Card.Title>
                     <Card.Text className="small text-muted">
-                      Stay connected with real-time messaging.
+                    Stay connected with your team through real-time messaging, file sharing, and quick collaboration.
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -77,12 +81,14 @@ export default function LoginPage() {
             <Card className="auth_form_box   w-100  ">
 
               <Card.Body>
-                <h5 className="fw-bold">Login</h5>
+
+
+                <h5 className="fw-bold">Activate Your Account</h5>
                 <p className="small text-muted">
-                  Enter your details to log in.
+                  Enter your details to activate your secure account.
                 </p>
-       {showAlert && (
-        <Alert  
+                 {showAlert && (
+        <Alert
           variant="danger"
           className="auth_alert d-flex align-items-center gap-3"
         >
@@ -92,11 +98,12 @@ export default function LoginPage() {
           </span>
         </Alert>
       )}
+
                 <Form>
 
                   {/* EMAIL */}
                   <Form.Group className="mb-3">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Email  <span><img src="/icn/lock_icn.svg" alt="" />Verified Invite</span></Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="li@email.com"
@@ -107,31 +114,44 @@ export default function LoginPage() {
 
                   {/* PASSWORD */}
                   <Form.Group className="mb-3 position-relative">
-                    <Form.Label>Password</Form.Label>
-                     <div className="form_bx">
-                    <Form.Control
+                    <Form.Label>Create Password</Form.Label>
+                      <div className="form_bx">
+                         <Form.Control
                       type={showPassword ? "text" : "password"}
                       className="border-danger"
                       placeholder="••••••••"
                     />
-                   
-                   <span
+                    <span
                       className="auth_eye"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                        <img src="/icn/eye_icn.svg" alt="" />
+                       <img src="/icn/eye_icn.svg" alt="" />
                     </span>
-                    </div>
-                   
+                      </div>
                   </Form.Group>
 
-                 
+                  {/* CONFIRM PASSWORD */}
+                  <Form.Group className="mb-3 position-relative">
+                    <Form.Label>Confirm Password</Form.Label>
+                          <div className="form_bx">
+                    <Form.Control type="password"
+                      placeholder="••••••••"
+                     />
+                         <span
+                      className="auth_eye"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                       <img src="/icn/eye_icn.svg" alt="" />
+                    </span>
+                     </div>
+                  </Form.Group>
+
                   {/* CHECKLIST */}
-                  <div className="auth_checklist ">
+                  <div className="auth_checklist    mb-3">
                     <h6>Security Checklist</h6>
                     <ul>
-                        <li>
-                           <img src="/icn/auth_correct_icn.svg" alt="" /> Password must be at least 8 characters
+                        <li className="rong">
+                           <img src="/icn/auth_dcorrect_icn.svg" alt="" /> Password must be at least 8 characters
                         </li>
                           <li>
                            <img src="/icn/auth_correct_icn.svg" alt="" /> Include 1 uppercase, 1 Lowercase
@@ -144,14 +164,9 @@ export default function LoginPage() {
                    
                   </div>
 
-                 
-                    <Button className="auth_btn w-100" onClick={handleClick}>
-                    Login
+                  <Button className="auth_btn w-100"  onClick={() => setShowReviewModal(true)}>
+                    Continue
                   </Button>
-                  <div className="forget_btn">
-                     
-                  <Link href="/forgot-password"> Forgot Password? </Link>
-                  </div>
 
                 </Form>
 
@@ -167,6 +182,9 @@ export default function LoginPage() {
         </Row>
       </Container>
     </section>
+
+      <ExternalCompleteModel   show={showReviewModal}
+      handleClose={() => setShowReviewModal(false)}/>
      </>
   );
 }

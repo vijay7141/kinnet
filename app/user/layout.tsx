@@ -1,3 +1,5 @@
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import "./user.css";
 import { ReactNode } from "react";
  
@@ -7,16 +9,18 @@ export default function UserLayout({
   children: ReactNode;
 }) {
   return (
-    <>
-      <header className="user_header">
- 
-      </header>
+    <> 
 
-      <main>{children}</main>
-
-      <footer className="user_footer">
-        <p>User Footer</p>
-      </footer>
+      
+   <div className="dash_layout">
+       <Sidebar /> 
+       <div className="dash_main">
+         <Header /> 
+         <div className="container-fluid">
+<main>{children}</main> 
+         </div>
+       </div>
+     </div>
     </>
   );
 }

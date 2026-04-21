@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-export default function SignupUnderReviewModal({ show, handleClose }: any) {
+export default function ExternalCompleteModel({ show, handleClose }: any) {
   return (
     <Modal
       show={show}
