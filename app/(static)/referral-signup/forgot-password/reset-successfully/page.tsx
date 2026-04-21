@@ -16,7 +16,7 @@ export default function ResetSuccess() {
 
             {/* Card */}
             <Card className="auth_form_box border-0 text-center">
-              <Card.Body className="p-4">
+              <Card.Body className="p-0">
 
                 {/* Icon */}
                 <div className="success_icon_box mx-auto mb-3">
@@ -28,25 +28,19 @@ export default function ResetSuccess() {
 
                 {/* Text */}
                 <p className="text-muted small mt-2 mb-4">
-                  Your referral has been submitted successfully.
-                <span className="d-block">Your referral ID is #12345.</span>To track the status, create an account and use this ID under referrals.
+                  Your referral has been submitted successfully.<br />
+                Your referral ID is <span className="refrl-copy">#12345. <img src="/icn/copy.svg" alt="" /></span><br />To track the status, create an account and use this ID under referrals.
                 </p>
 
                 {/* Button */}
                 <div className="d-flex gap-3">
-                <Button
-                  as={Link}
-                  href="/forgot-password/reset-link-expired"
-                  className="auth_btn w-100"
-                >Done
-                </Button>
-                <Button
-                  as={Link}
-                  href="/forgot-password/reset-link-expired"
-                  className="auth_btn w-100"
-                >
+                <Link href="/forgot-password/reset-link-expired"
+                  className="commen_btn2 border-0 w-100 d-block">Done
+                </Link>
+                <Link href="/forgot-password/reset-link-expired"
+                  className="auth_btn w-100 d-block">
                   Create Account
-                </Button>
+                </Link>
                 </div>
 
 

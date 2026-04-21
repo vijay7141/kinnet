@@ -799,3 +799,139 @@ footer{
 
     }
 }
+
+.privacy-policy-page {
+}
+
+.privacy-policy-shell {
+    padding: 28px clamp(20px, 6vw, 110px) 80px;
+}
+
+.privacy-policy-card {
+    background: #fff;
+    max-width:1200px;
+    margin: 0 auto;
+}
+
+.privacy-policy-header {
+    margin-bottom: 34px;
+}
+
+.privacy-policy-header h1 {
+    color: #033E4F;
+    margin-bottom: 8px;
+    font-size: clamp(34px, 4.5vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.privacy-policy-header p {
+    color: #7b8d95;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.privacy-policy-content {
+    display: grid;
+    gap: 26px;
+}
+
+.privacy-policy-section h2,
+    .privacy-policy-highlight h2 {
+    color: #033E4F;
+    margin-bottom: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+.privacy-policy-intro,
+.privacy-policy-section p,
+.privacy-policy-highlight p {
+    color: #55666e;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-bottom: 15px;
+}
+
+.privacy-policy-group + .privacy-policy-group {
+    margin-top: 16px;
+}
+
+.privacy-policy-group h3,
+.privacy-policy-highlight h3 {
+    color: #173946;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.privacy-policy-list {
+    margin: 14px 0 0;
+    padding-left: 18px;
+    color: #55666e;
+    list-style: disc;
+}
+
+.privacy-policy-list li {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 6px;
+}
+
+.privacy-policy-highlight {
+    background: #dff6ff;
+    border-left: 4px solid #0f6f89;
+    padding: 28px 28px 24px;
+}
+
+.privacy-policy-highlight-grid {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+@media (max-width: 991.98px) {
+    .privacy-policy-shell {
+        padding: 24px 20px 56px;
+    }
+
+    .privacy-policy-card {
+        border-radius: 22px;
+    }
+
+    .privacy-policy-section h2,
+    .privacy-policy-highlight h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .privacy-policy-card {
+        padding: 22px 18px;
+    }
+
+    .privacy-policy-header {
+        margin-bottom: 24px;
+    }
+
+    .privacy-policy-section h2,
+    .privacy-policy-highlight h2 {
+        font-size: 21px;
+        margin-bottom: 12px;
+    }
+
+    .privacy-policy-intro,
+    .privacy-policy-section p,
+    .privacy-policy-highlight p,
+    .privacy-policy-list li {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .privacy-policy-highlight {
+        padding: 20px 18px;
+    }
+}

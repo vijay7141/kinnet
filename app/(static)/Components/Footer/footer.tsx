@@ -11,8 +11,8 @@ export default function Footer() {
           </div>
           {/* Center */}
           <div className="col-md-4 text-center my-3 my-md-0">
-            <a href="#" className="footer-link me-3">Terms of Use</a>
-            <a href="#" className="footer-link">Privacy Policy</a>
+            <a href="/terms-of-use" className="footer-link me-3">Terms of Use</a>
+            <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
           </div>
           {/* Right (Social Icons) */}
           <div className="col-md-4 text-center text-md-end">

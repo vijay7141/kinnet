@@ -238,7 +238,7 @@ font-weight: 700;
 line-height: 32px;  
 }
 
-.auth_form_box   p{
+.auth_form_box p{
   color: #41484B; 
 font-size: 14px;
 font-style: normal;
@@ -250,6 +250,7 @@ margin-bottom: 30px;
 .profile_upload {
   text-align: center;
 }
+
 
 /* Circle Box */
 .upload_circle {
@@ -404,6 +405,14 @@ line-height: 20px; /* 142.857% */
 .forgot_password_area .auth_form_box p span{
   color: var(--red_color);
   cursor: pointer;
+}
+.forgot_password_area .auth_form_box p span.refrl-copy{
+  color:#033E4F;
+  font-weight: 700;
+  margin: 3px;
+}
+.forgot_password_area .auth_form_box p span.refrl-copy img{
+  vertical-align: sub;
 }
 .forgot_password_area {
   background: #F8FAFB;
