@@ -177,7 +177,7 @@ header{
     line-height: 24px;
 }
 .testi-mon{
-
+    padding: 70px 0 0 100px;
 }
 .testi-mon h2{
     font-size: 48px;
@@ -252,6 +252,7 @@ header{
 
 .kinnect-slider-slide {
     flex: 0 0 var(--testimonial-card-width);
+    cursor: grab;
 }
 
 .kinnect-quote-mark {
@@ -265,11 +266,11 @@ header{
 }
 
 .kinnect-quote-copy {
-    max-width: 88%;
-    color: #111;
-    font-size: 18px;
+    max-width: 94%;
+    color: #000;
+    font-size: 24px;
     font-weight: 400;
-    line-height: 1.55;
+    line-height:39px;
     margin-top: 4px;
 }
 
@@ -281,17 +282,18 @@ header{
 }
 
 .kinnect-quote-name {
-    color: #111;
-    font-size: 15px;
+    color: #000;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 24px;
+
 }
 
 .kinnect-quote-title {
     color: #3d4a50;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 1.35;
+    line-height: 20px;
 }
 
 .kinnect-slider-dots {
@@ -313,9 +315,12 @@ header{
 }
 
 .kinnect-cta {
-    background:
-        linear-gradient(180deg, rgba(3, 62, 79, 0.6), rgba(3, 62, 79, 0.92)),
-        linear-gradient(135deg, #8f6a49 0%, #4a3424 100%);
+    background: url('/start-kin-bg.png') no-repeat;
+    background-size: cover;
+    min-height: 660px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 991.98px) {

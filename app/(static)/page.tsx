@@ -147,7 +147,7 @@ export default function HomePage() {
       </section>
 
       <section id="contact" className="py-5">
-        <div className="container-xxl">
+        <div className="container-fluid">
           <div className="kinnect-cta rounded-5 overflow-hidden p-4 p-lg-5 text-center text-lg-start">
             <div className="row align-items-center g-4">
               <div className="col-lg-8">
