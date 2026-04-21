@@ -2,7 +2,7 @@
 import Footer from "../Components/Footer/footer";
 import Header from "../Components/Header/header";
 
-export default function PrivacyPolicyPage() {
+export default function TermsOfUsePage() {
   return (
     <main className="privacy-policy-page">
       <Header/>
