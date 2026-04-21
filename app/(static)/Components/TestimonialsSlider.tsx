@@ -188,7 +188,7 @@ export default function TestimonialsSlider() {
 
   return (
     <div className="kinnect-testimonial-slider">
-      <div className="kinnect-slider-controls" aria-label="Testimonial navigation">
+      {/* <div className="kinnect-slider-controls" aria-label="Testimonial navigation">
         <button
           type="button"
           className="kinnect-slider-button"
@@ -205,7 +205,7 @@ export default function TestimonialsSlider() {
         >
           Next
         </button>
-      </div>
+      </div> */}
 
       <div className="kinnect-slider-viewport">
         <div

@@ -177,7 +177,7 @@ header{
     line-height: 24px;
 }
 .testi-mon{
-    padding: 100px 0 0 100px;
+    padding: 70px 0 0 100px;
 }
 .testi-mon h2{
     font-size: 48px;
@@ -252,6 +252,7 @@ header{
 
 .kinnect-slider-slide {
     flex: 0 0 var(--testimonial-card-width);
+    cursor: grab;
 }
 
 .kinnect-quote-mark {
@@ -285,7 +286,7 @@ header{
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
-    
+
 }
 
 .kinnect-quote-title {
@@ -314,9 +315,12 @@ header{
 }
 
 .kinnect-cta {
-    background:
-        linear-gradient(180deg, rgba(3, 62, 79, 0.6), rgba(3, 62, 79, 0.92)),
-        linear-gradient(135deg, #8f6a49 0%, #4a3424 100%);
+    background: url('/start-kin-bg.png') no-repeat;
+    background-size: cover;
+    min-height: 660px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 991.98px) {

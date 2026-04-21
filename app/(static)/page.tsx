@@ -136,7 +136,7 @@ export default function HomePage() {
         <div className="container-fluid">
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
             <div>
-              <h2 className="fw-bold mb-0">
+              <h2 className="fw-bold mb-4">
                 What referring veterinarians are saying
               </h2>
             </div>
@@ -146,36 +146,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="py-5">
-        <div className="container-xxl">
-          <div className="kinnect-cta rounded-5 overflow-hidden p-4 p-lg-5 text-center text-lg-start">
-            <div className="row align-items-center g-4">
-              <div className="col-lg-8">
+      <section className="contact py-5">
+        <div className="container-fluid">
+          <div className="kinnect-cta overflow-hidden text-center text-lg-start">
+            <div className="text-center">
                 <h2 className="display-6 fw-bold text-white mb-2">
                   Start using Kinnect today
                 </h2>
                 <p className="text-white-50 mb-0">
-                  Join veterinary teams building faster, clearer referral
-                  experiences.
+                 Join hundreds of clinics optimizing their professional communication.
                 </p>
-              </div>
-              <div className="col-lg-4">
-                <div className="d-flex flex-wrap justify-content-lg-end gap-3">
+                <div className="d-flex flex-wrap justify-content-lg-center gap-3">
                   <Link
                     href="/signup"
-                    className="btn btn-info rounded-pill px-4 py-3 fw-semibold text-dark"
+                    className="btn kinnect-btn-primary px-4 py-3 fw-semibold get-startd"
                   >
                     Get Started
                   </Link>
                   <Link
                     href="/login"
-                    className="btn kinnect-btn-primary rounded-pill px-4 py-3 fw-semibold"
+                    className="btn kinnect-btn-primary px-4 py-3 fw-semibold"
                   >
-                    Learn More
+                    Submit Referral
                   </Link>
                 </div>
-              </div>
-            </div>
+                </div>
           </div>
         </div>
       </section>
