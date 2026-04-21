@@ -311,6 +311,7 @@ margin-bottom: 30px;
     display: flex;
     width: 100% !important;
     height: 50px !important; 
+    border: 0 !important;
 }
 
 .react-tel-input .flag-dropdown{
@@ -1815,13 +1816,16 @@ padding: 8px 25px;
   position: relative;
 }
 
-.dropdown_head {
-  background: #f3f5f7;
-  padding: 12px;
-  border-radius: 10px;
+.dropdown_head { 
+  padding: 12px; 
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  background: #00000014;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    height: 49px;
 }
 
 .dropdown_list {
@@ -1899,6 +1903,40 @@ line-height: 16px;
 .auth_modal .buttons button{
   height: auto;
   padding: 11px 28px !important;
+}
+.kinnect-btn-primary {
+    background-color: var(--red_color) !important;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 11px 35px;
+    border-radius: 8px;
+    border: 0;
+
+}
+.kinnect-btn-secondary {
+    background-color: #9CEDED;
+    color: var(--primary) ;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 11px 35px;
+    border-radius: 8px;
+    border: 0;
+}
+.kinnect-btn-secondary:focus{
+     background-color: #9CEDED !important;
+    color: var(--primary) !important;
+}
+.kinnect-btn-secondary:hover{
+   background-color: #9CEDED;
+    color: var(--primary) ;
+}
+.kinnect-btn-primary:hover {
+    background-color: #cc341f !important;
+    border-color: #cc341f !important;
+    Color: #fff;
 }
  /*--------------------------- responcive css start ------------------------- */
 

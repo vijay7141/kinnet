@@ -22,7 +22,7 @@ export default function ReferralConfirmModel({
     
             {/* Heading */}
             <h5 className="fw-bold">Confirm Submission?</h5>
-            
+
     
             {/* Text */}
             <p className="text-muted small mt-2 mb-4">
@@ -31,10 +31,10 @@ export default function ReferralConfirmModel({
     
             {/* Button */}
             <div className="buttons">
-               <Button className="auth_btn commen_btn2 " onClick={handleClose}>
+               <Button className="kinnect-btn-secondary " onClick={handleClose}>
              Edit Form
             </Button> 
-    <Button className="auth_btn commen_btn" onClick={handleClose}>
+    <Button className="kinnect-btn-primary" onClick={handleClose}>
              Confirm
             </Button>
             </div>
