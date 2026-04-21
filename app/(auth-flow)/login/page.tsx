@@ -24,7 +24,7 @@ export default function LoginPage() {
             setShowAlert(true);
           } else {
             // Second click → redirect
-            router.push("/signup/profile-step"); // apna route daal dena
+            router.push("/login"); // apna route daal dena
           }
         };
   return (
