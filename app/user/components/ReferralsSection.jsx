@@ -1,125 +1,172 @@
 "use client";
 import React, { useState } from "react";
-
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from "@hello-pangea/dnd";
 export default function ReferralsSection() {
   const [open, setOpen] = useState(false);
 
+  const [data, setData] = useState({
+    incoming: [
+      { id: "1", name: "Luna", owner: "Sarah Miller", time: "2h ago", priority: "red" },
+      { id: "2", name: "Cooper", owner: "John Wick", time: "4h ago", priority: "red" },
+    ],
+    claimed: [
+      { id: "3", name: "Bella", owner: "Maria Garcia", time: "6h ago", priority: "orange" },
+    ],
+    review: [
+      { id: "4", name: "Oliver", owner: "David Chen", time: "1h ago", priority: "green" },
+    ],
+    accepted: [
+      { id: "5", name: "Max", owner: "Emily Blunt", time: "Yesterday", priority: "blue" },
+    ],
+    confirmed: [
+      { id: "6", name: "Milo", owner: "Chris Evans", time: "2d ago" },
+    ],
+  });
+
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+
+    const sourceCol = [...data[source.droppableId]];
+    const destCol = [...data[destination.droppableId]];
+    const [movedItem] = sourceCol.splice(source.index, 1);
+
+    destCol.splice(destination.index, 0, movedItem);
+
+    setData({
+      ...data,
+      [source.droppableId]: sourceCol,
+      [destination.droppableId]: destCol,
+    });
+  };
+
   return (
-
     <>
-    <div className="col-xl-12">
-    <div className="_referrals_list_wrap">
+      <div className="col-xl-12">
+        <div className="_referrals_list_wrap">
 
-      {!open && (
-        <div className="_referrals_list_wrap_inside">
- <div className="ref_summary_card" onClick={() => setOpen(true)}>
-               <div className="image">
-                <img src="/icn/no_referrals.svg" alt="" />
-               </div>
-          <h4>No referrals available yet.</h4>
+          {!open && (
+            <div className="_referrals_list_wrap_inside">
+              <div className="ref_summary_card" onClick={() => setOpen(true)}>
+                <div className="image">
+                  <img src="/icn/no_referrals.svg" alt="" />
+                </div>
+                <h4>No referrals available yet.</h4>
+              </div>
+            </div>
+          )}
+
+          {open && (
+            <DragDropContext onDragEnd={onDragEnd}>
+              <div className="_referrals_list">
+                <div className="ref_scroll">
+
+                  {/* COLUMN COMPONENT */}
+                  {Object.keys(data).map((colKey) => (
+                    <Droppable droppableId={colKey} key={colKey}>
+                      {(provided) => (
+                        <div
+                          className="ref_col"
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                        >
+                          <h6>
+                            {colKey === "incoming"
+                              ? "Incoming"
+                              : colKey === "claimed"
+                              ? "Claimed"
+                              : colKey === "review"
+                              ? "In Review"
+                              : colKey === "accepted"
+                              ? "Accepted"
+                              : "Confirmed"}
+                          </h6>
+
+                          {data[colKey].map((item, index) => (
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id}
+                              index={index}
+                            >
+                              {(provided) => (
+                                <div
+                                  className={`ref_card ${colKey === "confirmed" ? "muted" : ""}`}
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                >
+                                  <div className="ref_top">
+                                    {item.priority && (
+                                      <span className={`badge ${item.priority}`}>
+                                        {item.priority === "red"
+                                          ? "Priority 1-2"
+                                          : item.priority === "orange"
+                                          ? "Priority 2-3"
+                                          : item.priority === "green"
+                                          ? "Priority 4"
+                                          : "Info Only"}
+                                      </span>
+                                    )}
+
+                                    {/* DRAG HANDLE */}
+                                    <span
+                                      className="dots"
+                                      {...provided.dragHandleProps}
+                                    >
+                                      <img src="/icn/drag_dot.svg" alt="" />
+                                    </span>
+                                  </div>
+
+                                  <span className="time">{item.time}</span>
+                                  <h5>{item.name}</h5>
+                                  <p>{item.owner}</p>
+
+                                  {/* CONDITIONAL UI SAME AS DESIGN */}
+                                  {colKey === "incoming" && (
+                                    <button className="btn claim_btn">
+                                      <img src="/icn/clame_icn.svg" alt="" />
+                                      Claim Case
+                                    </button>
+                                  )}
+
+                                  {colKey === "claimed" && (
+                                    <div className="extra">
+                                      <img src="/icn/doc_img.svg" alt="" />
+                                      Claimed by Dr. Aris
+                                    </div>
+                                  )}
+
+                                  {colKey === "review" && (
+                                    <div className="status review">
+                                      Review in process
+                                    </div>
+                                  )}
+
+                                  {colKey === "accepted" && (
+                                    <div className="status accepted">
+                                      Accepted
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  ))}
+
+                </div>
+              </div>
+            </DragDropContext>
+          )}
         </div>
-        </div>
-       
-      )}
-
-      {open && (
-        <div className="_referrals_list">
-          <div className="ref_scroll">
-
-            {/* Incoming */}
-            <div className="ref_col">
-              <h6>Incoming</h6>
-
-              <div className="ref_card">
-                <div className="ref_top">
-                  <span className="badge red">Priority 1-2</span>
-                  <span className="dots"><img src="/icn/drag_dot.svg" alt="" /></span>
-                </div>
-                <span className="time">2h ago</span>
-                <h5>Luna</h5>
-                <p>Sarah Miller</p>
-                <button className="btn claim_btn"><img src="/icn/clame_icn.svg" alt="" />Claim Case</button>
-              </div>
-
-              <div className="ref_card">
-                <div className="ref_top">
-                  <span className="badge red">Priority 1-2</span>
-                         <span className="dots"><img src="/icn/drag_dot.svg" alt="" /></span>
-                </div>
-                <span className="time">4h ago</span>
-                <h5>Cooper</h5>
-                <p>John Wick</p>
-                <button className="btn claim_btn"><img src="/icn/clame_icn.svg" alt="" />Claim Case</button>
-              </div>
-            </div>
-
-            {/* Claimed */}
-            <div className="ref_col">
-              <h6>Claimed</h6>
-
-              <div className="ref_card">
-                <div className="ref_top">
-                  <span className="badge orange">Priority 2-3</span>
-                        <span className="dots"><img src="/icn/drag_dot.svg" alt="" /></span>
-                </div>
-                <span className="time">6h ago</span>
-                <h5>Bella</h5>
-                <p>Maria Garcia</p>
-                <div className="extra"> <img src="/icn/doc_img.svg" alt="" />Claimed by Dr. Aris</div>
-              </div>
-            </div>
-
-            {/* Review */}
-            <div className="ref_col">
-              <h6>In Review</h6>
-
-              <div className="ref_card">
-                <div className="ref_top">
-                  <span className="badge green">Priority 4</span>
-                         <span className="dots"><img src="/icn/drag_dot.svg" alt="" /></span>
-                </div>
-                <span className="time">1h ago</span>
-                <h5>Oliver</h5>
-                <p>David Chen</p>
-                <div className="status review">Review in process</div>
-              </div>
-            </div>
-
-            {/* Accepted */}
-            <div className="ref_col">
-              <h6>Accepted</h6>
-
-              <div className="ref_card">
-                <div className="ref_top">
-                  <span className="badge blue">Info Only</span>
-                         <span className="dots"><img src="/icn/drag_dot.svg" alt="" /></span>
-                </div>
-                <span className="time">Yesterday</span>
-                <h5>Max</h5>
-                <p>Emily Blunt</p>
-                <div className="status accepted">Accepted</div>
-              </div>
-            </div>
-
-            {/* Confirmed */}
-            <div className="ref_col">
-              <h6>Confirmed</h6>
-
-              <div className="ref_card muted">
-               
-                      <div className="ref_top"> <span className="time">2d ago</span><span className="dots"><img alt="" src="/icn/drag_dot.svg" /></span></div>
-                <h5>Milo</h5>
-                <p>Chris Evans</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
-    </div>
-    </div>
-    
+      </div>
     </>
-
   );
 }
