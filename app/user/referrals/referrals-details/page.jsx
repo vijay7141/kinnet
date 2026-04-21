@@ -79,7 +79,7 @@ export default function ReferralsDetails() {
       <div className="row g-4 mt-1">
 
         {/* LEFT */}
-        <div className="col-md-4">
+        <div className="col-xl-4">
           <div className="left_card">
 
             <h4>Cooper</h4>
@@ -152,28 +152,47 @@ export default function ReferralsDetails() {
 
           <div className="quick_card2">
             <h6>Quick Referral Context</h6>
-            <p>Referred by Dr. Aris Thorne</p>
-            <p>Accepted on Oct 24, 2023</p>
+                <div className="quick_card2_inner">
+                      <img src="/icn/i_icn.svg" alt="" />
+                      <div className="content">
+                        <p>Referred by Dr. Aris Thorne</p>
+                        <span>Urgency: Priority 1–2 · Emergency</span>
+                      </div>
+                      <img src="/icn/meassege_new.svg" alt="" />
+
+                </div>
+                 <div className="quick_card2_inner">
+                      <img src="/icn/calender_new.svg" alt="" />
+                      <div className="content">
+                        <p>Accepted on Oct 24, 2023</p>
+                        <span>Appt scheduled for Oct 27</span>
+                      </div> 
+
+                </div>
+    
           </div>
         </div>
 
         {/* RIGHT */}
-        <div className="col-md-8">
+        <div className="col-xl-8">
 
           <div className="status_box2">
-            <h6>Status: Accepted</h6>
+            <img src="/icn/round_check1.svg" alt="" />
+             <div className="content">
+                      <h6>Status: Accepted</h6>
             <p>
-              The cardiology specialist has accepted this referral and reviewed the records.
+              The cardiac oncology specialist has accepted this referral and reviewed the records.
             </p>
+             </div>
           </div>
 
           <div className="notes_card2">
-            <div className="notes_header">Clinical Notes</div>
-
-            <div className="note_block">
+            <div className="notes_header">Clinical Notes <img src="/icn/red_edit_icn.svg" alt=""></img></div>
+<div className="status_box2_inner">
+       <div className="note_block">
               <span>Reason For Referral</span>
               <p>
-                Patient presents with Grade 3/6 systolic heart murmur and intermittent syncope.
+              Patient presents with Grade 3/6 systolic heart murmur and intermittent syncope. Previous echo shows mitral valve thickening. Specialist review required for comprehensive cardiac staging and long-term management plan.
               </p>
             </div>
 
@@ -181,12 +200,19 @@ export default function ReferralsDetails() {
               <span>Tentative Diagnosis</span>
               <p>Tentative Diagnosis</p>
             </div>
-
-            <div className="media_grid">
-              <img src="/img/xray.jpg" alt="" />
-              <img src="/img/sample.jpg" alt="" />
-              <div className="upload_box2">Add File</div>
+        <div className="note_block">
+              <span>Attached Media</span> 
             </div>
+            <div className="media_grid">
+                
+              <img src="/icn/xray.png" alt="" />
+              <img src="/icn/sample.png" alt="" />
+              <div className="upload_box2">
+                <img src="/icn/camera_icn.svg" alt="" />
+                Add File</div>
+            </div>
+</div>
+         
 
           </div>
 
