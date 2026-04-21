@@ -1,9 +1,15 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React ,{ useState } from "react"; 
+import SendSMSModel from "../../components/SendSMSModel";
+import SMSSuccessModal from "../../components/SMSSuccessModal";
+import ChatWidget from "../../components/ChatWidget";
 
 export default function ReferralsDetails() {
+   const [showSMS, setShowSMS] = useState(false);
+const [showSuccess, setShowSuccess] = useState(false);
   return (
+    <>
     <div className="ref_details_exact2">
 
       {/* HEADER */}
@@ -120,7 +126,7 @@ export default function ReferralsDetails() {
             <div className="owner">
                 <div className="owner_inner">
                      <p className="label">Owner Contact</p> 
-                     <button className="sms_btn"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                     <button className="sms_btn" onClick={() => setShowSMS(true)}><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
   <path d="M3.5 5.25C3.66528 5.25 3.80382 5.1941 3.91563 5.08229C4.02743 4.97049 4.08333 4.83194 4.08333 4.66667C4.08333 4.50139 4.02743 4.36285 3.91563 4.25104C3.80382 4.13924 3.66528 4.08333 3.5 4.08333C3.33472 4.08333 3.19618 4.13924 3.08437 4.25104C2.97257 4.36285 2.91667 4.50139 2.91667 4.66667C2.91667 4.83194 2.97257 4.97049 3.08437 5.08229C3.19618 5.1941 3.33472 5.25 3.5 5.25ZM5.83333 5.25C5.99861 5.25 6.13715 5.1941 6.24896 5.08229C6.36076 4.97049 6.41667 4.83194 6.41667 4.66667C6.41667 4.50139 6.36076 4.36285 6.24896 4.25104C6.13715 4.13924 5.99861 4.08333 5.83333 4.08333C5.66806 4.08333 5.52951 4.13924 5.41771 4.25104C5.3059 4.36285 5.25 4.50139 5.25 4.66667C5.25 4.83194 5.3059 4.97049 5.41771 5.08229C5.52951 5.1941 5.66806 5.25 5.83333 5.25ZM8.16667 5.25C8.33194 5.25 8.47049 5.1941 8.58229 5.08229C8.6941 4.97049 8.75 4.83194 8.75 4.66667C8.75 4.50139 8.6941 4.36285 8.58229 4.25104C8.47049 4.13924 8.33194 4.08333 8.16667 4.08333C8.00139 4.08333 7.86285 4.13924 7.75104 4.25104C7.63924 4.36285 7.58333 4.50139 7.58333 4.66667C7.58333 4.83194 7.63924 4.97049 7.75104 5.08229C7.86285 5.1941 8.00139 5.25 8.16667 5.25ZM0 11.6667V1.16667C0 0.845833 0.114236 0.571181 0.342708 0.342708C0.571181 0.114236 0.845833 0 1.16667 0H10.5C10.8208 0 11.0955 0.114236 11.324 0.342708C11.5524 0.571181 11.6667 0.845833 11.6667 1.16667V8.16667C11.6667 8.4875 11.5524 8.76215 11.324 8.99063C11.0955 9.2191 10.8208 9.33333 10.5 9.33333H2.33333L0 11.6667ZM1.8375 8.16667H10.5V1.16667H1.16667V8.82292L1.8375 8.16667ZM1.16667 8.16667V1.16667V8.16667Z" fill="white"/>
 </svg>Send SMS</button>
                 </div>
@@ -220,5 +226,20 @@ export default function ReferralsDetails() {
       </div>
 
     </div>
+
+ <SendSMSModel
+  show={showSMS}
+  handleClose={() => setShowSMS(false)}
+  handleSuccessOpen={() => setShowSuccess(true)}
+/>
+
+        <SMSSuccessModal
+  show={showSuccess}
+  handleClose={() => setShowSuccess(false)}
+/>
+<ChatWidget />
+    </>
+    
+
   );
 }
