@@ -12,8 +12,8 @@ import {
   Button,
 } from "react-bootstrap";
 import { Alert } from "react-bootstrap";
-import { ExclamationCircle } from "react-bootstrap-icons";
-import ExternalCompleteModel from "../Componants/ExternalCompleteModel";
+import { ExclamationCircle } from "react-bootstrap-icons"; 
+import ExternalCompleteModel from "../Components/ExternalCompleteModel";
 export default function ReferralSignup() {
       const [showPassword, setShowPassword] = useState(false);
         const [showAlert, setShowAlert] = useState(false);
