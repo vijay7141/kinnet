@@ -194,7 +194,122 @@ header{
 
 .kinnect-quote-card {
    border-radius: 24px;
-    background: #E5F6FF;
+    background: #DDF2FF;
+    min-height: 100%;
+    padding: 30px 28px 24px !important;
+    position: relative;
+    box-shadow: none !important;
+}
+
+.kinnect-testimonial-slider {
+    position: relative;
+    --testimonial-gap: 28px;
+    --testimonial-card-width: calc((100% - (var(--testimonial-gap) * 1.35)) / 2.35);
+}
+
+.kinnect-slider-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.kinnect-slider-button {
+    border: 0;
+    background: #033e4f;
+    min-width: 48px;
+    min-height: 48px;
+    color: #033e4f;
+    border-radius: 999px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    color: #fff;
+}
+
+.kinnect-slider-button:hover {
+    background: #0b566d;
+    color: #fff;
+}
+
+.kinnect-slider-viewport {
+    overflow: hidden;
+    padding-right: 0;
+}
+
+.kinnect-slider-track {
+    display: flex;
+    gap: var(--testimonial-gap);
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.kinnect-slider-track.is-static {
+    transition: none;
+}
+
+.kinnect-slider-slide {
+    flex: 0 0 var(--testimonial-card-width);
+}
+
+.kinnect-quote-mark {
+    position: absolute;
+    top: 18px;
+    right: 14px;
+    font-size: 68px;
+    line-height: 0.8;
+    font-weight: 700;
+    color: #efc5cd;
+}
+
+.kinnect-quote-copy {
+    max-width: 88%;
+    color: #111;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-top: 4px;
+}
+
+.kinnect-quote-avatar {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 999px;
+}
+
+.kinnect-quote-name {
+    color: #111;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.kinnect-quote-title {
+    color: #3d4a50;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.35;
+}
+
+.kinnect-slider-dots {
+    display: none;
+}
+
+.kinnect-slider-dot {
+    width: 12px;
+    height: 12px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(3, 62, 79, 0.24);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.kinnect-slider-dot.is-active {
+    background: #033e4f;
+    transform: scale(1.1);
 }
 
 .kinnect-cta {
@@ -220,5 +335,75 @@ header{
     .kinnect-care-photo,
     .kinnect-clinic-photo {
         min-height: 300px;
+    }
+
+    .testi-mon h2{
+        font-size: 36px;
+    }
+
+    .kinnect-slider-controls {
+        justify-content: flex-start;
+        margin-bottom: 18px;
+    }
+
+    .kinnect-testimonial-slider {
+        --testimonial-gap: 20px;
+        --testimonial-card-width: calc(100% - 56px);
+    }
+
+    .kinnect-quote-card {
+        padding: 24px 22px 20px !important;
+    }
+
+    .kinnect-quote-copy {
+        max-width: 100%;
+        font-size: 17px;
+    }
+
+    .kinnect-quote-mark {
+        font-size: 54px;
+        top: 16px;
+        right: 12px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .testi-mon h2{
+        font-size: 30px;
+        line-height: 1.15;
+    }
+
+    .kinnect-testimonial-slider {
+        --testimonial-gap: 16px;
+        --testimonial-card-width: calc(100% - 8px);
+    }
+
+    .kinnect-slider-controls {
+        gap: 10px;
+    }
+
+    .kinnect-slider-button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 14px;
+        font-size: 12px;
+    }
+
+    .kinnect-quote-card {
+        min-height: 260px;
+        padding: 22px 18px 18px !important;
+    }
+
+    .kinnect-quote-copy {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .kinnect-quote-name {
+        font-size: 14px;
+    }
+
+    .kinnect-quote-title {
+        font-size: 11px;
     }
 }
