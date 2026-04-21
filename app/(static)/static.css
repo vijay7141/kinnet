@@ -149,6 +149,7 @@ header{
 .kinnect-story {
     background:#F7F5EA;
     padding: 0px 0px 0 100px;
+    border-radius:100px 100px 0px 0px ;
 }
 .kinnect-story h2{
     color: #000;
@@ -162,10 +163,12 @@ header{
     font-weight: 300;
     line-height: 24px;
 }
+
 .care-bx h4{
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 500;
     color: #000;
+    margin-bottom: 8px;
 }
 .care-bx p{
     font-size: 16px;
@@ -173,7 +176,14 @@ header{
     color: #000;
     line-height: 24px;
 }
+.testi-mon{
 
+}
+.testi-mon h2{
+    font-size: 48px;
+    font-weight: 600;
+    color: #000;
+}
 
 .kinnect-care-photo {
     min-height: 420px;
@@ -183,7 +193,8 @@ header{
 }
 
 .kinnect-quote-card {
-    background: linear-gradient(180deg, #f6fbff 0%, #eef6fb 100%);
+   border-radius: 24px;
+    background: #E5F6FF;
 }
 
 .kinnect-cta {

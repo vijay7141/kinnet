@@ -1,23 +1,5 @@
 import Link from "next/link";
 
-const testimonials = [
-  {
-    quote:
-      "Kinnect has transformed our referral speed. We save hours every day that used to disappear in phone calls.",
-    author: "Dr. Sarah Bennett",
-  },
-  {
-    quote:
-      "The transparency for pet owners is a game changer. Our clients feel held and informed the whole way through.",
-    author: "Dr. Priya Nair",
-  },
-  {
-    quote:
-      "Our team finally has one clean communication hub for intake, updates, and referral coordination.",
-    author: "Dr. Michael Torres",
-  },
-];
-
 export default function HomePage() {
   return (
     <main className="kinnect-home bg-white">
@@ -124,16 +106,16 @@ export default function HomePage() {
                 <p>Quickly connect with Kin's skilled emergency and specialty teams.</p>
 
                 <div className="d-grid gap-3">
-                    <div className="d-flex align-items-top gap-3">
+                    <div className="d-flex align-items-start gap-3 mt-5">
                         <img src="icn/real-time.svg" alt="Real-time Comms" />
                         <div className="care-bx">
                         <h4>Real-time Comms</h4>
                           <p className="mb-0">Instant messaging between referring vets and hospital <br />teams ensures zero-delay consultation.</p>
                         </div>
                     </div>
-                    <div className="d-flex align-items-top gap-3">
+                    <div className="d-flex align-items-start gap-3 mt-3">
                         <img src="icn/edu-hub.svg" alt="Real-time Comms" />
-                        <div>
+                        <div className="care-bx">
                         <h4>Education Hub</h4>
                           <p className="mb-0 ">Access Kin's past and upcoming CE webinars.</p>
                         </div>
@@ -149,13 +131,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-5">
-        <div className="container-xxl">
+      <section className="testi-mon py-5">
+        <div className="container-fluid">
           <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
             <div>
-              <span className="badge rounded-pill kinnect-badge mb-2">
-                Testimonials
-              </span>
               <h2 className="fw-bold mb-0">
                 What referring veterinarians are saying
               </h2>
@@ -163,21 +142,54 @@ export default function HomePage() {
           </div>
 
           <div className="row g-4">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.author} className="col-md-6 col-xl-4">
+              <div className="col-md-4 col-xl-4">
                 <div className="card h-100 border-0 shadow-sm rounded-4 p-4 kinnect-quote-card">
                   <p className="text-secondary mb-4">
-                    &ldquo;{testimonial.quote}&rdquo;
+                    "Kinnect has transformed our referral speed. We save hours every day that used to be spent chasing phone calls."
                   </p>
-                  <div className="mt-auto">
-                    <p className="fw-bold text-dark mb-1">{testimonial.author}</p>
+                  <div className="mt-auto d-flex gap-3">
+                    <img src="avatar-1.png" alt="Kinnect" className="img-fluid"/>
+                    <div >
+                    <p className="fw-bold text-dark mb-1">Dr. Sarah Mitchell</p>
                     <p className="small text-secondary mb-0">
-                      Referring veterinarian
+                      Senior Veterinarian, Urban Vet Care
                     </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+              <div className="col-md-4 col-xl-4">
+                <div className="card h-100 border-0 shadow-sm rounded-4 p-4 kinnect-quote-card">
+                  <p className="text-secondary mb-4">
+                    "Kinnect has transformed our referral speed. We save hours every day that used to be spent chasing phone calls."
+                  </p>
+                  <div className="mt-auto d-flex gap-3">
+                    <img src="avatar-1.png" alt="Kinnect" className="img-fluid"/>
+                    <div >
+                    <p className="fw-bold text-dark mb-1">Dr. Sarah Mitchell</p>
+                    <p className="small text-secondary mb-0">
+                      Senior Veterinarian, Urban Vet Care
+                    </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4 col-xl-4">
+                <div className="card h-100 border-0 shadow-sm rounded-4 p-4 kinnect-quote-card">
+                  <p className="text-secondary mb-4">
+                    "Kinnect has transformed our referral speed. We save hours every day that used to be spent chasing phone calls."
+                  </p>
+                  <div className="mt-auto d-flex gap-3">
+                    <img src="avatar-1.png" alt="Kinnect" className="img-fluid"/>
+                    <div >
+                    <p className="fw-bold text-dark mb-1">Dr. Sarah Mitchell</p>
+                    <p className="small text-secondary mb-0">
+                      Senior Veterinarian, Urban Vet Care
+                    </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </section>
