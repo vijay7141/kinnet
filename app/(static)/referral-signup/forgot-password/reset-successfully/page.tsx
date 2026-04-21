@@ -24,7 +24,7 @@ export default function ResetSuccess() {
                 </div>
 
                 {/* Heading */}
-                <h5 className="fw-bold">Referral submitted</h5>
+                <h5 className="fw-bold"></h5>
 
                 {/* Text */}
                 <p className="text-muted small mt-2 mb-4">

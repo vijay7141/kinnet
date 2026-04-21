@@ -1,16 +1,19 @@
 
 import Footer from "../Components/Footer/footer";
 import Header from "../Components/Header/header";
-import { NewrefferlsForm } from '../../user/components/NewrefferlsForm';
+import { NewrefferlsFormEx } from "../Components/NewrefferlsFormEx";
 import "../../user/user.css";
+import "../static.css";
 
 
 export default function ReferralSubmissionExternalPage() {
   return (
-    <main className="privacy-policy-page">
+    <main className="">
       <Header/>
-      <section className="privacy-policy-shell">
-        <NewrefferlsForm /> 
+      <section className="new-referral-pagex m-auto">
+        <h1>New Referral</h1>
+        <NewrefferlsFormEx />
+        
       </section>
       <Footer />
     </main>
