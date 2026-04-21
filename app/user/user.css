@@ -557,7 +557,7 @@ margin-top: 100%;
 
 /* Header */
 .dash_header {
-  background: #eaf2fb;
+  background: var(--white);
   padding: 12px 32px;
   border-radius: 12px;
   display: flex;
