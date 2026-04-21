@@ -552,17 +552,19 @@ margin-top: 100%;
 /* Main */
 .dash_main {
   flex: 1;
-  padding: 20px 40px;
+  padding: 0 0;
 }
 
 /* Header */
 .dash_header {
   background: #eaf2fb;
-  padding: 12px 20px;
+  padding: 12px 32px;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+
 }
 
 .dash_search {
