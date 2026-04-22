@@ -24,6 +24,22 @@ type WebinarCard = {
   startingSoon?: boolean;
 };
 
+type ChatMessage = {
+  id: number;
+  author: string;
+  time: string;
+  message: string;
+};
+
+type LiveAttendee = {
+  id: number;
+  name: string;
+  title: string;
+  image: string;
+  muted: boolean;
+  cameraOff: boolean;
+};
+
 const attendeeDirectory: Person[] = [
   { id: 1, name: "Marcus Chen", role: "Pharmacy Lead", image: "/avatar-1.png" },
   { id: 2, name: "Patty Vance", role: "Front Desk Admin", image: "/avatar-2.png" },
@@ -54,7 +70,7 @@ const initialWebinars: WebinarCard[] = [
   },
 ];
 
-const initialChatMessages = [
+const initialChatMessages: ChatMessage[] = [
   {
     id: 1,
     author: "Dr. Mark Chen",
@@ -76,7 +92,7 @@ const initialChatMessages = [
   },
 ];
 
-const initialLiveAttendees = [
+const initialLiveAttendees: LiveAttendee[] = [
   { id: 1, name: "Dr. Sarah Jenkins", title: "Host", image: "/avatar-2.png", muted: false, cameraOff: false },
   { id: 2, name: "Dr. Michael Chen", title: "Surgery", image: "/avatar-1.png", muted: false, cameraOff: false },
   { id: 3, name: "Elena Rodriguez", title: "Clinical Staff", image: "/avatar-2.png", muted: true, cameraOff: false },
@@ -139,6 +155,31 @@ function CameraIcon() {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
       <rect x="4.5" y="7.5" width="11" height="9" rx="2" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function MutedMicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 15C13.657 15 15 13.657 15 12V7C15 5.343 13.657 4 12 4C10.343 4 9 5.343 9 7V12C9 13.657 10.343 15 12 15Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <path d="M6 11.5C6 14.814 8.686 17.5 12 17.5C15.314 17.5 18 14.814 18 11.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M12 17.5V20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M5 5L19 19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CameraOffIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M15 10.5L19.5 7.5V16.5L15 13.5V10.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <rect x="4.5" y="7.5" width="11" height="9" rx="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M4 5L20 19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
@@ -207,6 +248,8 @@ function ToggleRadio({
 }
 
 export default function WebinarPage() {
+  const dateInputRef = useRef<HTMLInputElement | null>(null);
+  const timeInputRef = useRef<HTMLInputElement | null>(null);
   const selectorRef = useRef<HTMLDivElement | null>(null);
   const [view, setView] = useState<WebinarView>("list");
   const [webinars, setWebinars] = useState<WebinarCard[]>(initialWebinars);
@@ -222,8 +265,13 @@ export default function WebinarPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [livePanel, setLivePanel] = useState<LivePanel>("chat");
   const [liveRole, setLiveRole] = useState<LiveRole>("attendee");
+  const [isMicMuted, setIsMicMuted] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(initialChatMessages);
+  const [chatInput, setChatInput] = useState("");
+  const [liveAttendees, setLiveAttendees] = useState<LiveAttendee[]>(initialLiveAttendees);
 
   const selectedAttendees = useMemo(
     () => attendeeDirectory.filter((person) => selectedAttendeeIds.includes(person.id)),
@@ -279,10 +327,25 @@ export default function WebinarPage() {
       return;
     }
 
+    const formattedDate = selectedDate
+      ? new Date(`${selectedDate}T00:00:00`).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })
+      : "Oct 22, 2026";
+
+    const formattedTime = selectedTime
+      ? new Date(`1970-01-01T${selectedTime}`).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+        })
+      : "5:30 PM";
+
     const nextWebinar: WebinarCard = {
       id: Date.now(),
       title,
-      dateLabel: selectedDate && selectedTime ? `${selectedDate}, ${selectedTime}` : "Oct 22, 2026, 5:30 PM",
+      dateLabel: `${formattedDate}, ${formattedTime}`,
       host: selectedHosts[0]?.name ?? "Dr. Elena Rodriguez",
     };
 
@@ -294,6 +357,48 @@ export default function WebinarPage() {
     setLiveRole(role);
     setView("live");
     setSelectorMode(null);
+    setIsMicMuted(false);
+    setIsVideoMuted(false);
+    setChatMessages(initialChatMessages);
+    setChatInput("");
+    setLiveAttendees(initialLiveAttendees);
+  };
+
+  const toggleAttendeeAudio = (id: number) => {
+    setLiveAttendees((current) =>
+      current.map((person) => (person.id === id ? { ...person, muted: !person.muted } : person))
+    );
+  };
+
+  const toggleAttendeeVideo = (id: number) => {
+    setLiveAttendees((current) =>
+      current.map((person) => (person.id === id ? { ...person, cameraOff: !person.cameraOff } : person))
+    );
+  };
+
+  const handleSendMessage = () => {
+    const message = chatInput.trim();
+
+    if (!message) {
+      return;
+    }
+
+    const time = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+    setChatMessages((current) => [
+      ...current,
+      {
+        id: Date.now(),
+        author: "Dr. Elena Rodriguez",
+        time,
+        message,
+      },
+    ]);
+    setChatInput("");
   };
 
   useEffect(() => {
@@ -344,51 +449,53 @@ export default function WebinarPage() {
 
           {view === "list" ? (
             webinars.length ? (
-              <div className="webinar_cards">
+              <div className="row webinar_cards">
                 {webinars.map((item) => (
-                  <article key={item.id} className="webinar_card">
-                    <div className="webinar_card_media">
-                      <div className="webinar_card_media_icon">
-                        <WebinarEmptyIcon />
-                      </div>
-                    </div>
-
-                    <div className="webinar_card_body">
-                      <h3>{item.title}</h3>
-                      <div className="webinar_card_meta">
-                        <span>
-                          <CalendarIcon />
-                          {item.dateLabel}
-                        </span>
-                        <span>
-                          <UserIcon />
-                          {item.host}
-                        </span>
+                  <div key={item.id} className="col-12 col-md-6">
+                    <article className="webinar_card">
+                      <div className="webinar_card_media">
+                        <div className="webinar_card_media_icon">
+                          <WebinarEmptyIcon />
+                        </div>
                       </div>
 
-                      <div className="webinar_card_actions">
-                        <button
-                          type="button"
-                          className="commen_btn webinar_primary_btn webinar_join_btn"
-                          onClick={() => {
-                            if (item.startingSoon) {
-                              setView("waiting");
-                            } else {
-                              openLive("host");
-                            }
-                          }}
-                        >
-                          Join Webinar
-                        </button>
-                        <button type="button" className="webinar_icon_btn" onClick={() => setView("create")} aria-label="Edit webinar">
-                          <EditIcon />
-                        </button>
-                        <button type="button" className="webinar_icon_btn" onClick={() => handleDelete(item.id)} aria-label="Delete webinar">
-                          <TrashIcon />
-                        </button>
+                      <div className="webinar_card_body">
+                        <h3>{item.title}</h3>
+                        <div className="webinar_card_meta">
+                          <span>
+                            <CalendarIcon />
+                            {item.dateLabel}
+                          </span>
+                          <span>
+                            <UserIcon />
+                            {item.host}
+                          </span>
+                        </div>
+
+                        <div className="webinar_card_actions">
+                          <button
+                            type="button"
+                            className="commen_btn webinar_primary_btn webinar_join_btn"
+                            onClick={() => {
+                              if (item.startingSoon) {
+                                setView("waiting");
+                              } else {
+                                openLive("host");
+                              }
+                            }}
+                          >
+                            Join Webinar
+                          </button>
+                          <button type="button" className="webinar_icon_btn" onClick={() => setView("create")} aria-label="Edit webinar">
+                            <EditIcon />
+                          </button>
+                          <button type="button" className="webinar_icon_btn" onClick={() => handleDelete(item.id)} aria-label="Delete webinar">
+                            <TrashIcon />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </article>
+                    </article>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -422,16 +529,32 @@ export default function WebinarPage() {
 
                 <div className="webinar_field webinar_field_half">
                   <label>Date</label>
-                  <div className="webinar_input_icon">
-                    <input type="text" placeholder="Select" value={selectedDate} onChange={(event) => setSelectedDate(event.target.value)} />
+                  <div
+                    className="webinar_input_icon webinar_picker_field"
+                    onClick={() => dateInputRef.current?.showPicker?.()}
+                  >
+                    <input
+                      ref={dateInputRef}
+                      type="date"
+                      value={selectedDate}
+                      onChange={(event) => setSelectedDate(event.target.value)}
+                    />
                     <CalendarIcon />
                   </div>
                 </div>
 
                 <div className="webinar_field webinar_field_half">
                   <label>Time</label>
-                  <div className="webinar_input_icon">
-                    <input type="text" placeholder="00:00" value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)} />
+                  <div
+                    className="webinar_input_icon webinar_picker_field"
+                    onClick={() => timeInputRef.current?.showPicker?.()}
+                  >
+                    <input
+                      ref={timeInputRef}
+                      type="time"
+                      value={selectedTime}
+                      onChange={(event) => setSelectedTime(event.target.value)}
+                    />
                     <ClockIcon />
                   </div>
                 </div>
@@ -543,7 +666,7 @@ export default function WebinarPage() {
                   Cancel
                 </button>
                 <button type="button" className="commen_btn webinar_primary_btn webinar_continue_btn" onClick={continueCreate}>
-                  Continue
+                  Create Webinar
                 </button>
               </div>
             </div>
@@ -626,8 +749,13 @@ export default function WebinarPage() {
               </div>
               <div className="webinar_live_main_feed">
                 <div className="webinar_live_speaker"></div>
-                <div className={`webinar_live_self_tile ${liveRole === "host" ? "host_mode" : ""}`}>
+                <div
+                  className={`webinar_live_self_tile ${liveRole === "host" ? "host_mode" : ""} ${
+                    isVideoMuted ? "video_off" : ""
+                  }`}
+                >
                   <Image src="/avatar-2.png" alt="Dr. Sarah Jenkins" width={240} height={240} />
+                  {isVideoMuted ? <div className="webinar_live_self_tile_overlay">Camera Off</div> : null}
                   <span>Dr. Sarah Jenkins</span>
                 </div>
               </div>
@@ -644,11 +772,21 @@ export default function WebinarPage() {
               ) : null}
 
               <div className="webinar_live_controls">
-                <button type="button" className="webinar_control_btn">
-                  <MicrophoneIcon />
+                <button
+                  type="button"
+                  className={`webinar_control_btn ${isMicMuted ? "muted" : ""}`}
+                  onClick={() => setIsMicMuted((current) => !current)}
+                  aria-label={isMicMuted ? "Unmute microphone" : "Mute microphone"}
+                >
+                  {isMicMuted ? <MutedMicIcon /> : <MicrophoneIcon />}
                 </button>
-                <button type="button" className="webinar_control_btn">
-                  <CameraIcon />
+                <button
+                  type="button"
+                  className={`webinar_control_btn ${isVideoMuted ? "muted" : ""}`}
+                  onClick={() => setIsVideoMuted((current) => !current)}
+                  aria-label={isVideoMuted ? "Turn on camera" : "Turn off camera"}
+                >
+                  {isVideoMuted ? <CameraOffIcon /> : <CameraIcon />}
                 </button>
                 {liveRole === "host" ? (
                   <button
@@ -686,7 +824,7 @@ export default function WebinarPage() {
 
               {livePanel === "chat" ? (
                 <div className="webinar_chat_panel">
-                  {initialChatMessages.map((message, index) => (
+                  {chatMessages.map((message, index) => (
                     <div key={message.id}>
                       <div className="webinar_chat_head">
                         <strong>{message.author}</strong>
@@ -699,7 +837,7 @@ export default function WebinarPage() {
                 </div>
               ) : (
                 <div className="webinar_attendee_panel">
-                  {initialLiveAttendees.map((person) => (
+                  {liveAttendees.map((person) => (
                     <div key={person.id} className="webinar_attendee_row">
                       <div className="webinar_attendee_identity">
                         <Image src={person.image} alt={person.name} width={58} height={58} />
@@ -709,8 +847,22 @@ export default function WebinarPage() {
                         </div>
                       </div>
                       <div className="webinar_attendee_actions">
-                        <MicrophoneIcon />
-                        <CameraIcon />
+                        <button
+                          type="button"
+                          className={`webinar_attendee_action_btn ${person.muted ? "muted" : ""}`}
+                          onClick={() => toggleAttendeeAudio(person.id)}
+                          aria-label={person.muted ? `Unmute ${person.name}` : `Mute ${person.name}`}
+                        >
+                          {person.muted ? <MutedMicIcon /> : <MicrophoneIcon />}
+                        </button>
+                        <button
+                          type="button"
+                          className={`webinar_attendee_action_btn ${person.cameraOff ? "muted" : ""}`}
+                          onClick={() => toggleAttendeeVideo(person.id)}
+                          aria-label={person.cameraOff ? `Turn on ${person.name} video` : `Turn off ${person.name} video`}
+                        >
+                          {person.cameraOff ? <CameraOffIcon /> : <CameraIcon />}
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -719,8 +871,18 @@ export default function WebinarPage() {
 
               {livePanel === "chat" ? (
                 <div className="webinar_chat_input">
-                  <input placeholder="Type a message..." />
-                  <button type="button">
+                  <input
+                    placeholder="Type a message..."
+                    value={chatInput}
+                    onChange={(event) => setChatInput(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                  />
+                  <button type="button" onClick={handleSendMessage} aria-label="Send message">
                     <Image src="/icn/send_icn.svg" alt="send" width={28} height={28} />
                   </button>
                 </div>
@@ -733,10 +895,29 @@ export default function WebinarPage() {
       {showSuccessModal ? (
         <div className="webinar_modal_backdrop">
           <div className="webinar_success_modal">
-            <div className="webinar_success_icon">✓</div>
+            <div className="webinar_success_icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="23" stroke="currentColor" strokeWidth="2.6" />
+                <path
+                  d="M24 12.5L27.34 15.18L31.57 14.84L33.04 18.81L36.82 20.72L35.84 24.85L37.38 28.8L34.09 31.54L33.28 35.71L29.05 36.02L26.42 39.36L22.43 37.96L18.75 40.07L16.36 36.56L12.21 35.78L12.23 31.54L9.5 28.29L11.91 24.81L11 20.66L14.69 18.57L16.15 14.6L20.38 14.96L24 12.5Z"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18.2 24.25L22.04 28.09L29.82 20.31"
+                  stroke="currentColor"
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             <h3>Webinar Created Successfully</h3>
             <p>
-              Your {webinarType} webinar has been created successfully and is now visible in the Webinars tab.
+              {webinarType === "public"
+                ? "Your public webinar has been created successfully and is now visible to all users in the Webinars tab."
+                : "Your private webinar has been created successfully and is now ready for the selected attendees and hosts."}
             </p>
             <button
               type="button"

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 
 type MessageAttachment = {
@@ -72,6 +73,14 @@ type Conversation = {
   unreadCount: number;
   hasMessages: boolean;
   messages: MessageItem[];
+};
+
+type IncomingCallAlert = {
+  conversationId: string;
+  name: string;
+  role: string;
+  type: "audio" | "video";
+  avatar: string;
 };
 
 const initialConversations: Conversation[] = [
@@ -473,6 +482,7 @@ function MessagePlaceholder({ mode }: { mode: "empty" | "search" | "files" }) {
 }
 
 export default function MessagesPage() {
+  const router = useRouter();
   const [conversations, setConversations] = useState(initialConversations);
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>("icu-team");
   const [activeTab, setActiveTab] = useState<"chat" | "files">("chat");
@@ -506,6 +516,13 @@ export default function MessagesPage() {
   const [openMessageActionsId, setOpenMessageActionsId] = useState<number | null>(null);
   const [modalPreviewAttachment, setModalPreviewAttachment] = useState<SharedAttachment | null>(null);
   const [typingConversationId] = useState<string | null>("sarah");
+  const [incomingCallAlert, setIncomingCallAlert] = useState<IncomingCallAlert | null>({
+    conversationId: "marcus",
+    name: "John Michael Smith",
+    role: "Head of Diagnostics",
+    type: "audio",
+    avatar: "/avatar-1.png",
+  });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const groupImageInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -513,6 +530,35 @@ export default function MessagesPage() {
     () => conversations.find((conversation) => conversation.id === selectedConversationId) ?? null,
     [conversations, selectedConversationId]
   );
+
+  const openCallScreen = (type: "audio" | "video", conversation: Conversation | null = selectedConversation) => {
+    if (!conversation) {
+      return;
+    }
+
+    const params = new URLSearchParams({
+      conversation: conversation.id,
+      type,
+      screen: conversation.isGroup ? "active" : type === "video" ? "active" : "outgoing",
+    });
+
+    router.push(`/user/call?${params.toString()}`);
+  };
+
+  const acceptIncomingCall = () => {
+    if (!incomingCallAlert) {
+      return;
+    }
+
+    const params = new URLSearchParams({
+      conversation: incomingCallAlert.conversationId,
+      type: incomingCallAlert.type,
+      screen: "active",
+    });
+
+    setIncomingCallAlert(null);
+    router.push(`/user/call?${params.toString()}`);
+  };
 
   const selectedGroupMembers = useMemo<GroupMember[]>(
     () =>
@@ -558,6 +604,9 @@ export default function MessagesPage() {
     () => conversations.filter((conversation) => conversation.isGroup || conversation.id === "julian"),
     [conversations]
   );
+
+  const isMobileConversationView = Boolean(selectedConversation || isNewMessageOpen || isCreateGroupOpen);
+  const isMobileListView = !isMobileConversationView;
 
   const allSidebarConversations = useMemo(
     () => conversations.filter((conversation) => !conversation.isGroup && conversation.id !== "julian"),
@@ -737,6 +786,24 @@ export default function MessagesPage() {
     setIsSearchOpen((current) => !current);
     setIsInfoOpen(false);
     setChatSearch("");
+  };
+
+  const returnToConversationList = () => {
+    setSelectedConversationId(null);
+    setIsInfoOpen(false);
+    setIsSearchOpen(false);
+    setIsNewMessageOpen(false);
+    setIsCreateGroupOpen(false);
+    setIsCreateMenuOpen(false);
+    setGroupSettingsView(null);
+    setMemberPendingRemoval(null);
+    setIsLeaveGroupOpen(false);
+    setChatSearch("");
+    setAttachedFile(null);
+    setReplyingTo(null);
+    setIsDragActive(false);
+    setOpenMessageActionsId(null);
+    setModalPreviewAttachment(null);
   };
 
   const toggleInfo = () => {
@@ -1654,7 +1721,7 @@ export default function MessagesPage() {
               </div>
               <span>{isAdmin ? "Admin" : "Member"}</span>
             </section>
-            <button type="button" className="messages_group_danger_action" onClick={() => setIsLeaveGroupOpen(true)}>
+            <button type="button" className="messages_group_danger_action messages_group_leave_btn v2" onClick={() => setIsLeaveGroupOpen(true)}>
               Leave Group
             </button>
           </div>
@@ -1823,10 +1890,10 @@ export default function MessagesPage() {
         </div>
 
         <div className="messages_group_details_actions">
-          <button type="button" aria-label="Call group">
+          <button type="button" aria-label="Call group" onClick={() => openCallScreen("audio", conversation)}>
             <img src="/icn/audiocall_icn.svg" alt="" />
           </button>
-          <button type="button" aria-label="Video call group">
+          <button type="button" aria-label="Video call group" onClick={() => openCallScreen("video", conversation)}>
             <img src="/icn/videocall_icn.svg" alt="" />
           </button>
         </div>
@@ -2166,57 +2233,60 @@ export default function MessagesPage() {
 
             <div className="messages_bubble_block">
               <div className={`messages_bubble_head ${message.sender === "me" ? "outgoing" : ""}`}>
-                {message.sender === "contact" ? <b>{message.author}</b> : null}
-                <span>{message.time}</span>
-                {message.sender === "me" ? <b>{message.author}</b> : null}
-              </div>
-
-              <div className={`messages_bubble_actions ${message.sender === "me" ? "outgoing" : ""}`}>
-                <div className="messages_actions_menu_wrap">
-                  <button
-                    type="button"
-                    className="messages_actions_trigger"
-                    onClick={() =>
-                      setOpenMessageActionsId((current) => (current === message.id ? null : message.id))
-                    }
-                    aria-label="Open message actions"
-                    aria-expanded={openMessageActionsId === message.id}
+                <div className={`messages_bubble_head_identity ${message.sender === "me" ? "outgoing" : ""}`}>
+                  {message.sender === "contact" ? <b>{message.author}</b> : null}
+                  <span>{message.time}</span>
+                  {message.sender === "me" ? <b>{message.author}</b> : null}
+                </div>
+                <div className="messages_bubble_meta">
+                  <div
+                    className={`messages_actions_menu_wrap ${openMessageActionsId === message.id ? "open" : ""}`}
                   >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </button>
+                    <button
+                      type="button"
+                      className="messages_actions_trigger"
+                      onClick={() =>
+                        setOpenMessageActionsId((current) => (current === message.id ? null : message.id))
+                      }
+                      aria-label="Open message actions"
+                      aria-expanded={openMessageActionsId === message.id}
+                    >
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
 
-                  {openMessageActionsId === message.id ? (
-                    <div className="messages_actions_menu">
-                      <button type="button" onClick={() => handleReply(message)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                          <path d="M7.5 6.25L3.75 10L7.5 13.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M4.167 10H12.5C15.031 10 16.667 11.831 16.667 14.167V15" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        Reply
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          togglePinnedMessage(message.id);
-                          setOpenMessageActionsId(null);
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                          <path d="M12.917 2.917L17.083 7.083L13.542 8.125L11.25 10.417L15 14.167L13.333 15.833L9.583 12.083L7.292 14.375L6.25 17.917L2.083 13.75L5.625 12.708L7.917 10.417L4.167 6.667L5.833 5L9.583 8.75L11.875 6.458L12.917 2.917Z" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {message.pinned ? "Unpin" : "Pin"}
-                      </button>
-                      <button type="button" onClick={() => handleCopy(message)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                          <rect x="5.833" y="5.833" width="10" height="10" rx="1.667" stroke="currentColor" strokeWidth="1.6" />
-                          <path d="M4.167 12.5H3.75C2.829 12.5 2.083 11.754 2.083 10.833V3.75C2.083 2.829 2.829 2.083 3.75 2.083H10.833C11.754 2.083 12.5 2.829 12.5 3.75V4.167" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                        </svg>
-                        Copy
-                      </button>
-                    </div>
-                  ) : null}
+                    {openMessageActionsId === message.id ? (
+                      <div className="messages_actions_menu">
+                        <button type="button" onClick={() => handleReply(message)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 6.25L3.75 10L7.5 13.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M4.167 10H12.5C15.031 10 16.667 11.831 16.667 14.167V15" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          Reply
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            togglePinnedMessage(message.id);
+                            setOpenMessageActionsId(null);
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M12.917 2.917L17.083 7.083L13.542 8.125L11.25 10.417L15 14.167L13.333 15.833L9.583 12.083L7.292 14.375L6.25 17.917L2.083 13.75L5.625 12.708L7.917 10.417L4.167 6.667L5.833 5L9.583 8.75L11.875 6.458L12.917 2.917Z" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          {message.pinned ? "Unpin" : "Pin"}
+                        </button>
+                        <button type="button" onClick={() => handleCopy(message)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <rect x="5.833" y="5.833" width="10" height="10" rx="1.667" stroke="currentColor" strokeWidth="1.6" />
+                            <path d="M4.167 12.5H3.75C2.829 12.5 2.083 11.754 2.083 10.833V3.75C2.083 2.829 2.829 2.083 3.75 2.083H10.833C11.754 2.083 12.5 2.829 12.5 3.75V4.167" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                          </svg>
+                          Copy
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
 
@@ -2284,7 +2354,35 @@ export default function MessagesPage() {
   };
 
   return (
-    <section className="messages_page">
+    <section
+      className={`messages_page ${isMobileConversationView ? "mobile_conversation_view" : ""} ${
+        isMobileListView ? "mobile_list_view" : ""
+      }`}
+    >
+      {incomingCallAlert ? (
+        <div className="messages_incoming_call_popup">
+          <div className="messages_incoming_call_identity">
+            <div className="messages_incoming_call_avatar">
+              <img src={incomingCallAlert.avatar} alt={incomingCallAlert.name} />
+            </div>
+            <div className="messages_incoming_call_content">
+              <span>Incoming {incomingCallAlert.type === "video" ? "Video" : "Audio"} Call</span>
+              <h3>{incomingCallAlert.name}</h3>
+              <p>{incomingCallAlert.role}</p>
+            </div>
+          </div>
+
+          <div className="messages_incoming_call_actions">
+            <button type="button" className="messages_incoming_call_decline" onClick={() => setIncomingCallAlert(null)}>
+              <img src="/icn/call_icn1.svg" alt="" />
+            </button>
+            <button type="button" className="messages_incoming_call_accept" onClick={acceptIncomingCall}>
+              <img src="/icn/call_icn1.svg" alt="" />
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="messages_layout">
         <aside className="messages_sidebar_panel">
           <div className="messages_sidebar_head">
@@ -2349,6 +2447,9 @@ export default function MessagesPage() {
             <>
               <div className="messages_chat_header">
                 <div className="messages_chat_identity">
+                  <button type="button" className="messages_mobile_back" onClick={returnToConversationList} aria-label="Back to conversations">
+                    ←
+                  </button>
                   {selectedConversation ? (
                     <>
                       {selectedConversation.isGroup ? (
@@ -2414,10 +2515,10 @@ export default function MessagesPage() {
                   </div>
 
                   <div className="messages_chat_actions">
-                    <button type="button" aria-label="Audio call" disabled={!selectedConversation}>
+                    <button type="button" aria-label="Audio call" disabled={!selectedConversation} onClick={() => openCallScreen("audio")}>
                       <img src="/icn/audiocall_icn.svg" alt="" />
                     </button>
-                    <button type="button" aria-label="Video call" disabled={!selectedConversation}>
+                    <button type="button" aria-label="Video call" disabled={!selectedConversation} onClick={() => openCallScreen("video")}>
                       <img src="/icn/videocall_icn.svg" alt="" />
                     </button>
                     <button
@@ -2466,11 +2567,11 @@ export default function MessagesPage() {
                     <div className="messages_info_section">
                       <h4>Contact actions</h4>
                       <div className="messages_info_actions">
-                        <button type="button">
+                        <button type="button" onClick={() => openCallScreen("audio")}>
                           <img src="/icn/audiocall_icn.svg" alt="" />
                           Call
                         </button>
-                        <button type="button">
+                        <button type="button" onClick={() => openCallScreen("video")}>
                           <img src="/icn/videocall_icn.svg" alt="" />
                           Video
                         </button>
@@ -2635,6 +2736,12 @@ export default function MessagesPage() {
                     <input
                       value={draftMessage}
                       onChange={(event) => setDraftMessage(event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" && !event.shiftKey) {
+                          event.preventDefault();
+                          sendMessage();
+                        }
+                      }}
                       placeholder="Type a message..."
                     />
 

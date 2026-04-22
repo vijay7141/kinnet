@@ -266,45 +266,47 @@ export default function RecordingsPage() {
         </div>
       </div>
 
-      <div className="recordings_grid">
+      <div className="row recordings_grid">
         {filteredRecordings.map((item) => (
-          <article className="recordings_card" key={item.id}>
-            <div className="recordings_card_preview">
-              <span className="recordings_duration">{item.duration}</span>
-              <div className="recordings_preview_icon">
-                <RecordingPreviewIcon category={item.category} />
+          <div className="col-12 col-md-6 col-xl-4" key={item.id}>
+            <article className="recordings_card">
+              <div className="recordings_card_preview">
+                <span className="recordings_duration">{item.duration}</span>
+                <div className="recordings_preview_icon">
+                  <RecordingPreviewIcon category={item.category} />
+                </div>
               </div>
-            </div>
 
-            <div className="recordings_card_body">
-              <h4>{item.title}</h4>
+              <div className="recordings_card_body">
+                <h4>{item.title}</h4>
 
-              <div className="recordings_meta">
-                <span>
-                  <MetaCalendarIcon />
-                  {formatDateLabel(item.recordedAt)}
-                  {item.attendees ? ` • ${item.attendees}` : ""}
-                </span>
-
-                {item.speaker ? (
+                <div className="recordings_meta">
                   <span>
-                    <MetaUserIcon />
-                    {item.speaker}
+                    <MetaCalendarIcon />
+                    {formatDateLabel(item.recordedAt)}
+                    {item.attendees ? ` • ${item.attendees}` : ""}
                   </span>
-                ) : null}
-              </div>
 
-              <div className="recordings_card_actions">
-                <button type="button" className="recordings_play_btn">
-                  Play Recording
-                </button>
+                  {item.speaker ? (
+                    <span>
+                      <MetaUserIcon />
+                      {item.speaker}
+                    </span>
+                  ) : null}
+                </div>
 
-                <button type="button" className="recordings_icon_btn" aria-label={`Download ${item.title}`}>
-                  <DownloadIcon />
-                </button>
+                <div className="recordings_card_actions">
+                  <button type="button" className="recordings_play_btn">
+                    Play Recording
+                  </button>
+
+                  <button type="button" className="recordings_icon_btn" aria-label={`Download ${item.title}`}>
+                    <DownloadIcon />
+                  </button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         ))}
       </div>
 
