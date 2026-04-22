@@ -24,6 +24,17 @@ type GroupMember = {
   isAdmin?: boolean;
 };
 
+type GroupSettingsView = "settings" | "members" | "notifications";
+
+type ConsultationCandidate = {
+  id: string;
+  name: string;
+  role: string;
+  chipLabel: string;
+  avatar?: string;
+  avatarClassName?: string;
+};
+
 type MessageReply = {
   author: string;
   text: string;
@@ -37,7 +48,10 @@ type MessageItem = {
   time: string;
   read?: boolean;
   pinned?: boolean;
+  pinnedTitle?: string;
+  deliveryStatus?: "Read" | "Delivered";
   attachment?: MessageAttachment;
+  attachments?: MessageAttachment[];
   replyTo?: MessageReply;
 };
 
@@ -63,15 +77,15 @@ type Conversation = {
 const initialConversations: Conversation[] = [
   {
     id: "icu-team",
-    name: "General",
-    role: "24",
+    name: "Surgery Experts",
+    role: "Surgical cases discussions",
     status: "available",
     isGroup: true,
-    groupDescription: "General discussion and announcements",
+    groupDescription: "Surgical cases discussions",
     createdByMe: true,
     notificationsMuted: false,
-    preview: "General discussion and announcements",
-    time: "154 Messages",
+    preview: "Updated pre-op protocol and case discussion notes",
+    time: "10:42 AM",
     unreadCount: 0,
     hasMessages: true,
     members: [
@@ -85,42 +99,80 @@ const initialConversations: Conversation[] = [
       {
         id: "sarah",
         name: "Dr. Sarah Jenkins",
-        role: "Offline",
+        role: "Surgery Lead",
         avatar: "/icn/Dr.Sarah.svg",
         isAdmin: true,
       },
       {
-        id: "julian",
-        name: "Dr. Julian Miller",
-        role: "Available",
-        avatarClassName: "messages_avatar_julian",
+        id: "marcus",
+        name: "Marcus Thorne",
+        role: "Pharmacy Lead",
+        avatar: "/avatar-2.png",
       },
       {
         id: "elena",
-        name: "Nurse Elena Vance",
-        role: "Available",
-        avatarClassName: "messages_avatar_elena",
+        name: "Dr. Aris",
+        role: "Surgeon",
+        avatar: "/avatar-1.png",
       },
     ],
     messages: [
       {
         id: 10,
         sender: "contact",
-        author: "Dr. Sarah Jenkins",
-        text: "I uploaded the latest case history and imaging notes for the group.",
-        time: "09:25 AM",
-        attachment: {
-          name: "Case_History_2026.csv",
-          size: "156 KB",
-        },
+        author: "Dr. Aris",
+        text: "Team, please ensure you review the updated sterilization sequence for ortho cases. All staff must sign off in the Documents tab before Monday's shift.",
+        time: "09:12 AM",
+        pinned: true,
+        pinnedTitle: "Updated Pre-Op Protocol (v4.2)",
       },
       {
         id: 11,
+        sender: "contact",
+        author: "Dr. Sarah Jenkins",
+        text: "I've reviewed Buddy's latest bloodwork. His liver enzymes are slightly elevated, but consistent with his current medication protocol.",
+        time: "10:42 AM",
+      },
+      {
+        id: 12,
+        sender: "contact",
+        author: "Marcus Thorne",
+        text: "Yes, everything looks stable. Here is the comprehensive report and the referral history CSV for the records.",
+        time: "10:42 AM",
+        attachments: [
+          {
+            name: "Blood_Panel_Bella.pdf",
+            size: "2.4 MB",
+          },
+          {
+            name: "Case_History_2026.csv",
+            size: "156 KB",
+          },
+        ],
+      },
+      {
+        id: 13,
         sender: "me",
         author: "Me",
-        text: "Thanks team. Please keep this group updated after rounds.",
-        time: "09:32 AM",
+        text: "He's eating well. We switched to the prescription diet this morning.",
+        time: "11:30 AM",
         read: true,
+        deliveryStatus: "Read",
+      },
+      {
+        id: 14,
+        sender: "contact",
+        author: "Dr. Sarah Jenkins",
+        text: "Proceed with caution. Marcus, please prep the Isoflurane machine for Room 3. Sarah, let's meet at the scrub station in 10.",
+        time: "10:42 AM",
+      },
+      {
+        id: 15,
+        sender: "me",
+        author: "Me",
+        text: "He's eating well. We switched to the prescription diet this morning.",
+        time: "11:30 AM",
+        deliveryStatus: "Delivered",
       },
     ],
   },
@@ -251,6 +303,60 @@ const initialConversations: Conversation[] = [
   },
 ];
 
+const consultationCandidates: ConsultationCandidate[] = [
+  {
+    id: "aris",
+    name: "Dr. Aris",
+    role: "Surgeon",
+    chipLabel: "Dr. Aris (Surgeon)",
+    avatar: "/avatar-1.png",
+  },
+  {
+    id: "sarah",
+    name: "Sarah L.",
+    role: "Tech",
+    chipLabel: "Sarah L. (Tech)",
+    avatar: "/icn/Dr.Sarah.svg",
+  },
+  {
+    id: "james",
+    name: "Dr. James Wilson",
+    role: "Pharmacy Lead",
+    chipLabel: "Dr. James Wilson",
+    avatar: "/avatar-2.png",
+  },
+  {
+    id: "elena",
+    name: "Elena Rodriguez",
+    role: "Anesthesia Tech",
+    chipLabel: "Elena Rodriguez",
+    avatar: "/icn/user_avatar.svg",
+  },
+  {
+    id: "marcus",
+    name: "Marcus Chen",
+    role: "Pharmacy Lead",
+    chipLabel: "Marcus Chen",
+    avatarClassName: "messages_avatar_marcus",
+  },
+  {
+    id: "patty",
+    name: "Patty Vance",
+    role: "Front Desk Admin",
+    chipLabel: "Patty Vance",
+    avatar: "/avatar-1.png",
+  },
+];
+
+const groupDirectoryCandidates: GroupMember[] = [
+  { id: "sarah-johnson", name: "Dr. Sarah Johnson", role: "Surgery", avatar: "/avatar-1.png" },
+  { id: "sarah", name: "Dr. Sarah Jenkins", role: "General Practice", avatar: "/icn/Dr.Sarah.svg" },
+  { id: "lisa-wong", name: "Dr. Lisa Wong", role: "General Practice", avatar: "/avatar-2.png" },
+  { id: "marcus", name: "Marcus Thorne", role: "Pharmacy Lead", avatar: "/avatar-2.png" },
+  { id: "elena", name: "Dr. Elena Rodriguez", role: "Specialist - Surgery", avatar: "/icn/user_avatar.svg" },
+  { id: "aris", name: "Dr. Aris", role: "Surgeon", avatar: "/avatar-1.png" },
+];
+
 const getAttachmentExtension = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase() ?? "";
 
@@ -368,7 +474,7 @@ function MessagePlaceholder({ mode }: { mode: "empty" | "search" | "files" }) {
 
 export default function MessagesPage() {
   const [conversations, setConversations] = useState(initialConversations);
-  const [selectedConversationId, setSelectedConversationId] = useState<string | null>("sarah");
+  const [selectedConversationId, setSelectedConversationId] = useState<string | null>("icu-team");
   const [activeTab, setActiveTab] = useState<"chat" | "files">("chat");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
@@ -378,10 +484,14 @@ export default function MessagesPage() {
   const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
   const [groupCreateStep, setGroupCreateStep] = useState<"select" | "details" | "created">("select");
-  const [selectedGroupMemberIds, setSelectedGroupMemberIds] = useState<string[]>(["sarah", "julian"]);
+  const [groupSettingsView, setGroupSettingsView] = useState<GroupSettingsView | null>(null);
+  const [selectedGroupMemberIds, setSelectedGroupMemberIds] = useState<string[]>(["aris", "sarah", "james"]);
   const [groupName, setGroupName] = useState("Surgery Experts");
   const [groupDescription, setGroupDescription] = useState("");
-  const [groupSettingsTab, setGroupSettingsTab] = useState<"overview" | "members" | "notifications">("overview");
+  const [groupMemberSearch, setGroupMemberSearch] = useState("");
+  const [groupDirectorySearch, setGroupDirectorySearch] = useState("");
+  const [isGroupDirectoryOpen, setIsGroupDirectoryOpen] = useState(false);
+  const [groupImagePreview, setGroupImagePreview] = useState<string | null>(null);
   const [memberPendingRemoval, setMemberPendingRemoval] = useState<GroupMember | null>(null);
   const [isLeaveGroupOpen, setIsLeaveGroupOpen] = useState(false);
   const [chatSearch, setChatSearch] = useState("");
@@ -394,34 +504,55 @@ export default function MessagesPage() {
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploadHintVisible, setIsUploadHintVisible] = useState(false);
   const [openMessageActionsId, setOpenMessageActionsId] = useState<number | null>(null);
-  const [previewAttachment, setPreviewAttachment] = useState<SharedAttachment | null>(null);
   const [modalPreviewAttachment, setModalPreviewAttachment] = useState<SharedAttachment | null>(null);
   const [typingConversationId] = useState<string | null>("sarah");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const groupImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedConversation = useMemo(
     () => conversations.find((conversation) => conversation.id === selectedConversationId) ?? null,
     [conversations, selectedConversationId]
   );
 
-  const contactOptions = useMemo<GroupMember[]>(
+  const selectedGroupMembers = useMemo<GroupMember[]>(
     () =>
-      conversations
-        .filter((conversation) => !conversation.isGroup)
-        .map((conversation) => ({
-          id: conversation.id,
-          name: conversation.name,
-          role: conversation.role,
-          avatar: conversation.avatar,
-          avatarClassName: conversation.avatarClassName,
+      consultationCandidates
+        .filter((candidate) => selectedGroupMemberIds.includes(candidate.id))
+        .map((candidate) => ({
+          id: candidate.id,
+          name: candidate.name,
+          role: candidate.role,
+          avatar: candidate.avatar,
+          avatarClassName: candidate.avatarClassName,
         })),
-    [conversations]
+    [selectedGroupMemberIds]
   );
 
-  const selectedGroupMembers = useMemo(
-    () => contactOptions.filter((contact) => selectedGroupMemberIds.includes(contact.id)),
-    [contactOptions, selectedGroupMemberIds]
-  );
+  const filteredConsultationMembers = useMemo(() => {
+    const query = groupMemberSearch.trim().toLowerCase();
+
+    if (!query) {
+      return consultationCandidates;
+    }
+
+    return consultationCandidates.filter((member) =>
+      [member.name, member.role, member.chipLabel].some((value) =>
+        value.toLowerCase().includes(query)
+      )
+    );
+  }, [groupMemberSearch]);
+
+  const filteredGroupDirectory = useMemo(() => {
+    const query = groupDirectorySearch.trim().toLowerCase();
+
+    if (!query) {
+      return groupDirectoryCandidates;
+    }
+
+    return groupDirectoryCandidates.filter((member) =>
+      [member.name, member.role].some((value) => value.toLowerCase().includes(query))
+    );
+  }, [groupDirectorySearch]);
 
   const pinnedSidebarConversations = useMemo(
     () => conversations.filter((conversation) => conversation.isGroup || conversation.id === "julian"),
@@ -462,15 +593,17 @@ export default function MessagesPage() {
       return [];
     }
 
-    return selectedConversation.messages
-      .filter((message) => message.attachment)
-      .map((message) => ({
-        ...(message.attachment as MessageAttachment),
-        id: message.id,
+    return selectedConversation.messages.flatMap((message) => {
+      const attachments = message.attachments ?? (message.attachment ? [message.attachment] : []);
+
+      return attachments.map((attachment, index) => ({
+        ...attachment,
+        id: Number(`${message.id}${index}`),
         author: message.author,
         time: message.time,
         text: message.text,
       }));
+    });
   }, [selectedConversation]);
 
   const isStandalonePanel = isNewMessageOpen || isCreateGroupOpen || !selectedConversation;
@@ -479,9 +612,11 @@ export default function MessagesPage() {
 
   const resetGroupDraft = () => {
     setGroupCreateStep("select");
-    setSelectedGroupMemberIds(["sarah", "julian"]);
+    setSelectedGroupMemberIds(["aris", "sarah", "james"]);
     setGroupName("Surgery Experts");
     setGroupDescription("");
+    setGroupMemberSearch("");
+    setGroupImagePreview(null);
   };
 
   useEffect(() => {
@@ -534,7 +669,7 @@ export default function MessagesPage() {
     setIsNewMessageOpen(false);
     setIsCreateGroupOpen(false);
     setIsCreateMenuOpen(false);
-    setGroupSettingsTab("overview");
+    setGroupSettingsView(null);
     setMemberPendingRemoval(null);
     setIsLeaveGroupOpen(false);
     setChatSearch("");
@@ -542,7 +677,6 @@ export default function MessagesPage() {
     setReplyingTo(null);
     setIsDragActive(false);
     setOpenMessageActionsId(null);
-    setPreviewAttachment(null);
     setModalPreviewAttachment(null);
   };
 
@@ -550,6 +684,7 @@ export default function MessagesPage() {
     setIsNewMessageOpen(true);
     setIsCreateMenuOpen(false);
     setIsCreateGroupOpen(false);
+    setGroupSettingsView(null);
     setIsInfoOpen(false);
     setIsSearchOpen(false);
     setSelectedConversationId(null);
@@ -559,7 +694,6 @@ export default function MessagesPage() {
     setReplyingTo(null);
     setIsDragActive(false);
     setOpenMessageActionsId(null);
-    setPreviewAttachment(null);
     setModalPreviewAttachment(null);
   };
 
@@ -567,6 +701,7 @@ export default function MessagesPage() {
     resetGroupDraft();
     setIsCreateMenuOpen(false);
     setIsCreateGroupOpen(true);
+    setGroupSettingsView(null);
     setIsNewMessageOpen(false);
     setIsInfoOpen(false);
     setIsSearchOpen(false);
@@ -576,7 +711,6 @@ export default function MessagesPage() {
     setReplyingTo(null);
     setIsDragActive(false);
     setOpenMessageActionsId(null);
-    setPreviewAttachment(null);
     setModalPreviewAttachment(null);
   };
 
@@ -584,13 +718,13 @@ export default function MessagesPage() {
     setSelectedConversationId(conversationId);
     setIsNewMessageOpen(false);
     setIsCreateGroupOpen(false);
+    setGroupSettingsView(null);
     setIsInfoOpen(false);
     setIsSearchOpen(false);
     setAttachedFile(null);
     setReplyingTo(null);
     setIsDragActive(false);
     setOpenMessageActionsId(null);
-    setPreviewAttachment(null);
     setModalPreviewAttachment(null);
   };
 
@@ -611,6 +745,7 @@ export default function MessagesPage() {
     }
 
     setIsInfoOpen((current) => !current);
+    setGroupSettingsView(null);
     setIsSearchOpen(false);
     setIsNewMessageOpen(false);
     setIsCreateGroupOpen(false);
@@ -620,6 +755,20 @@ export default function MessagesPage() {
     setSelectedGroupMemberIds((current) =>
       current.includes(memberId) ? current.filter((id) => id !== memberId) : [...current, memberId]
     );
+  };
+
+  const handleGroupImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setGroupImagePreview(typeof reader.result === "string" ? reader.result : null);
+    };
+    reader.readAsDataURL(file);
   };
 
   const createGroupConversation = () => {
@@ -705,6 +854,32 @@ export default function MessagesPage() {
     }));
   };
 
+  const toggleGroupDirectoryMember = (member: GroupMember) => {
+    updateSelectedGroup((conversation) => {
+      const members = conversation.members ?? [];
+      const exists = members.some((entry) => entry.id === member.id);
+
+      return {
+        ...conversation,
+        members: exists ? members.filter((entry) => entry.id !== member.id) : [...members, member],
+        role: `${exists ? members.length - 1 : members.length + 1} Members`,
+      };
+    });
+  };
+
+  const openGroupSettings = (view: GroupSettingsView = "settings") => {
+    if (!selectedConversation?.isGroup) {
+      return;
+    }
+
+    setGroupSettingsView(view);
+    setIsInfoOpen(true);
+    setIsSearchOpen(false);
+    setIsNewMessageOpen(false);
+    setIsCreateGroupOpen(false);
+    setActiveTab("chat");
+  };
+
   const leaveSelectedGroup = () => {
     if (!selectedConversationId) {
       return;
@@ -770,13 +945,21 @@ export default function MessagesPage() {
   const handleReply = (message: MessageItem) => {
     setReplyingTo({
       author: message.author,
-      text: message.attachment ? `${message.attachment.name} attached` : message.text,
+      text: message.attachments?.length
+        ? `${message.attachments[0].name} attached`
+        : message.attachment
+          ? `${message.attachment.name} attached`
+          : message.text,
     });
     setOpenMessageActionsId(null);
   };
 
   const handleCopy = async (message: MessageItem) => {
-    const payload = [message.text, message.attachment ? `${message.attachment.name} (${message.attachment.size})` : ""]
+    const payload = [
+      message.text,
+      message.attachments?.map((attachment) => `${attachment.name} (${attachment.size})`).join("\n") ??
+        (message.attachment ? `${message.attachment.name} (${message.attachment.size})` : ""),
+    ]
       .filter(Boolean)
       .join("\n");
 
@@ -822,6 +1005,30 @@ export default function MessagesPage() {
     </svg>
   );
 
+  const renderPreviewIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M2.25 12C3.9967 8.12806 7.66483 5.625 12 5.625C16.3352 5.625 20.0033 8.12806 21.75 12C20.0033 15.8719 16.3352 18.375 12 18.375C7.66483 18.375 3.9967 15.8719 2.25 12Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+
+  const getAttachmentDateLabel = (attachment: SharedAttachment) => {
+    const labels: Record<string, string> = {
+      "Blood_Panel_Bella.pdf-10:58 AM": "Yesterday",
+      "Case_History_2026.csv-11:04 AM": "2 Days Ago",
+      "referral-history.csv-10:42 AM": "09/03/2026",
+      "Blood_Panel_Bella.pdf-10:42 AM": "06/03/2026",
+    };
+
+    return labels[`${attachment.name}-${attachment.time}`] ?? attachment.time;
+  };
+
   const renderAttachmentIcon = (attachment: MessageAttachment) => {
     const extension = getAttachmentExtension(attachment.name);
 
@@ -848,7 +1055,7 @@ export default function MessagesPage() {
     );
   };
 
-  const renderAttachmentCard = (attachment: MessageAttachment, className = "") => (
+  const renderAttachmentCard = (attachment: MessageAttachment | SharedAttachment, className = "") => (
     <div
       className={`messages_attachment_card ${getAttachmentKind(attachment.name) !== "file" ? "previewable" : ""} ${className}`}
       role={getAttachmentKind(attachment.name) !== "file" ? "button" : undefined}
@@ -981,17 +1188,68 @@ export default function MessagesPage() {
       );
     }
 
-    return null;
+    return (
+      <div className="messages_media_preview file_view">
+        <div className="messages_media_preview_head">
+          <div>
+            <span>Messages - File Preview</span>
+            <h3>{attachment.name}</h3>
+            <p>
+              {attachment.size} &bull; {getAttachmentTypeLabel(attachment.name)} &bull; Shared by {attachment.author}
+            </p>
+          </div>
+          <button type="button" onClick={() => handleDownloadAttachment(attachment)}>
+            {renderDownloadIcon()}
+            Download
+          </button>
+        </div>
+        <div className="messages_file_preview_stage">
+          <div className={`messages_attachment_icon ${getAttachmentTone(attachment.name)}`} aria-hidden="true">
+            {renderAttachmentIcon(attachment)}
+          </div>
+          <div className="messages_file_preview_copy">
+            <h4>{attachment.name}</h4>
+            <p>{attachment.text || "Preview this shared file, or download it to inspect the full document contents."}</p>
+          </div>
+        </div>
+      </div>
+    );
   };
 
+  const renderFileListItem = (attachment: SharedAttachment) => (
+    <article key={attachment.id} className="messages_file_list_item">
+      <div className={`messages_attachment_icon ${getAttachmentTone(attachment.name)}`} aria-hidden="true">
+        {renderAttachmentIcon(attachment)}
+      </div>
+      <div className="messages_file_list_copy">
+        <strong title={attachment.name}>{truncateAttachmentName(attachment.name)}</strong>
+        <span>
+          {attachment.size} &bull; {getAttachmentTypeLabel(attachment.name)} &bull; {getAttachmentDateLabel(attachment)}
+        </span>
+      </div>
+      <div className="messages_file_list_actions">
+        <button
+          type="button"
+          className="messages_file_action_btn"
+          aria-label={`Preview ${attachment.name}`}
+          onClick={() => setModalPreviewAttachment(attachment)}
+        >
+          {renderPreviewIcon()}
+        </button>
+        <button
+          type="button"
+          className="messages_file_action_btn"
+          aria-label={`Download ${attachment.name}`}
+          onClick={() => handleDownloadAttachment(attachment)}
+        >
+          {renderDownloadIcon()}
+        </button>
+      </div>
+    </article>
+  );
+
   const renderFilesPanel = () => {
-    const imageAttachments = sharedAttachments.filter((attachment) => getAttachmentKind(attachment.name) === "image");
-    const videoAttachments = sharedAttachments.filter((attachment) => getAttachmentKind(attachment.name) === "video");
     const fileAttachments = sharedAttachments.filter((attachment) => getAttachmentKind(attachment.name) === "file");
-    const selectedPreview =
-      previewAttachment && sharedAttachments.some((attachment) => attachment.id === previewAttachment.id)
-        ? previewAttachment
-        : imageAttachments[0] ?? videoAttachments[0] ?? null;
 
     if (sharedAttachments.length === 0) {
       return <MessagePlaceholder mode="files" />;
@@ -1008,67 +1266,7 @@ export default function MessagesPage() {
           <strong>{sharedAttachments.length} items</strong>
         </div>
 
-        <div className="messages_files_grid">
-          {fileAttachments.map((attachment) => (
-            <article key={attachment.id} className="messages_file_tile">
-              {renderAttachmentCard(attachment, "file_view")}
-              <small>{attachment.time}</small>
-            </article>
-          ))}
-        </div>
-
-        <div className="messages_media_columns">
-          <section>
-            <div className="messages_media_section_title">
-              <span>Messages - Image View</span>
-              <strong>{imageAttachments.length} Images</strong>
-            </div>
-            <div className="messages_media_grid">
-              {imageAttachments.map((attachment) => (
-                <button
-                  type="button"
-                  key={attachment.id}
-                  className={`messages_media_tile ${
-                    selectedPreview?.id === attachment.id ? "active" : ""
-                  }`}
-                  onClick={() => setPreviewAttachment(attachment)}
-                >
-                  {attachment.url ? <img src={attachment.url} alt={attachment.name} /> : null}
-                  <span>{attachment.name}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <div className="messages_media_section_title">
-              <span>Messages - Video Preview</span>
-              <strong>{videoAttachments.length} Videos</strong>
-            </div>
-            <div className="messages_media_grid">
-              {videoAttachments.map((attachment) => (
-                <button
-                  type="button"
-                  key={attachment.id}
-                  className={`messages_media_tile video ${
-                    selectedPreview?.id === attachment.id ? "active" : ""
-                  }`}
-                  onClick={() => setPreviewAttachment(attachment)}
-                >
-                  <span className="messages_media_play">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                      <circle cx="11" cy="11" r="11" fill="#033E4F" />
-                      <path d="M8.75 6.75L15 11L8.75 15.25V6.75Z" fill="white" />
-                    </svg>
-                  </span>
-                  <span>{attachment.name}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        {selectedPreview ? renderMediaPreview(selectedPreview) : null}
+        <div className="messages_files_list">{fileAttachments.map((attachment) => renderFileListItem(attachment))}</div>
       </div>
     );
   };
@@ -1115,21 +1313,6 @@ export default function MessagesPage() {
     setIsInfoOpen(false);
     setActiveTab("chat");
   };
-
-  const renderGroupMemberRow = (member: GroupMember, options?: { removable?: boolean }) => (
-    <div className="messages_group_member_row" key={member.id}>
-      <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
-      <div>
-        <h4>{member.name}</h4>
-        <span>{member.isAdmin ? "Group Admin" : member.role}</span>
-      </div>
-      {options?.removable && member.id !== "me" ? (
-        <button type="button" onClick={() => setMemberPendingRemoval(member)}>
-          Remove
-        </button>
-      ) : null}
-    </div>
-  );
 
   const renderSidebarConversation = (conversation: Conversation, options?: { pinned?: boolean }) => {
     const isActive = selectedConversationId === conversation.id;
@@ -1213,8 +1396,11 @@ export default function MessagesPage() {
   const renderCreateGroupPanel = () => {
     const canContinue = selectedGroupMemberIds.length > 0;
     const canCreate = groupName.trim().length > 0 && canContinue;
-    const primarySelectedMembers = contactOptions.filter((member) => selectedGroupMemberIds.includes(member.id)).slice(0, 3);
-    const remainingMembers = contactOptions.filter((member) => !primarySelectedMembers.some((selected) => selected.id === member.id));
+    const participantCount = selectedGroupMemberIds.length;
+    const selectedChipMembers = consultationCandidates.filter(
+      (member) => ["aris", "sarah"].includes(member.id) && selectedGroupMemberIds.includes(member.id)
+    );
+    const suggestedMembers = filteredConsultationMembers.filter((member) => !["aris", "sarah"].includes(member.id));
 
     if (groupCreateStep === "created") {
       return (
@@ -1246,7 +1432,6 @@ export default function MessagesPage() {
                 onClick={() => {
                   setIsCreateGroupOpen(false);
                   setIsInfoOpen(true);
-                  setGroupSettingsTab("overview");
                 }}
               >
                 Group Info
@@ -1273,20 +1458,30 @@ export default function MessagesPage() {
         </div>
 
         <div className="messages_consult_group_body">
-          <div className="messages_group_photo_upload">
-            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="27" viewBox="0 0 31 27" fill="none">
-              <path d="M4.5 7.5H9.1L11.1 4.5H17.8L19.8 7.5H24.5C26.157 7.5 27.5 8.843 27.5 10.5V21C27.5 22.657 26.157 24 24.5 24H4.5C2.843 24 1.5 22.657 1.5 21V10.5C1.5 8.843 2.843 7.5 4.5 7.5Z" stroke="#033E4F" strokeWidth="2" strokeLinejoin="round" />
-              <circle cx="14.5" cy="15.75" r="4.25" stroke="#033E4F" strokeWidth="2" />
-              <path d="M24.5 3V8" stroke="#033E4F" strokeWidth="2" strokeLinecap="round" />
-              <path d="M22 5.5H27" stroke="#033E4F" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+          <button
+            type="button"
+            className="messages_group_photo_upload"
+            onClick={() => groupImageInputRef.current?.click()}
+            aria-label="Upload consultation group image"
+          >
+            {groupImagePreview ? (
+              <img src={groupImagePreview} alt="Group upload preview" className="messages_group_photo_preview" />
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="27" viewBox="0 0 31 27" fill="none">
+                <path d="M4.5 7.5H9.1L11.1 4.5H17.8L19.8 7.5H24.5C26.157 7.5 27.5 8.843 27.5 10.5V21C27.5 22.657 26.157 24 24.5 24H4.5C2.843 24 1.5 22.657 1.5 21V10.5C1.5 8.843 2.843 7.5 4.5 7.5Z" stroke="#033E4F" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="14.5" cy="15.75" r="4.25" stroke="#033E4F" strokeWidth="2" />
+                <path d="M24.5 3V8" stroke="#033E4F" strokeWidth="2" strokeLinecap="round" />
+                <path d="M22 5.5H27" stroke="#033E4F" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            )}
             <span>
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
                 <path d="M2 8.75L8.75 2" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
                 <path d="M6.75 2H8.75V4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
-          </div>
+          </button>
+          <input ref={groupImageInputRef} type="file" accept="image/*" hidden onChange={handleGroupImageChange} />
 
           <div className="messages_consult_group_fields">
             <label>
@@ -1302,35 +1497,39 @@ export default function MessagesPage() {
 
         <div className="messages_consult_member_head">
           <span>Select Members</span>
-          <strong>{selectedGroupMemberIds.length} Participants Selected</strong>
+          <strong>{participantCount} Participants Selected</strong>
         </div>
 
         <div className="messages_consult_search">
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
             <path d="M15.5 15.5L11.95 11.95M13.875 7.688C13.875 11.106 11.106 13.875 7.688 13.875C4.269 13.875 1.5 11.106 1.5 7.688C1.5 4.269 4.269 1.5 7.688 1.5C11.106 1.5 13.875 4.269 13.875 7.688Z" stroke="#71787C" strokeWidth="1.6" strokeLinecap="round" />
           </svg>
-          <input placeholder="Search by name, role, or specialty..." />
+          <input
+            placeholder="Search by name, role, or specialty..."
+            value={groupMemberSearch}
+            onChange={(event) => setGroupMemberSearch(event.target.value)}
+          />
         </div>
 
         <div className="messages_consult_selected_list">
-          {primarySelectedMembers.map((member) => (
+          {selectedChipMembers.map((member) => (
             <button type="button" key={member.id} className="selected" onClick={() => toggleGroupMember(member.id)}>
               <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
-              <div>
-                <h4>{member.id === "sarah" ? "Dr. Sarah Johnson" : member.name}</h4>
-                <span>{member.id === "sarah" ? "Surgery" : member.role}</span>
-              </div>
-              <strong>
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="10" viewBox="0 0 13 10" fill="none">
-                  <path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <span>{member.chipLabel}</span>
+              <strong aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 2L8 8" stroke="#033E4F" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M8 2L2 8" stroke="#033E4F" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </strong>
             </button>
           ))}
         </div>
 
+        <div className="messages_consult_suggested_head">Suggested for Surgical Teams</div>
+
         <div className="messages_consult_member_grid">
-          {remainingMembers.map((member) => (
+          {suggestedMembers.map((member) => (
                 <button
                   type="button"
                   key={member.id}
@@ -1339,10 +1538,16 @@ export default function MessagesPage() {
                 >
                   <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
                   <div>
-                    <h4>{member.id === "marcus" ? "Marcus Chen" : member.id === "elena" ? "Patty Vance" : member.name}</h4>
+                    <h4>{member.name}</h4>
                     <span>{member.role}</span>
                   </div>
-                  <strong aria-hidden="true"></strong>
+                  <strong aria-hidden="true">
+                    {selectedGroupMemberIds.includes(member.id) ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
+                        <path d="M1.5 4.5L4.5 7.5L9.5 1.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    ) : null}
+                  </strong>
                 </button>
           ))}
         </div>
@@ -1356,71 +1561,425 @@ export default function MessagesPage() {
     );
   };
 
+  const renderGroupSettingsPanel = (conversation: Conversation) => {
+    const members = conversation.members ?? [];
+    const isAdmin = Boolean(conversation.createdByMe || members.find((member) => member.id === "me" && member.isAdmin));
+    const currentView = groupSettingsView ?? "settings";
+    const frameLabel =
+      currentView === "members"
+        ? "Group - Settings/Members"
+        : currentView === "notifications"
+          ? "Group - Settings/Notifications"
+          : "Group - Settings";
+
+    return (
+      <aside className="messages_info_panel messages_group_settings_panel">
+        <div className="messages_group_settings_head">
+          <button type="button" className="messages_group_back_btn" onClick={() => setGroupSettingsView(null)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11.25 14.25L6 9L11.25 3.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div>
+            <span>{frameLabel}</span>
+            <h3>Group Settings</h3>
+          </div>
+          <button type="button" className="messages_group_close_btn" aria-label="Close group settings" onClick={toggleInfo}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 4.5L13.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M13.5 4.5L4.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="messages_group_settings_profile">
+          <div className="messages_group_settings_avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 42 42" fill="none">
+              <circle cx="15.5" cy="15" r="5.25" stroke="#0B5064" strokeWidth="2.2" />
+              <circle cx="25.75" cy="15.75" r="4.5" stroke="#0B5064" strokeWidth="2.2" opacity="0.88" />
+              <path d="M7.75 30.25C7.75 25.9698 11.2198 22.5 15.5 22.5H18C22.2802 22.5 25.75 25.9698 25.75 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" />
+              <path d="M21.5 30.25C21.5 27.2124 23.9624 24.75 27 24.75H28.5C31.5376 24.75 34 27.2124 34 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" opacity="0.88" />
+            </svg>
+          </div>
+          <div>
+            <h4>{conversation.name}</h4>
+            <p>{conversation.groupDescription}</p>
+          </div>
+        </div>
+
+        <div className="messages_group_settings_tabs" role="tablist" aria-label="Group settings sections">
+          <button
+            type="button"
+            className={currentView === "settings" ? "active" : ""}
+            onClick={() => setGroupSettingsView("settings")}
+          >
+            Settings
+          </button>
+          <button
+            type="button"
+            className={currentView === "members" ? "active" : ""}
+            onClick={() => setGroupSettingsView("members")}
+          >
+            Members
+          </button>
+          <button
+            type="button"
+            className={currentView === "notifications" ? "active" : ""}
+            onClick={() => setGroupSettingsView("notifications")}
+          >
+            Notifications
+          </button>
+        </div>
+
+        {currentView === "settings" ? (
+          <div className="messages_group_settings_content">
+            <section className="messages_group_setting_card">
+              <div>
+                <h4>Group Name</h4>
+                <p>{conversation.name}</p>
+              </div>
+              <button type="button">Edit</button>
+            </section>
+            <section className="messages_group_setting_card">
+              <div>
+                <h4>Description</h4>
+                <p>{conversation.groupDescription}</p>
+              </div>
+              <button type="button">Edit</button>
+            </section>
+            <section className="messages_group_setting_card split">
+              <div>
+                <h4>Invite Permissions</h4>
+                <p>{isAdmin ? "Admins and care team members can invite people." : "Only admins can invite people."}</p>
+              </div>
+              <span>{isAdmin ? "Admin" : "Member"}</span>
+            </section>
+            <button type="button" className="messages_group_danger_action" onClick={() => setIsLeaveGroupOpen(true)}>
+              Leave Group
+            </button>
+          </div>
+        ) : null}
+
+        {currentView === "members" ? (
+          <div className="messages_group_settings_content">
+            <div className="messages_group_settings_search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M16.875 16.875L12.9876 12.9876M14.625 8.4375C14.625 11.8553 11.8553 14.625 8.4375 14.625C5.01974 14.625 2.25 11.8553 2.25 8.4375C2.25 5.01974 5.01974 2.25 8.4375 2.25C11.8553 2.25 14.625 5.01974 14.625 8.4375Z" stroke="#0B5064" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <input
+                placeholder="Search members..."
+                value={groupDirectorySearch}
+                onChange={(event) => setGroupDirectorySearch(event.target.value)}
+              />
+            </div>
+            <button type="button" className="messages_group_add_member_btn" onClick={() => setIsGroupDirectoryOpen((current) => !current)}>
+              Add Member
+            </button>
+            {isGroupDirectoryOpen ? (
+              <div className="messages_group_directory_panel compact">
+                <div className="messages_group_directory_list">
+                  {filteredGroupDirectory.map((member) => {
+                    const isSelected = members.some((entry) => entry.id === member.id);
+
+                    return (
+                      <button
+                        type="button"
+                        key={member.id}
+                        className="messages_group_directory_item"
+                        onClick={() => toggleGroupDirectoryMember(member)}
+                      >
+                        <div className="messages_group_directory_identity">
+                          <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
+                          <div>
+                            <h4>{member.name}</h4>
+                            <span>{member.role}</span>
+                          </div>
+                        </div>
+                        <strong className={isSelected ? "selected" : ""} aria-hidden="true">
+                          {isSelected ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
+                              <path d="M1.5 4.5L4.5 7.5L9.5 1.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          ) : null}
+                        </strong>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
+            <div className="messages_group_settings_member_list">
+              {members.map((member) => (
+                <article key={member.id} className="messages_group_setting_member">
+                  <div className="messages_group_member_identity_v2">
+                    <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
+                    <div>
+                      <h4>{member.name}</h4>
+                      <span>{member.id === "me" ? "Specialist - Surgery" : member.role}</span>
+                    </div>
+                  </div>
+                  {member.isAdmin ? <strong>Admin</strong> : null}
+                  {isAdmin && member.id !== "me" ? (
+                    <button type="button" aria-label={`Remove ${member.name}`} onClick={() => setMemberPendingRemoval(member)}>
+                      Remove
+                    </button>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {currentView === "notifications" ? (
+          <div className="messages_group_settings_content">
+            <section className="messages_group_notification_card">
+              <div>
+                <h4>Mute Group Notifications</h4>
+                <p>Pause push and in-app alerts for this group.</p>
+              </div>
+              <button
+                type="button"
+                className={`messages_group_switch ${conversation.notificationsMuted ? "active" : ""}`}
+                onClick={toggleGroupNotifications}
+                aria-pressed={conversation.notificationsMuted}
+              >
+                <span></span>
+              </button>
+            </section>
+            <section className="messages_group_notification_card">
+              <div>
+                <h4>Mentions</h4>
+                <p>Notify me when someone mentions my name.</p>
+              </div>
+              <button type="button" className="messages_group_switch active" aria-pressed="true">
+                <span></span>
+              </button>
+            </section>
+            <section className="messages_group_notification_card">
+              <div>
+                <h4>Shared Files</h4>
+                <p>Alert me when new documents are uploaded.</p>
+              </div>
+              <button type="button" className="messages_group_switch active" aria-pressed="true">
+                <span></span>
+              </button>
+            </section>
+          </div>
+        ) : null}
+      </aside>
+    );
+  };
+
   // Implements: Messages - new group info, Group Admin variants, Leave Group,
   // Group Remove Member, and the Group Settings/Members/Notifications tabs.
   const renderGroupInfoPanel = (conversation: Conversation) => {
     const members = conversation.members ?? [];
     const isAdmin = Boolean(conversation.createdByMe || members.find((member) => member.id === "me" && member.isAdmin));
+    const groupMemberCountDisplay = conversation.id === "icu-team" ? 24 : members.length;
+    const groupMessageCountDisplay = conversation.id === "icu-team" ? 154 : conversation.messages.length;
 
     return (
-      <aside className="messages_info_panel messages_group_info_panel">
-        <div className="messages_info_profile">
-          <ContactAvatar name={conversation.name} large />
-          <span className="messages_group_frame_label">
-            {isAdmin ? "Messages - new group info - Group Admin" : "Messages - new group info"}
-          </span>
-          <h3>{conversation.name}</h3>
-          <p>{conversation.groupDescription}</p>
-        </div>
-
-        <div className="messages_group_settings_tabs">
-          <button type="button" className={groupSettingsTab === "overview" ? "active" : ""} onClick={() => setGroupSettingsTab("overview")}>
-            Group - Settings
-          </button>
-          <button type="button" className={groupSettingsTab === "members" ? "active" : ""} onClick={() => setGroupSettingsTab("members")}>
-            Group - Settings/Members
-          </button>
-          <button type="button" className={groupSettingsTab === "notifications" ? "active" : ""} onClick={() => setGroupSettingsTab("notifications")}>
-            Group - Settings/Notifications
-          </button>
-        </div>
-
-        {groupSettingsTab === "overview" ? (
-          <div className="messages_info_section">
-            <h4>Group settings</h4>
-            <p>{members.length} members. {conversation.notificationsMuted ? "Notifications are muted." : "Notifications are enabled."}</p>
-            <div className="messages_group_info_actions">
-              <button type="button" onClick={() => setGroupSettingsTab("members")}>Manage Members</button>
-              <button type="button" onClick={() => setGroupSettingsTab("notifications")}>Notifications</button>
-            </div>
-          </div>
-        ) : null}
-
-        {groupSettingsTab === "members" ? (
-          <div className="messages_info_section">
-            <h4>{isAdmin ? "Members and admin controls" : "Members"}</h4>
-            <div className="messages_group_member_list">
-              {members.map((member) => renderGroupMemberRow(member, { removable: isAdmin }))}
-            </div>
-          </div>
-        ) : null}
-
-        {groupSettingsTab === "notifications" ? (
-          <div className="messages_info_section">
-            <h4>Notification preferences</h4>
-            <button type="button" className="messages_group_toggle" onClick={toggleGroupNotifications}>
-              <span>{conversation.notificationsMuted ? "Muted" : "Enabled"}</span>
-              <strong>{conversation.notificationsMuted ? "Turn On" : "Mute"}</strong>
+      <aside className="messages_info_panel messages_group_details_panel">
+        <div className="messages_group_details_head">
+          <h3>Group Details</h3>
+          <div className="messages_group_details_head_actions">
+            <button type="button" aria-label="Edit group details">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M10.5 3L15 7.5M2.25 15.75L5.456 15.037C5.865 14.946 6.238 14.733 6.524 14.425L14.25 6.187C14.845 5.554 14.83 4.564 14.216 3.95L13.05 2.784C12.436 2.17 11.446 2.155 10.813 2.75L2.575 10.476C2.267 10.762 2.054 11.135 1.963 11.544L1.25 14.75L2.25 15.75Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
-            <p>Use this setting to pause alerts for busy group conversations without leaving the group.</p>
+            <button type="button" aria-label="Close group details" onClick={toggleInfo}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M4.5 4.5L13.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                <path d="M13.5 4.5L4.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </button>
           </div>
-        ) : null}
+        </div>
 
-        <div className="messages_info_section">
-          <button type="button" className="messages_group_leave_btn" onClick={() => setIsLeaveGroupOpen(true)}>
-            {isAdmin ? "Messages - Leave Group Admin" : "Leave Group"}
+        <div className="messages_group_details_hero">
+          <div className="messages_group_details_icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
+              <circle cx="15.5" cy="15" r="5.25" stroke="#0B5064" strokeWidth="2.2" />
+              <circle cx="25.75" cy="15.75" r="4.5" stroke="#0B5064" strokeWidth="2.2" opacity="0.88" />
+              <path d="M7.75 30.25C7.75 25.9698 11.2198 22.5 15.5 22.5H18C22.2802 22.5 25.75 25.9698 25.75 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" />
+              <path d="M21.5 30.25C21.5 27.2124 23.9624 24.75 27 24.75H28.5C31.5376 24.75 34 27.2124 34 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" opacity="0.88" />
+            </svg>
+          </div>
+          <h4>{conversation.name}</h4>
+          <p>{conversation.groupDescription}</p>
+          <span>Created By: Dr. Sarah Jenkins</span>
+        </div>
+
+        <div className="messages_group_details_meta">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 8.5C9.65685 8.5 11 7.15685 11 5.5C11 3.84315 9.65685 2.5 8 2.5C6.34315 2.5 5 3.84315 5 5.5C5 7.15685 6.34315 8.5 8 8.5Z" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M2.75 13.25C2.75 10.9028 5.40279 9 8 9C10.5972 9 13.25 10.9028 13.25 13.25" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            {groupMemberCountDisplay}
+          </div>
+          <div>{groupMessageCountDisplay} Messages</div>
+        </div>
+
+        <div className="messages_group_details_actions">
+          <button type="button" aria-label="Call group">
+            <img src="/icn/audiocall_icn.svg" alt="" />
+          </button>
+          <button type="button" aria-label="Video call group">
+            <img src="/icn/videocall_icn.svg" alt="" />
           </button>
         </div>
+
+        <div className="messages_group_details_stats">
+          <article>
+            <span>Members</span>
+            <strong>{groupMemberCountDisplay}</strong>
+          </article>
+          <article>
+            <span>Messages</span>
+            <strong>{groupMessageCountDisplay}</strong>
+          </article>
+        </div>
+
+        <div className="messages_group_detail_links">
+          <button type="button" onClick={() => openGroupSettings("notifications")}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 15.75C10.2426 15.75 11.25 14.7426 11.25 13.5H6.75C6.75 14.7426 7.75736 15.75 9 15.75Z" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M13.5 13.5H4.5C5.32672 12.6378 5.80508 11.5021 5.85 10.308V7.875C5.85 6.18425 7.09875 4.7655 8.775 4.5525C10.7317 4.3035 12.375 5.8395 12.375 7.75V10.308C12.4199 11.5021 12.8983 12.6378 13.725 13.5H13.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Notification Settings
+          </button>
+          <button type="button" onClick={() => openGroupSettings("settings")}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25Z" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M14.25 10.125V7.875L12.774 7.425C12.6366 6.98572 12.4568 6.56088 12.2378 6.15675L12.96 4.77L11.37 3.18L9.98325 3.90225C9.57912 3.68317 9.15428 3.50343 8.715 3.366L8.25 1.875H5.99999L5.55 3.351C5.11072 3.48843 4.68588 3.66817 4.28175 3.88725L2.895 3.165L1.305 4.755L2.02725 6.14175C1.80817 6.54588 1.62843 6.97072 1.491 7.41L0 7.875V10.125L1.476 10.575C1.61343 11.0143 1.79317 11.4391 2.01225 11.8433L1.29 13.23L2.88 14.82L4.26675 14.0978C4.67088 14.3168 5.09572 14.4966 5.535 14.634L6 16.125H8.25L8.7 14.649C9.13928 14.5116 9.56412 14.3318 9.96825 14.1128L11.355 14.835L12.945 13.245L12.2228 11.8583C12.4418 11.4541 12.6216 11.0293 12.759 10.59L14.25 10.125Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Group Settings
+          </button>
+          <button type="button" onClick={() => setCopiedToast("Group pinned")}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M10.875 2.625L14.625 6.375L11.4375 7.3125L9.375 9.375L12.75 12.75L11.25 14.25L7.875 10.875L5.8125 12.9375L4.875 16.125L1.125 12.375L4.3125 11.4375L6.375 9.375L3 6L4.5 4.5L7.875 7.875L9.9375 5.8125L10.875 2.625Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Pin Group
+          </button>
+        </div>
+
+        <div className="messages_group_members_block">
+          <div className="messages_group_members_head">
+            <span>Members</span>
+            <div>
+              <button
+                type="button"
+                aria-label="Add member"
+                onClick={() => {
+                  setGroupSettingsView("members");
+                  setIsGroupDirectoryOpen((current) => !current);
+                  setGroupDirectorySearch("");
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 3.75V14.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M14.25 9H3.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="Search members"
+                onClick={() => {
+                  setIsGroupDirectoryOpen(true);
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M16.875 16.875L12.9876 12.9876M14.625 8.4375C14.625 11.8553 11.8553 14.625 8.4375 14.625C5.01974 14.625 2.25 11.8553 2.25 8.4375C2.25 5.01974 5.01974 2.25 8.4375 2.25C11.8553 2.25 14.625 5.01974 14.625 8.4375Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {isGroupDirectoryOpen ? (
+            <div className="messages_group_directory_panel">
+              <div className="messages_group_directory_search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M16.875 16.875L12.9876 12.9876M14.625 8.4375C14.625 11.8553 11.8553 14.625 8.4375 14.625C5.01974 14.625 2.25 11.8553 2.25 8.4375C2.25 5.01974 5.01974 2.25 8.4375 2.25C11.8553 2.25 14.625 5.01974 14.625 8.4375Z" stroke="#0B5064" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <input
+                  placeholder="Search name here..."
+                  value={groupDirectorySearch}
+                  onChange={(event) => setGroupDirectorySearch(event.target.value)}
+                />
+              </div>
+
+              <div className="messages_group_directory_list">
+                {filteredGroupDirectory.map((member) => {
+                  const isSelected = members.some((entry) => entry.id === member.id);
+
+                  return (
+                    <button
+                      type="button"
+                      key={member.id}
+                      className="messages_group_directory_item"
+                      onClick={() => toggleGroupDirectoryMember(member)}
+                    >
+                      <div className="messages_group_directory_identity">
+                        <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
+                        <div>
+                          <h4>{member.name}</h4>
+                          <span>{member.role}</span>
+                        </div>
+                      </div>
+                      <strong className={isSelected ? "selected" : ""} aria-hidden="true">
+                        {isSelected ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
+                            <path d="M1.5 4.5L4.5 7.5L9.5 1.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        ) : null}
+                      </strong>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
+          <div className="messages_group_members_list_v2">
+            {members.map((member) => (
+              <article key={member.id} className="messages_group_member_item_v2">
+                <div className="messages_group_member_identity_v2">
+                  <div className="messages_group_member_avatar_wrap">
+                    <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
+                    <span className="messages_group_member_status_dot"></span>
+                  </div>
+                  <div>
+                    <h4>{member.name}</h4>
+                    <span>{member.id === "me" ? "Specialist - Surgery" : member.role}</span>
+                  </div>
+                </div>
+
+                {isAdmin && member.id !== "me" ? (
+                  <button
+                    type="button"
+                    className="messages_group_member_delete"
+                    aria-label={`Remove ${member.name}`}
+                    onClick={() => setMemberPendingRemoval(member)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M3.75 5.25H14.25" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M6.75 5.25V4.5C6.75 3.87868 7.25368 3.375 7.875 3.375H10.125C10.7463 3.375 11.25 3.87868 11.25 4.5V5.25" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M5.25 5.25L5.7 13.209C5.76915 14.4314 6.7803 15.375 8.00467 15.375H9.99533C11.2197 15.375 12.2309 14.4314 12.3 13.209L12.75 5.25" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M7.5 8.25V12.375" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M10.5 8.25V12.375" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <button type="button" className="messages_group_leave_btn v2" onClick={() => setIsLeaveGroupOpen(true)}>
+          Leave Group
+        </button>
       </aside>
     );
   };
@@ -1577,10 +2136,11 @@ export default function MessagesPage() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M10.6673 2.66699L13.3339 5.33366L10.6673 6.00033L8.66732 8.00033L12.0007 11.3337L10.6673 12.667L7.33398 9.33366L5.33398 11.3337L4.66732 14.0003L2.00065 11.3337L4.00065 8.00033L2.00065 4.66699L3.33398 3.33366L6.66732 5.33366L8.66732 3.33366L10.6673 2.66699Z" fill="#E4432D" />
                   </svg>
-                  <span className="messages_pinned_author">{message.author}-</span>
-                  <span className="messages_pinned_text">
-                    {message.attachment ? `${message.attachment.name} attached` : message.text}
-                  </span>
+                  <div className="messages_pinned_content">
+                    <span className="messages_pinned_author">Pinned by {message.author}</span>
+                    <strong>{message.pinnedTitle ?? message.attachment?.name ?? "Pinned Update"}</strong>
+                    <span className="messages_pinned_text">{message.text}</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -1598,9 +2158,9 @@ export default function MessagesPage() {
           >
             {message.sender === "contact" ? (
               <ContactAvatar
-                name={selectedConversation.name}
-                avatar={selectedConversation.avatar}
-                avatarClassName={selectedConversation.avatarClassName}
+                name={message.author}
+                avatar={selectedConversation.members?.find((member) => member.name === message.author)?.avatar}
+                avatarClassName={selectedConversation.members?.find((member) => member.name === message.author)?.avatarClassName}
               />
             ) : null}
 
@@ -1674,7 +2234,21 @@ export default function MessagesPage() {
 
                 {message.text ? <p>{message.text}</p> : null}
 
-                {message.attachment ? (
+                {message.attachments?.length ? (
+                  <div className="messages_attachment_row">
+                    {message.attachments.map((attachment) => (
+                      <div key={attachment.name} className="messages_attachment_stack">
+                        {renderAttachmentCard({
+                          ...attachment,
+                          id: message.id,
+                          author: message.author,
+                          time: message.time,
+                          text: message.text,
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                ) : message.attachment ? (
                   renderAttachmentCard({
                     ...message.attachment,
                     id: message.id,
@@ -1685,10 +2259,10 @@ export default function MessagesPage() {
                 ) : null}
               </div>
 
-              {message.sender === "me" && message.read ? (
+              {message.sender === "me" && message.deliveryStatus ? (
                 <div className="messages_read_status">
                   <img src="/icn/read_icn.svg" alt="" />
-                  Read
+                  {message.deliveryStatus}
                 </div>
               ) : null}
             </div>
@@ -1702,7 +2276,7 @@ export default function MessagesPage() {
               <span></span>
               <span></span>
             </div>
-            <p>{selectedConversation.name.split(" ")[1] ?? selectedConversation.name} is typing...</p>
+            <p>{selectedConversation.isGroup ? "Dr. Sarah +2 are typing..." : `${selectedConversation.name.split(" ")[1] ?? selectedConversation.name} is typing...`}</p>
           </div>
         ) : null}
       </div>
@@ -1777,22 +2351,34 @@ export default function MessagesPage() {
                 <div className="messages_chat_identity">
                   {selectedConversation ? (
                     <>
-                      <ContactAvatar
-                        name={selectedConversation.name}
-                        avatar={selectedConversation.avatar}
-                        avatarClassName={selectedConversation.avatarClassName}
-                        large
-                      />
+                      {selectedConversation.isGroup ? (
+                        <div className="messages_group_header_avatar" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                            <circle cx="11" cy="10" r="4" stroke="#0B5064" strokeWidth="1.8" />
+                            <circle cx="19.5" cy="10.5" r="3.5" stroke="#0B5064" strokeWidth="1.8" opacity="0.88" />
+                            <path d="M4.5 22C4.5 18.9624 6.96243 16.5 10 16.5H12C15.0376 16.5 17.5 18.9624 17.5 22" stroke="#0B5064" strokeWidth="1.8" strokeLinecap="round" />
+                            <path d="M15 22C15 19.7909 16.7909 18 19 18H20C22.2091 18 24 19.7909 24 22" stroke="#0B5064" strokeWidth="1.8" strokeLinecap="round" opacity="0.88" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <ContactAvatar
+                          name={selectedConversation.name}
+                          avatar={selectedConversation.avatar}
+                          avatarClassName={selectedConversation.avatarClassName}
+                          large
+                        />
+                      )}
 
                       <div>
-                        {selectedConversation.isGroup ? (
-                          <span className="messages_group_header_label">Messages - new group</span>
-                        ) : null}
                         <h2>{selectedConversation.name}</h2>
-                        <div className="messages_chat_status">
-                          <span className={selectedConversation.status}></span>
-                          {selectedConversation.role}
-                        </div>
+                        {selectedConversation.isGroup ? (
+                          <div className="messages_group_subtitle">{selectedConversation.groupDescription}</div>
+                        ) : (
+                          <div className="messages_chat_status">
+                            <span className={selectedConversation.status}></span>
+                            {selectedConversation.role}
+                          </div>
+                        )}
                       </div>
                     </>
                   ) : (
@@ -1834,17 +2420,14 @@ export default function MessagesPage() {
                     <button type="button" aria-label="Video call" disabled={!selectedConversation}>
                       <img src="/icn/videocall_icn.svg" alt="" />
                     </button>
-                    <button type="button" aria-label="Conversation info" disabled={!selectedConversation}>
-                      <img src="/icn/i_icn.svg" alt="" />
-                    </button>
                     <button
                       type="button"
-                      aria-label="Open conversation info"
+                      aria-label="Conversation info"
                       className={isInfoOpen ? "active" : ""}
                       onClick={toggleInfo}
                       disabled={!selectedConversation}
                     >
-                      <img src="/icn/user_icn.svg" alt="" />
+                      <img src="/icn/i_icn.svg" alt="" />
                     </button>
                     <button
                       type="button"
@@ -1866,7 +2449,7 @@ export default function MessagesPage() {
 
                 {isInfoOpen && selectedConversation ? (
                   selectedConversation.isGroup ? (
-                    renderGroupInfoPanel(selectedConversation)
+                    groupSettingsView ? renderGroupSettingsPanel(selectedConversation) : renderGroupInfoPanel(selectedConversation)
                   ) : (
                   <aside className="messages_info_panel">
                     <div className="messages_info_profile">
