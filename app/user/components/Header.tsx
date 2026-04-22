@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type HeaderProps = {
@@ -168,14 +169,14 @@ export default function Header({ toggleSidebar }: HeaderProps) {
 
         <div className="dash_vertical_line"></div>
 
-        <div className="dash_user_info">
+        <Link href="/user/profile" className="dash_user_info">
           <h4 className="dash_user_name">Dr. Elena Rodriguez</h4>
           <p className="dash_user_role">Lead Surgeon</p>
-        </div>
+        </Link>
 
-        <div className="dash_user_avatar">
+        <Link href="/user/profile" className="dash_user_avatar">
           <img src="/icn/user_avatar.svg" alt="user" />
-        </div>
+        </Link>
 
         <button className="mobile_side_show" onClick={toggleSidebar} type="button">
           <img src="/icn/navs.svg" alt="Open navigation" />
