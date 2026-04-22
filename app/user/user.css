@@ -759,6 +759,10 @@ height: 8px;
   gap: 20px;
 }
 
+.dash_notification_wrap {
+  position: relative;
+}
+
 /* Bell Icon */
 .dash_notify_icon {
   width: 45px;
@@ -767,11 +771,186 @@ height: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: 0;
+  position: relative;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dash_notify_icon.active,
+.dash_notify_icon:hover {
+  background: #f2f8fb;
+  box-shadow: inset 0 0 0 1px rgba(3, 62, 79, 0.08);
 }
 
 .dash_notify_icon i {
   font-size: 24px;
   color: #0f4c5c;
+}
+
+.dash_notify_icon img {
+  width: 25px;
+  height: 25px;
+}
+
+.dash_notify_badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--red_color);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  padding: 0 5px;
+  border: 2px solid var(--white);
+}
+
+.dash_notification_panel {
+  position: absolute;
+  top: calc(100% + 18px);
+  right: -120px;
+  width: min(384px, calc(100vw - 40px));
+  border-radius: 28px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 28px 60px -24px rgba(0, 31, 41, 0.35);
+  overflow: hidden;
+  z-index: 40;
+}
+
+.dash_notification_panel::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 135px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  transform: rotate(45deg);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dash_notification_panel_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 30px 22px;
+  background: linear-gradient(180deg, #fcfcfc 0%, #f7f7f7 100%);
+}
+
+.dash_notification_panel_head h3 {
+  margin: 0;
+color: #191C1D; 
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px;  
+letter-spacing: -0.35px;
+}
+
+.dash_notification_panel_head button {
+  border: 0;
+  background: transparent;
+color: var(--red_color);
+text-align: center; 
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 16px; /* 133.333% */
+letter-spacing: -0.35px;
+}
+
+.dash_notification_list {
+  background: #fff;
+}
+
+.dash_notification_item {
+  display: flex; 
+  gap: 18px;
+  padding: 10px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dash_notification_item.unread {
+  background: linear-gradient(90deg, rgba(216, 242, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.dash_notification_media {
+min-width: 40px;
+    height: 40px;
+border-radius: 12px;
+
+  background: #9CEDED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dash_notification_media_avatar {
+  background: #0b4253;
+}
+
+.dash_notification_media_avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dash_notification_content {
+  min-width: 0;
+  width: 100%;
+}
+
+.dash_notification_meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.dash_notification_type {
+color: var(--primary); 
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px; /* 133.333% */
+}
+
+.dash_notification_time {
+color: #40484C; 
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 200% */
+letter-spacing: -0.35px;
+}
+
+.dash_notification_content h4 {
+  margin: 0 0 6px;
+color: #191C1D; 
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: -0.35px;
+}
+
+.dash_notification_content p {
+  margin: 0;
+color: #40484C; 
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 19.5px;
 }
 
 /* Divider Line */
@@ -1224,14 +1403,24 @@ line-height: 15px;
 /* 🔹 Filter Box */
 .das_area_inner .filter_box {
   display: flex;
-  align-items: center;
-  background: #e3e7ea;
-  border-radius: 18px;
-  padding: 10px 16px;
+  align-items: center; 
+padding: 12px 16px;
   position: relative;
   cursor: pointer;
+  border-radius: 8px;
+background: rgba(0, 0, 0, 0.08);
+width: 100%;
+max-width: 208px;
 }
+.das_area_inner .filter_box span{
+  color:var(--primary); 
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 160% */
+opacity: 0.5;
 
+}
 /* 🔹 Date Input */
 .das_area_inner .date_input {
   border: none;
@@ -2833,7 +3022,7 @@ justify-content: center;
     display: block;
   }
   .dash_notify_icon{
-    display: none;
+    display: flex;
   }
   .dash_main{
     padding-left: 0;
@@ -2850,6 +3039,14 @@ justify-content: center;
 }
 .dash_search{
   width: 60%;
+}
+
+.dash_notification_panel {
+  right: -40px;
+}
+
+.dash_notification_panel::before {
+  right: 54px;
 }
 
 .dash_sidebar.active{
@@ -2906,6 +3103,39 @@ justify-content: center;
         height: 100%;
         padding: 16px 10px;
     }
+    .dash_header {
+      padding: 12px 16px;
+    }
+    .dash_header_right_area {
+      gap: 12px;
+    }
+    .dash_vertical_line {
+      display: none;
+    }
+    .dash_notification_panel {
+      right: -84px;
+      width: min(520px, calc(100vw - 20px));
+    }
+    .dash_notification_panel::before {
+      right: 96px;
+    }
+    .dash_notification_panel_head {
+      padding: 22px 20px 18px;
+    }
+    .dash_notification_item {
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      padding: 16px 20px;
+    }
+    .dash_notification_media {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+    }
+    .dash_notification_content h4 {
+      font-size: 17px;
+      line-height: 24px;
+    }
 }
 
 
@@ -2953,6 +3183,27 @@ justify-content: center;
   }
   .dash_table_wrap{
     margin-top: 20px;
+  }
+  .dash_notification_panel {
+    position: fixed;
+    top: 74px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+  }
+  .dash_notification_panel::before {
+    display: none;
+  }
+  
+  .dash_notification_meta {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .dash_notification_time {
+    font-size: 13px;
+    line-height: 18px;
   }
 }
 
@@ -3011,6 +3262,9 @@ justify-content: center;
     position: fixed;
     bottom: 10px;
     right: 10px;
+}
+.dash_header .logo {
+    width: 140px; 
 }
 .ref_chat_card{
   max-width: 310px;
