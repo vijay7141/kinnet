@@ -1729,6 +1729,7 @@ export default function MessagesPage() {
 </svg>
             Notifications
           </button>
+          
         </div>
 
         {currentView === "settings" ? (
