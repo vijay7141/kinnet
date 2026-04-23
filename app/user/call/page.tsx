@@ -102,16 +102,9 @@ function normalizeScreen(value: string | null): CallScreen {
 
 function PhoneIcon({ crossed = false }: { crossed?: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M6.56 5.72C7.18 5.11 8.17 5.08 8.82 5.65L10.76 7.34C11.42 7.92 11.58 8.88 11.14 9.64L10.16 11.32C11.18 13.25 12.75 14.82 14.68 15.84L16.36 14.86C17.12 14.42 18.08 14.58 18.66 15.24L20.35 17.18C20.92 17.83 20.89 18.82 20.28 19.44L18.94 20.78C18.3 21.42 17.37 21.67 16.49 21.45C7.99 19.27 4.73 16.01 2.55 7.51C2.33 6.63 2.58 5.7 3.22 5.06L4.56 3.72C5.18 3.11 6.17 3.08 6.82 3.65"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {crossed ? <path d="M5 5L19 19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /> : null}
-    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+  <path d="M15.0702 15.0704C13.3319 16.8087 11.2695 18.1714 8.88304 19.1584C6.49656 20.1454 3.94802 20.5947 1.23745 20.5063C0.883894 20.5063 0.589266 20.3884 0.353564 20.1527C0.117861 19.917 1.036e-05 19.6224 1.036e-05 19.2688L0.0442045 15.2472C0.0442039 14.9231 0.143641 14.6469 0.342515 14.4185C0.54139 14.1902 0.795506 14.0539 1.10487 14.0097L5.61267 13.391C5.81891 13.3616 6.01042 13.3763 6.1872 13.4352C6.36397 13.4941 6.52602 13.5973 6.67333 13.7446L9.1924 16.2636C9.92897 15.8806 10.6434 15.446 11.3358 14.9599C12.0282 14.4738 12.6837 13.9213 13.3025 13.3026C13.9212 12.6839 14.4736 12.0284 14.9597 11.336C15.4459 10.6436 15.8805 9.92914 16.2635 9.19257L13.7444 6.6735C13.5971 6.52619 13.494 6.36414 13.435 6.18736C13.3761 6.01059 13.3614 5.81908 13.3908 5.61284L14.0096 1.10503C14.0538 0.795674 14.19 0.541558 14.4184 0.342683C14.6467 0.143809 14.9229 0.0443725 15.247 0.0443726L19.2687 0.000178445C19.6222 0.000178445 19.9169 0.11803 20.1526 0.353732C20.3883 0.589434 20.5061 0.884062 20.5061 1.23762C20.6092 3.93346 20.1636 6.47831 19.1692 8.87216C18.1749 11.266 16.8085 13.3321 15.0702 15.0704Z" fill="white"/>
+</svg>
   );
 }
 
@@ -154,21 +147,68 @@ function SpeakerIcon() {
 }
 
 function CameraIcon({ off = false }: { off?: boolean }) {
+  if (off) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+      >
+        <g clipPath="url(#clip0)">
+          <path
+            d="M1.225 16.125L13.55 3.8C13.4125 3.7625 13.275 3.75 13.125 3.75H1.875C0.8375 3.75 0 4.5875 0 5.625V14.375C0 15.1875 0.5125 15.875 1.225 16.125Z"
+            fill="#033E4F"
+          />
+          <path
+            d="M19.1 5.06281L15 7.11281V5.88406L19.8175 1.06656C20.0613 0.822812 20.0613 0.426562 19.8175 0.182812C19.5738 -0.0609375 19.1775 -0.0609375 18.9338 0.182812L0.183789 18.9328C-0.0599609 19.1766 -0.0599609 19.5728 0.183789 19.8166C0.427539 20.0603 0.823789 20.0603 1.06754 19.8166L4.63379 16.2503H13.125C14.1625 16.2503 15 15.4128 15 14.3753V12.8878L19.1 14.9378C19.3313 15.0366 19.545 15.0103 19.7 14.9128C19.8875 14.7878 20 14.5878 20 14.3753V5.62531C20 5.41281 19.8875 5.21281 19.7 5.08781C19.525 4.97531 19.2875 4.96281 19.1 5.06281Z"
+            fill="#033E4F"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    );
+  }
+
+  // ON state (normal camera)
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M15.5 8.5L20 6V18L15.5 15.5M6 18H14C15.1 18 16 17.1 16 16V8C16 6.9 15.1 6 14 6H6C4.9 6 4 6.9 4 8V16C4 17.1 4.9 18 6 18Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {off ? <path d="M4.5 4.5L19.5 19.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /> : null}
-    </svg>
+   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+  <path d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H14C14.55 0 15.0208 0.195833 15.4125 0.5875C15.8042 0.979167 16 1.45 16 2V6.5L20 2.5V13.5L16 9.5V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z" fill="#033E4F"/>
+</svg>
   );
 }
+function RecordIcon({ off = false }: { off?: boolean }) {
+  // OFF state (record disabled - slash + faded look)
+  if (off) {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle
+          cx="12"
+          cy="12"
+          r="6.25"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          opacity="0.4"
+        />
+        <circle cx="12" cy="12" r="3.75" fill="currentColor" opacity="0.4" />
 
-function RecordIcon() {
+        {/* slash */}
+        <path
+          d="M4.5 4.5L19.5 19.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  // ON state (normal record)
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <circle cx="12" cy="12" r="6.25" stroke="currentColor" strokeWidth="1.8" />
@@ -193,15 +233,9 @@ function GroupIcon() {
 
 function TimerIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M12 8V12L14.75 14.75M12 3.75C16.56 3.75 20.25 7.44 20.25 12C20.25 16.56 16.56 20.25 12 20.25C7.44 20.25 3.75 16.56 3.75 12C3.75 7.44 7.44 3.75 12 3.75ZM9.5 2.5H14.5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+ <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
+  <path d="M4.5 1.5V0H9V1.5H4.5ZM6 9.75H7.5V5.25H6V9.75ZM6.75 15.75C5.825 15.75 4.95312 15.5719 4.13438 15.2156C3.31563 14.8594 2.6 14.375 1.9875 13.7625C1.375 13.15 0.890625 12.4344 0.534375 11.6156C0.178125 10.7969 0 9.925 0 9C0 8.075 0.178125 7.20312 0.534375 6.38438C0.890625 5.56563 1.375 4.85 1.9875 4.2375C2.6 3.625 3.31563 3.14062 4.13438 2.78437C4.95312 2.42812 5.825 2.25 6.75 2.25C7.525 2.25 8.26875 2.375 8.98125 2.625C9.69375 2.875 10.3625 3.2375 10.9875 3.7125L12.0375 2.6625L13.0875 3.7125L12.0375 4.7625C12.5125 5.3875 12.875 6.05625 13.125 6.76875C13.375 7.48125 13.5 8.225 13.5 9C13.5 9.925 13.3219 10.7969 12.9656 11.6156C12.6094 12.4344 12.125 13.15 11.5125 13.7625C10.9 14.375 10.1844 14.8594 9.36563 15.2156C8.54688 15.5719 7.675 15.75 6.75 15.75ZM6.75 14.25C8.2 14.25 9.4375 13.7375 10.4625 12.7125C11.4875 11.6875 12 10.45 12 9C12 7.55 11.4875 6.3125 10.4625 5.2875C9.4375 4.2625 8.2 3.75 6.75 3.75C5.3 3.75 4.0625 4.2625 3.0375 5.2875C2.0125 6.3125 1.5 7.55 1.5 9C1.5 10.45 2.0125 11.6875 3.0375 12.7125C4.0625 13.7375 5.3 14.25 6.75 14.25Z" fill="white"/>
+</svg>
   );
 }
 
@@ -520,11 +554,11 @@ export default function CallPage() {
         </div>
 
         <div className="calls_remote_visual">
-          {contact.remoteVisual ? <Image src={contact.remoteVisual} alt={contact.name} fill className="calls_remote_main_image" /> : null}
+      <Image src='/big_call_icn.png' alt={contact.name} fill className="calls_remote_main_image" /> 
         </div>
 
         <div className="calls_self_preview">
-          <Image src={selfPreview.avatar} alt={selfPreview.name} fill className="calls_self_preview_image" />
+          <Image src='/call_prev.svg' alt={selfPreview.name} fill className="calls_self_preview_image" />
           <span>
             <MicIcon />
             You
