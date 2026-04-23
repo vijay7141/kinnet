@@ -949,7 +949,7 @@ export default function MessagesPage() {
     }
 
     setGroupSettingsView(view);
-    setIsInfoOpen(true);
+    setIsInfoOpen(false);
     setIsSearchOpen(false);
     setIsNewMessageOpen(false);
     setIsCreateGroupOpen(false);
@@ -1664,63 +1664,59 @@ export default function MessagesPage() {
 
   const renderGroupSettingsPanel = (conversation: Conversation) => {
     const members = conversation.members ?? [];
-    const isAdmin = Boolean(conversation.createdByMe || members.find((member) => member.id === "me" && member.isAdmin));
     const currentView = groupSettingsView ?? "settings";
-    const frameLabel =
-      currentView === "members"
-        ? "Group - Settings/Members"
-        : currentView === "notifications"
-          ? "Group - Settings/Notifications"
-          : "Group - Settings";
+    const groupMemberCountDisplay = conversation.id === "icu-team" ? members.length + 20 : members.length;
 
     return (
-      <aside className="messages_info_panel messages_group_settings_panel">
-        <div className="messages_group_settings_head">
-          <button type="button" className="messages_group_back_btn" onClick={() => setGroupSettingsView(null)}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M11.25 14.25L6 9L11.25 3.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      <div className="messages_group_settings_page channels_settings_page">
+        <div className="channels_settings_hero">
+          <button type="button" className="channels_mobile_back" onClick={() => setGroupSettingsView(null)} aria-label="Back to group chat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M12.5 4.167L6.667 10L12.5 15.833" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <div>
-            <span>{frameLabel}</span>
-            <h3>Group Settings</h3>
-          </div>
-          <button type="button" className="messages_group_close_btn" aria-label="Close group settings" onClick={toggleInfo}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M4.5 4.5L13.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              <path d="M13.5 4.5L4.5 13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="messages_group_settings_profile">
-          <div className="messages_group_settings_avatar" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 42 42" fill="none">
-              <circle cx="15.5" cy="15" r="5.25" stroke="#0B5064" strokeWidth="2.2" />
-              <circle cx="25.75" cy="15.75" r="4.5" stroke="#0B5064" strokeWidth="2.2" opacity="0.88" />
-              <path d="M7.75 30.25C7.75 25.9698 11.2198 22.5 15.5 22.5H18C22.2802 22.5 25.75 25.9698 25.75 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" />
-              <path d="M21.5 30.25C21.5 27.2124 23.9624 24.75 27 24.75H28.5C31.5376 24.75 34 27.2124 34 30.25" stroke="#0B5064" strokeWidth="2.2" strokeLinecap="round" opacity="0.88" />
-            </svg>
+          <div className="channels_settings_icon">
+         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+  <path d="M31.5344 25.9684C34.2281 23.9652 35.9844 20.7684 35.9844 17.1605C35.9844 11.1043 31.0578 6.17773 25.0016 6.17773C18.9453 6.17773 14.0187 11.1043 14.0187 17.1605C14.0187 20.7684 15.775 23.9652 18.4687 25.9684C13.6672 27.5824 10.1953 32.1168 10.1953 37.4543V38.9855C10.1953 40.8012 11.4844 42.3668 13.2609 42.7074C17.1219 43.4465 21.0719 43.8199 25.0031 43.8199C28.9344 43.8199 32.8844 43.4449 36.7469 42.7074C38.5219 42.3668 39.8109 40.8012 39.8109 38.9855V37.4543C39.8078 32.1168 36.3344 27.5824 31.5344 25.9684ZM16.8297 17.1605C16.8297 12.6559 20.4953 8.99023 25 8.99023C29.5047 8.99023 33.1703 12.6559 33.1703 17.1605C33.1703 21.6652 29.5047 25.3309 25 25.3309C20.4953 25.3309 16.8297 21.6668 16.8297 17.1605ZM36.9938 38.9855C36.9938 39.4543 36.6656 39.859 36.2141 39.9449C28.8406 41.3543 21.1578 41.3543 13.7875 39.9449C13.3344 39.8574 13.0063 39.4543 13.0063 38.9855V37.4543C13.0063 32.3199 17.1828 28.1434 22.3156 28.1434H27.6844C32.8172 28.1434 36.9938 32.3199 36.9938 37.4543V38.9855Z" fill="#033E4F"/>
+  <path d="M42.2798 25.4639C44.1266 23.7858 45.2501 21.3686 45.2501 18.7952C45.2501 15.0827 43.0173 11.803 39.5626 10.4405C38.8438 10.1577 38.0251 10.5092 37.7391 11.2327C37.4532 11.9545 37.8079 12.7717 38.5313 13.0561C40.9048 13.992 42.436 16.2452 42.436 18.7936C42.436 21.3327 40.8454 23.6483 38.4798 24.5592C37.8798 24.7905 37.5126 25.3983 37.5891 26.0373C37.6641 26.6764 38.1642 27.1811 38.8001 27.2655C42.2892 27.7264 45.4688 31.3452 45.4688 34.8561V36.0592C45.4688 36.2889 45.3063 36.4967 45.0845 36.5405C44.8079 36.5951 44.5204 36.6452 44.2235 36.6967L43.6235 36.8014C42.8595 36.9405 42.3532 37.6717 42.4907 38.4358C42.6142 39.1155 43.2063 39.5905 43.8735 39.5905C43.9579 39.5905 44.0407 39.5827 44.1266 39.567L44.6985 39.467C45.0204 39.4108 45.3345 39.3576 45.6313 39.2983C47.1657 38.9967 48.2813 37.6342 48.2813 36.0592V34.8561C48.2813 30.9795 45.7407 27.2342 42.2798 25.4639Z" fill="#033E4F"/>
+  <path d="M6.37656 36.8046L5.77656 36.6999C5.48125 36.6483 5.19219 36.5999 4.91094 36.5421C4.69531 36.4999 4.53125 36.2936 4.53125 36.0624V34.8593C4.53125 31.3483 7.70938 27.7296 11.2 27.2686C11.8359 27.1843 12.3375 26.6796 12.4109 26.0405C12.4875 25.4015 12.1188 24.7936 11.5203 24.5624C9.15313 23.6515 7.56406 21.3343 7.56406 18.7968C7.56406 16.2468 9.09531 13.9936 11.4688 13.0593C12.1922 12.7733 12.5453 11.9561 12.2609 11.2343C11.975 10.5108 11.1547 10.1577 10.4375 10.4421C6.98281 11.8046 4.75 15.0843 4.75 18.7968C4.75 21.3686 5.875 23.7874 7.72031 25.4655C4.25938 27.2343 1.71875 30.9796 1.71875 34.8593V36.0624C1.71875 37.6374 2.83438 38.9999 4.36406 39.2999C4.66406 39.3608 4.97969 39.414 5.30156 39.4702L5.87344 39.5702C5.95937 39.5858 6.04219 39.5936 6.12656 39.5936C6.79375 39.5936 7.38594 39.1171 7.50938 38.439C7.64844 37.6749 7.14062 36.9436 6.37656 36.8046Z" fill="#033E4F"/>
+</svg>
           </div>
           <div>
-            <h4>{conversation.name}</h4>
+            <h1>{conversation.name}</h1>
             <p>{conversation.groupDescription}</p>
+            <div className="messages_group_settings_meta">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <path d="M6.5 6.5C7.14279 6.5 7.77114 6.30939 8.3056 5.95228C8.84006 5.59516 9.25662 5.08758 9.50261 4.49372C9.74859 3.89986 9.81295 3.2464 9.68755 2.61596C9.56215 1.98552 9.25262 1.40643 8.7981 0.951904C8.34358 0.497384 7.76448 0.187851 7.13404 0.0624493C6.50361 -0.0629527 5.85014 0.00140818 5.25628 0.247393C4.66242 0.493378 4.15484 0.909938 3.79772 1.4444C3.44061 1.97886 3.25 2.60721 3.25 3.25C3.25086 4.11169 3.59355 4.93784 4.20285 5.54715C4.81216 6.15646 5.63831 6.49914 6.5 6.5ZM6.5 1.08333C6.92853 1.08333 7.34743 1.21041 7.70374 1.44848C8.06004 1.68656 8.33775 2.02495 8.50174 2.42085C8.66573 2.81676 8.70864 3.25241 8.62504 3.6727C8.54143 4.09299 8.33508 4.47905 8.03206 4.78207C7.72905 5.08508 7.34299 5.29144 6.9227 5.37504C6.5024 5.45864 6.06676 5.41573 5.67085 5.25174C5.27495 5.08775 4.93656 4.81004 4.69848 4.45374C4.46041 4.09743 4.33333 3.67853 4.33333 3.25C4.33333 2.67537 4.56161 2.12427 4.96794 1.71794C5.37426 1.31161 5.92536 1.08333 6.5 1.08333Z" fill="#71787C" />
+                  <path d="M6.5 7.58398C5.20751 7.58542 3.96837 8.09949 3.05444 9.01342C2.14051 9.92735 1.62643 11.1665 1.625 12.459C1.625 12.6026 1.68207 12.7404 1.78365 12.842C1.88523 12.9436 2.02301 13.0007 2.16667 13.0007C2.31033 13.0007 2.4481 12.9436 2.54968 12.842C2.65126 12.7404 2.70833 12.6026 2.70833 12.459C2.70833 11.4534 3.10781 10.4889 3.81889 9.77787C4.52996 9.0668 5.49439 8.66732 6.5 8.66732C7.50561 8.66732 8.47004 9.0668 9.18111 9.77787C9.89219 10.4889 10.2917 11.4534 10.2917 12.459C10.2917 12.6026 10.3487 12.7404 10.4503 12.842C10.5519 12.9436 10.6897 13.0007 10.8333 13.0007C10.977 13.0007 11.1148 12.9436 11.2164 12.842C11.3179 12.7404 11.375 12.6026 11.375 12.459C11.3736 11.1665 10.8595 9.92735 9.94556 9.01342C9.03163 8.09949 7.79249 7.58542 6.5 7.58398Z" fill="#71787C" />
+                </svg>
+                {groupMemberCountDisplay}
+              </span>
+              <span>{conversation.id === "icu-team" ? 154 : conversation.messages.length} Messages</span>
+            </div>
           </div>
         </div>
 
-        <div className="messages_group_settings_tabs" role="tablist" aria-label="Group settings sections">
+        <div className="channels_settings_tabs" role="tablist" aria-label="Group settings sections">
           <button
             type="button"
             className={currentView === "settings" ? "active" : ""}
             onClick={() => setGroupSettingsView("settings")}
           >
-            Settings
+          <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+  <path d="M7.3 20L6.9 16.8C6.68333 16.7167 6.47917 16.6167 6.2875 16.5C6.09583 16.3833 5.90833 16.2583 5.725 16.125L2.75 17.375L0 12.625L2.575 10.675C2.55833 10.5583 2.55 10.4458 2.55 10.3375C2.55 10.2292 2.55 10.1167 2.55 10C2.55 9.88333 2.55 9.77083 2.55 9.6625C2.55 9.55417 2.55833 9.44167 2.575 9.325L0 7.375L2.75 2.625L5.725 3.875C5.90833 3.74167 6.1 3.61667 6.3 3.5C6.5 3.38333 6.7 3.28333 6.9 3.2L7.3 0H12.8L13.2 3.2C13.4167 3.28333 13.6208 3.38333 13.8125 3.5C14.0042 3.61667 14.1917 3.74167 14.375 3.875L17.35 2.625L20.1 7.375L17.525 9.325C17.5417 9.44167 17.55 9.55417 17.55 9.6625C17.55 9.77083 17.55 9.88333 17.55 10C17.55 10.1167 17.55 10.2292 17.55 10.3375C17.55 10.4458 17.5333 10.5583 17.5 10.675L20.075 12.625L17.325 17.375L14.375 16.125C14.1917 16.2583 14 16.3833 13.8 16.5C13.6 16.6167 13.4 16.7167 13.2 16.8L12.8 20H7.3ZM9.05 18H11.025L11.375 15.35C11.8917 15.2167 12.3708 15.0208 12.8125 14.7625C13.2542 14.5042 13.6583 14.1917 14.025 13.825L16.5 14.85L17.475 13.15L15.325 11.525C15.4083 11.2917 15.4667 11.0458 15.5 10.7875C15.5333 10.5292 15.55 10.2667 15.55 10C15.55 9.73333 15.5333 9.47083 15.5 9.2125C15.4667 8.95417 15.4083 8.70833 15.325 8.475L17.475 6.85L16.5 5.15L14.025 6.2C13.6583 5.81667 13.2542 5.49583 12.8125 5.2375C12.3708 4.97917 11.8917 4.78333 11.375 4.65L11.05 2H9.075L8.725 4.65C8.20833 4.78333 7.72917 4.97917 7.2875 5.2375C6.84583 5.49583 6.44167 5.80833 6.075 6.175L3.6 5.15L2.625 6.85L4.775 8.45C4.69167 8.7 4.63333 8.95 4.6 9.2C4.56667 9.45 4.55 9.71667 4.55 10C4.55 10.2667 4.56667 10.525 4.6 10.775C4.63333 11.025 4.69167 11.275 4.775 11.525L2.625 13.15L3.6 14.85L6.075 13.8C6.44167 14.1833 6.84583 14.5042 7.2875 14.7625C7.72917 15.0208 8.20833 15.2167 8.725 15.35L9.05 18ZM10.1 13.5C11.0667 13.5 11.8917 13.1583 12.575 12.475C13.2583 11.7917 13.6 10.9667 13.6 10C13.6 9.03333 13.2583 8.20833 12.575 7.525C11.8917 6.84167 11.0667 6.5 10.1 6.5C9.11667 6.5 8.2875 6.84167 7.6125 7.525C6.9375 8.20833 6.6 9.03333 6.6 10C6.6 10.9667 6.9375 11.7917 7.6125 12.475C8.2875 13.1583 9.11667 13.5 10.1 13.5Z" fill="#41484B"/>
+</svg>
+            General
           </button>
           <button
             type="button"
             className={currentView === "members" ? "active" : ""}
             onClick={() => setGroupSettingsView("members")}
           >
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <path d="M8 8C6.9 8 5.95833 7.60833 5.175 6.825C4.39167 6.04167 4 5.1 4 4C4 2.9 4.39167 1.95833 5.175 1.175C5.95833 0.391667 6.9 0 8 0C9.1 0 10.0417 0.391667 10.825 1.175C11.6083 1.95833 12 2.9 12 4C12 5.1 11.6083 6.04167 10.825 6.825C10.0417 7.60833 9.1 8 8 8ZM0 16V13.2C0 12.6333 0.145833 12.1125 0.4375 11.6375C0.729167 11.1625 1.11667 10.8 1.6 10.55C2.63333 10.0333 3.68333 9.64583 4.75 9.3875C5.81667 9.12917 6.9 9 8 9C9.1 9 10.1833 9.12917 11.25 9.3875C12.3167 9.64583 13.3667 10.0333 14.4 10.55C14.8833 10.8 15.2708 11.1625 15.5625 11.6375C15.8542 12.1125 16 12.6333 16 13.2V16H0ZM2 14H14V13.2C14 13.0167 13.9542 12.85 13.8625 12.7C13.7708 12.55 13.65 12.4333 13.5 12.35C12.6 11.9 11.6917 11.5625 10.775 11.3375C9.85833 11.1125 8.93333 11 8 11C7.06667 11 6.14167 11.1125 5.225 11.3375C4.30833 11.5625 3.4 11.9 2.5 12.35C2.35 12.4333 2.22917 12.55 2.1375 12.7C2.04583 12.85 2 13.0167 2 13.2V14ZM8 6C8.55 6 9.02083 5.80417 9.4125 5.4125C9.80417 5.02083 10 4.55 10 4C10 3.45 9.80417 2.97917 9.4125 2.5875C9.02083 2.19583 8.55 2 8 2C7.45 2 6.97917 2.19583 6.5875 2.5875C6.19583 2.97917 6 3.45 6 4C6 4.55 6.19583 5.02083 6.5875 5.4125C6.97917 5.80417 7.45 6 8 6Z" fill="#41484B"/>
+</svg>
             Members
           </button>
           <button
@@ -1728,146 +1724,133 @@ export default function MessagesPage() {
             className={currentView === "notifications" ? "active" : ""}
             onClick={() => setGroupSettingsView("notifications")}
           >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
+  <path d="M0 17V15H2V8C2 6.61667 2.41667 5.3875 3.25 4.3125C4.08333 3.2375 5.16667 2.53333 6.5 2.2V1.5C6.5 1.08333 6.64583 0.729167 6.9375 0.4375C7.22917 0.145833 7.58333 0 8 0C8.41667 0 8.77083 0.145833 9.0625 0.4375C9.35417 0.729167 9.5 1.08333 9.5 1.5V2.2C10.8333 2.53333 11.9167 3.2375 12.75 4.3125C13.5833 5.3875 14 6.61667 14 8V15H16V17H0ZM8 20C7.45 20 6.97917 19.8042 6.5875 19.4125C6.19583 19.0208 6 18.55 6 18H10C10 18.55 9.80417 19.0208 9.4125 19.4125C9.02083 19.8042 8.55 20 8 20ZM4 15H12V8C12 6.9 11.6083 5.95833 10.825 5.175C10.0417 4.39167 9.1 4 8 4C6.9 4 5.95833 4.39167 5.175 5.175C4.39167 5.95833 4 6.9 4 8V15Z" fill="#41484B"/>
+</svg>
             Notifications
           </button>
         </div>
 
         {currentView === "settings" ? (
-          <div className="messages_group_settings_content">
-            <section className="messages_group_setting_card">
-              <div>
-                <h4>Group Name</h4>
-                <p>{conversation.name}</p>
+          <div className="channels_settings_general">
+            <div className="channels_settings_general_main">
+              <h2>Group Information</h2>
+              <label>
+                <span>Group Name</span>
+                <input  type="text" value={conversation.name}  />
+              </label>
+              <label>
+                <span>Description</span>
+                <textarea   value={conversation.groupDescription ?? ""} />
+              </label>
+              <div className="channels_settings_private">
+                <strong>Private Group</strong>
+                <p>Only invited care team members can view this conversation.</p>
               </div>
-              <button type="button">Edit</button>
-            </section>
-            <section className="messages_group_setting_card">
-              <div>
-                <h4>Description</h4>
-                <p>{conversation.groupDescription}</p>
+            </div>
+            <aside className="channels_settings_general_side">
+              <div className="channels_settings_stats">
+                <div><span>Created</span><strong>Oct 12, 2023</strong></div>
+                <div><span>By</span><strong>Dr. Sarah Jenkins</strong></div>
+                <div><span>Members</span><strong>{groupMemberCountDisplay}</strong></div>
               </div>
-              <button type="button">Edit</button>
-            </section>
-            <section className="messages_group_setting_card split">
-              <div>
-                <h4>Invite Permissions</h4>
-                <p>{isAdmin ? "Admins and care team members can invite people." : "Only admins can invite people."}</p>
-              </div>
-              <span>{isAdmin ? "Admin" : "Member"}</span>
-            </section>
-            <button type="button" className="messages_group_danger_action messages_group_leave_btn v2" onClick={() => setIsLeaveGroupOpen(true)}>
-              Leave Group
-            </button>
+              <button type="button" className="channels_leave_btn" onClick={() => setIsLeaveGroupOpen(true)}>
+                Leave Group
+              </button>
+            </aside>
           </div>
         ) : null}
 
         {currentView === "members" ? (
-          <div className="messages_group_settings_content">
-            <div className="messages_group_settings_search">
+          <div className="channels_settings_members">
+            <h2>Members</h2>
+            <div className="channels_search_bar messages_group_settings_search">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M16.875 16.875L12.9876 12.9876M14.625 8.4375C14.625 11.8553 11.8553 14.625 8.4375 14.625C5.01974 14.625 2.25 11.8553 2.25 8.4375C2.25 5.01974 5.01974 2.25 8.4375 2.25C11.8553 2.25 14.625 5.01974 14.625 8.4375Z" stroke="#0B5064" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <input
-                placeholder="Search members..."
+                placeholder="Search members"
                 value={groupDirectorySearch}
                 onChange={(event) => setGroupDirectorySearch(event.target.value)}
               />
             </div>
-            <button type="button" className="messages_group_add_member_btn" onClick={() => setIsGroupDirectoryOpen((current) => !current)}>
-              Add Member
-            </button>
-            {isGroupDirectoryOpen ? (
-              <div className="messages_group_directory_panel compact">
-                <div className="messages_group_directory_list">
-                  {filteredGroupDirectory.map((member) => {
-                    const isSelected = members.some((entry) => entry.id === member.id);
+            <div className="channels_members_list channels_members_list_plain">
+              {members
+                .filter((member) => {
+                  const query = groupDirectorySearch.trim().toLowerCase();
 
-                    return (
-                      <button
-                        type="button"
-                        key={member.id}
-                        className="messages_group_directory_item"
-                        onClick={() => toggleGroupDirectoryMember(member)}
-                      >
-                        <div className="messages_group_directory_identity">
-                          <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
-                          <div>
-                            <h4>{member.name}</h4>
-                            <span>{member.role}</span>
-                          </div>
-                        </div>
-                        <strong className={isSelected ? "selected" : ""} aria-hidden="true">
-                          {isSelected ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
-                              <path d="M1.5 4.5L4.5 7.5L9.5 1.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          ) : null}
-                        </strong>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : null}
-            <div className="messages_group_settings_member_list">
-              {members.map((member) => (
-                <article key={member.id} className="messages_group_setting_member">
-                  <div className="messages_group_member_identity_v2">
-                    <ContactAvatar name={member.name} avatar={member.avatar} avatarClassName={member.avatarClassName} />
-                    <div>
-                      <h4>{member.name}</h4>
-                      <span>{member.id === "me" ? "Specialist - Surgery" : member.role}</span>
+                  if (!query) {
+                    return true;
+                  }
+
+                  return member.name.toLowerCase().includes(query) || member.role.toLowerCase().includes(query);
+                })
+                .map((member) => (
+                  <div key={member.id} className="channels_member_row">
+                    <div className="channels_member_identity">
+                      <div className="channels_member_avatar">
+                        {member.avatar ? <img src={member.avatar} alt={member.name} /> : <span>{member.name.slice(0, 2)}</span>}
+                        <span className="online"></span>
+                      </div>
+                      <div>
+                        <strong>{member.name}</strong>
+                        <p>{member.id === "me" ? "Specialist - Surgery" : member.role}</p>
+                      </div>
                     </div>
+                    {member.id !== "me" ? (
+                      <button type="button" className="messages_group_member_delete" aria-label={`Remove ${member.name}`} onClick={() => setMemberPendingRemoval(member)}>
+                        Remove
+                      </button>
+                    ) : null}
                   </div>
-                  {member.isAdmin ? <strong>Admin</strong> : null}
-                  {isAdmin && member.id !== "me" ? (
-                    <button type="button" aria-label={`Remove ${member.name}`} onClick={() => setMemberPendingRemoval(member)}>
-                      Remove
-                    </button>
-                  ) : null}
-                </article>
-              ))}
+                ))}
+            </div>
+            <div className="channels_settings_footer_action">
+              <button type="button" className="messages_group_leave_btn v2" onClick={() => setIsLeaveGroupOpen(true)}>
+              Leave Group
+              </button>
             </div>
           </div>
         ) : null}
 
         {currentView === "notifications" ? (
-          <div className="messages_group_settings_content">
-            <section className="messages_group_notification_card">
+          <div className="channels_settings_notifications">
+            <div className="channels_notify_row">
               <div>
-                <h4>Mute Group Notifications</h4>
-                <p>Pause push and in-app alerts for this group.</p>
+                <strong>Notifications</strong>
+                <p>Receive alerts for important updates and activity in this group.</p>
               </div>
               <button
                 type="button"
-                className={`messages_group_switch ${conversation.notificationsMuted ? "active" : ""}`}
+                className={`channels_toggle ${!conversation.notificationsMuted ? "active" : ""}`}
+                onClick={toggleGroupNotifications}
+                aria-pressed={!conversation.notificationsMuted}
+              >
+                <span></span>
+              </button>
+            </div>
+            <div className="channels_notify_row">
+              <div>
+                <strong>Mute Group</strong>
+                <p>Notify me when someone mentions my name.</p>
+              </div>
+              <button
+                type="button"
+                className={`channels_toggle ${conversation.notificationsMuted ? "active" : ""}`}
                 onClick={toggleGroupNotifications}
                 aria-pressed={conversation.notificationsMuted}
               >
                 <span></span>
               </button>
-            </section>
-            <section className="messages_group_notification_card">
-              <div>
-                <h4>Mentions</h4>
-                <p>Notify me when someone mentions my name.</p>
-              </div>
-              <button type="button" className="messages_group_switch active" aria-pressed="true">
-                <span></span>
+            </div>
+            <div className="channels_settings_footer_action">
+              <button type="button" className="channels_leave_btn" onClick={() => setIsLeaveGroupOpen(true)}>
+                Leave Group
               </button>
-            </section>
-            <section className="messages_group_notification_card">
-              <div>
-                <h4>Shared Files</h4>
-                <p>Alert me when new documents are uploaded.</p>
-              </div>
-              <button type="button" className="messages_group_switch active" aria-pressed="true">
-                <span></span>
-              </button>
-            </section>
+            </div>
           </div>
         ) : null}
-      </aside>
+      </div>
     );
   };
 
@@ -1876,7 +1859,7 @@ export default function MessagesPage() {
   const renderGroupInfoPanel = (conversation: Conversation) => {
     const members = conversation.members ?? [];
     const isAdmin = Boolean(conversation.createdByMe || members.find((member) => member.id === "me" && member.isAdmin));
-    const groupMemberCountDisplay = conversation.id === "icu-team" ? 24 : members.length;
+    const groupMemberCountDisplay = conversation.id === "icu-team" ? members.length + 20 : members.length;
     const groupMessageCountDisplay = conversation.id === "icu-team" ? 154 : conversation.messages.length;
 
     return (
@@ -1974,7 +1957,6 @@ export default function MessagesPage() {
                 type="button"
                 aria-label="Add member"
                 onClick={() => {
-                  setGroupSettingsView("members");
                   setIsGroupDirectoryOpen((current) => !current);
                   setGroupDirectorySearch("");
                 }}
@@ -2463,6 +2445,9 @@ a new message to begin communicating</p>
         </div>
       ) : null}
 
+      {groupSettingsView && selectedConversation?.isGroup ? (
+        renderGroupSettingsPanel(selectedConversation)
+      ) : (
       <div className="messages_layout">
         <aside className="messages_sidebar_panel">
           <div className="messages_sidebar_head">
@@ -2906,6 +2891,7 @@ a new message to begin communicating</p>
           )}
         </div>
       </div>
+      )}
       {renderPreviewModal()}
       {memberPendingRemoval ? (
         <div className="messages_group_confirm_modal" role="dialog" aria-modal="true">
