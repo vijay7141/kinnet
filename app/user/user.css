@@ -7394,7 +7394,7 @@ line-height: 16px; /* 133.333% */
 
 @media screen and (max-width: 767px) {
   .recordings_tabs {
-    grid-template-columns: 1fr;
+    /* grid-template-columns: 1fr; */
   }
 
   .recordings_grid {
