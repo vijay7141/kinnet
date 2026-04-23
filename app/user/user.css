@@ -519,7 +519,7 @@ gap: 12px;
    color: var(--black); 
 font-size: 14px;
 font-style: normal;
-font-weight: 500;
+font-weight: 400;
 line-height: 21px;  
 opacity: 0.6;
 display: flex;
@@ -543,7 +543,10 @@ width: 100%;
   opacity: 1;
   border-radius: 8px; 
 box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
-
+}
+.dash_menu li.active a{
+  color: var(--red_color);  
+  opacity: 1;
 }
 
 .dash_menu span {
@@ -7100,7 +7103,7 @@ line-height: 16px; /* 133.333% */
 .recordings_tab {
   min-height: 48px;
   border: 0;
-  border-radius: 18px;
+  border-radius: 16px;
   background: transparent;
   color: #000;
   text-align: center;
@@ -7114,8 +7117,7 @@ line-height: 16px; /* 133.333% */
 .recordings_tab.active {
   background: var(--red_color);
   color: var(--white);
-  font-weight: 700;
-  box-shadow: 0 14px 30px -18px rgba(228, 67, 45, 0.9);
+  font-weight: 600;
 }
 
 .recordings_toolbar {
@@ -7123,7 +7125,6 @@ line-height: 16px; /* 133.333% */
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
-  margin-bottom: 28px;
 }
 
 .recordings_section_title {
@@ -7132,7 +7133,7 @@ line-height: 16px; /* 133.333% */
   font-style: normal;
   font-weight: 800;
   line-height: 36px;
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .recordings_filters {
@@ -7145,16 +7146,16 @@ line-height: 16px; /* 133.333% */
 
 .recordings_filter_btn {
   min-width: 238px;
-  min-height: 56px;
+  min-height: 44px;
+  color: var(--primary);
+  background: #00000014;
   border: 0;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  padding: 16px 18px;
+  padding: 10px 18px;
+  display: flex;
 }
 
 .recordings_filter_btn span {
@@ -7172,13 +7173,14 @@ line-height: 16px; /* 133.333% */
 
 .recordings_search {
   min-width: 312px;
-  min-height: 56px;
+  min-height: 44px;
   border-radius: 12px;
   background: #dff2ff;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 0 16px;
+  margin-bottom: 0;
 }
 
 .recordings_search svg {
@@ -7215,19 +7217,20 @@ line-height: 16px; /* 133.333% */
 }
 
 .recordings_card {
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 16px 38px -24px rgba(0, 31, 41, 0.28);
   overflow: hidden;
+  border-radius: 16px;
+  background: #FFF;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10);
 }
 
 .recordings_card_preview {
   position: relative;
   min-height: 192px;
-  background: linear-gradient(180deg, #f3f3f3 0%, #ececec 100%);
+  background:#E5E5E5;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 1px;
 }
 
 .recordings_duration {
@@ -7278,20 +7281,24 @@ line-height: 16px; /* 133.333% */
 .recordings_meta {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   min-height: 52px;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .recordings_meta span {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #71787c;
-  font-size: 14px;
+  color: #3E494A;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+}
+.recordings_meta span:nth-child(2) {
+  color: #3E494A;
+  font-weight:600;
 }
 
 .recordings_meta svg {
@@ -7308,16 +7315,16 @@ line-height: 16px; /* 133.333% */
 }
 
 .recordings_play_btn {
-  flex: 1;
-  min-height: 38px;
-  border: 0;
-  border-radius: 8px;
   background: var(--red_color);
+  min-height: 36px;
   color: var(--white);
   text-align: center;
+  border: 0;
+  border-radius: 8px;
+  flex: 1;
   font-size: 15px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 24px;
 }
 
@@ -7480,7 +7487,7 @@ line-height: 16px; /* 133.333% */
 }
 
 .settings_secondary_btn {
-  background: #9ce7eb;
+  background: #9CEDED;
   color: var(--primary);
 }
 
@@ -7569,6 +7576,16 @@ line-height: 16px; /* 133.333% */
 }
 .settings_profile_card {
   text-align: center;
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0 8px 32px 0 rgba(0, 39, 51, 0.10);
+  padding: 24px;  
+}
+.settings_profile_content .settings_panel, .settings_panel.settings_password_panel{
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0 8px 32px 0 rgba(0, 39, 51, 0.10);
+  padding: 24px;
 }
 
 .settings_avatar_wrap {
@@ -7592,18 +7609,19 @@ line-height: 16px; /* 133.333% */
 }
 
 .settings_avatar_edit {
-  position: absolute;
-  right: -8px;
-  bottom: -4px;
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  border: 2px solid var(--white);
-  background: #9ce7eb;
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 22px -14px rgba(0, 31, 41, 0.35);
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  position: absolute;
+  bottom: -4px;
+  right: -8px;
+  border-radius: 10px;
+  border: 2px solid #FFF;
+  background: var(--Light-Blue, #9CEDED);
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.15);
+  padding: 8px;
 }
 
 .settings_avatar_input {
@@ -7619,10 +7637,10 @@ line-height: 16px; /* 133.333% */
 }
 
 .settings_profile_card > p {
-  color: #696969;
-  font-size: 16px;
-  line-height: 24px;
+  color: rgba(0, 0, 0, 0.6);
   margin-bottom: 22px;
+  font-size: 14px;
+  line-height: 20px;  
 }
 
 .settings_info_block {
@@ -8190,7 +8208,7 @@ line-height: 16px; /* 133.333% */
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #9ce7eb;
+  background: #9CEDED;
   color: var(--primary);
   display: inline-flex;
   align-items: center;
@@ -10939,22 +10957,24 @@ line-height: 16px; /* 133.333% */
   Messages Incoming Call Popup
 ==============================*/
 .messages_incoming_call_popup {
+  z-index: 60;
+  background: #fff;
+  border-radius: 16px;
+  align-items: center;
+  width: min(360px, 100vw - 24px);
+  padding:20px 18px;
+  display: flex;
   position: fixed;
   top: 108px;
   right: 28px;
-  z-index: 60;
-  width: min(360px, calc(100vw - 24px));
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 22px 48px -26px rgba(0, 31, 41, 0.34);
-  padding: 18px 18px 14px;
+  box-shadow: 0 2px 20px #0000002e;
+  justify-content: space-between;
 }
 
 .messages_incoming_call_identity {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 14px;
 }
 
 .messages_incoming_call_avatar {
@@ -10976,21 +10996,20 @@ line-height: 16px; /* 133.333% */
 }
 
 .messages_incoming_call_content span {
+  color: var(--red_color); 
+  margin-bottom: 2px; 
+  font-size: 12px; 
+  font-weight: 500; 
+  line-height: 16px; 
   display: block;
-  color: var(--red_color);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  text-decoration: underline;
-  margin-bottom: 2px;
 }
 
 .messages_incoming_call_content h3 {
+  color: #000;
   margin: 0;
-  color: #111;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 20px;
 }
 
 .messages_incoming_call_content p {
