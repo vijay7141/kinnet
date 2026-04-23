@@ -626,7 +626,12 @@ align-self: stretch;
 padding: 10px 16px 10px 42px;
 border: 0;
 background-color: transparent;
-
+}
+.dash_search input::placeholder{
+  color: #C0C7CC;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
 }
 .dash_search input:focus{
   outline: 0;
@@ -7512,10 +7517,15 @@ cursor: pointer;
 .settings_panel {
   border-radius: 22px;
   background: var(--white);
-  box-shadow: 0 20px 44px -28px rgba(0, 31, 41, 0.28);
-  padding: 24px;
+  /* box-shadow: 0 20px 44px -28px rgba(0, 31, 41, 0.28);
+  padding: 24px; */
 }
-
+.settings_quiet_hours_panel{
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  background: #F2F4F5;
+}
 .settings_profile_card {
   text-align: center;
 }
@@ -7597,8 +7607,8 @@ cursor: pointer;
 .settings_security_mini h4,
 .settings_days_wrap h4 {
   color: #000;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 20px;
   margin-bottom: 0;
 }
@@ -7627,8 +7637,8 @@ cursor: pointer;
 }
 
 .settings_status_dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #9ce7eb;
   flex-shrink: 0;
@@ -7714,7 +7724,7 @@ cursor: pointer;
   font-size: 18px;
   font-weight: 500;
   line-height: 30px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .settings_form_grid {
@@ -7846,6 +7856,7 @@ cursor: pointer;
   justify-content: space-between;
   gap: 16px;
   padding: 18px 16px;
+  margin-bottom: 16px;
 }
 
 .settings_preference_row h4,
@@ -7862,8 +7873,8 @@ cursor: pointer;
 .settings_quiet_hours_head p,
 .settings_helper_text {
   color: #6b6f73;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 19px;
   margin-bottom: 0;
 }
 
@@ -7943,17 +7954,19 @@ cursor: pointer;
 
 .settings_days_list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   margin-top: 14px;
 }
 
 .settings_day_option {
-  display: flex;
+  color: #1f1f1f;
   align-items: center;
   gap: 10px;
-  color: #1f1f1f;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 22px;
+  display: flex;
+  font-weight: 400;
+  margin-bottom: 0;
 }
 
 .settings_day_option input,
@@ -8092,8 +8105,11 @@ cursor: pointer;
 }
 
 .settings_time_box input {
-  background: rgba(0, 0, 0, 0.08);
-  border-color: transparent;
+  border-radius: 8px;
+  border: 1px solid rgba(192, 199, 204, 0.20);
+  background: #FFF;
+  border-radius: 8px;
+  padding: 10px 15px;
 }
 
 .settings_time_dash {

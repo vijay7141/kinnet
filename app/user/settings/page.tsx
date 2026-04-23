@@ -192,7 +192,7 @@ export default function SettingsPage() {
 
             <div className="settings_availability_row">
               <div className="settings_availability_label">
-                <span className="settings_status_dot dark"></span>
+                <img src="../icn/donot-distrb.svg" alt="Do Not Disturb Icon" className="settings_dnd_icon" />
                 <span>Do Not Disturb</span>
               </div>
               <Toggle
