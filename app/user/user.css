@@ -2756,16 +2756,30 @@ font-style: normal;
 font-weight: 600;
 line-height: 10px;
 margin-bottom: 0;
+display: flex;
+align-items: center;
+gap: 4px;
 }
 .ref_chat_actions {
   display: flex;
   gap: 10px;
   align-items: center;
 }
-.ref_chat_actions img{
-  width: 25px;
-  height: 20px;
-  object-fit: contain;
+.ref_chat_actions button{
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--Primary, #033E4F);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.ref_chat_actions button:hover{
+  background: #F2F4F5;
 }
 
 .ref_chat_close {
@@ -2777,9 +2791,12 @@ margin-bottom: 0;
   border-radius: 50%;
   width: 22px;
   height: 22px;
-  text-align: center;
-  line-height: 22px;
+  border: 0;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 /* BODY */
@@ -2895,10 +2912,10 @@ font-style: normal;
 font-weight: 500;
 line-height: 15px; /* 150% */
   margin-top: 2px;
-}
-.ref_read img{
-  width: 10.95px;
-height: 6.012px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
 }
 
 /* FOOTER */
@@ -2922,9 +2939,17 @@ background: #F2F4F5;
 }
 
 .ref_plus {
-  width: 32px; 
+  width: 32px;
+  min-width: 32px;
+  height: 44px;
   border: 0;
   background-color: transparent;
+  color: var(--Primary, #033E4F);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
 }
 
 .ref_send {
@@ -2940,6 +2965,8 @@ height: 44px;
 display: flex;
 align-items: center;
 justify-content: center;
+padding: 0;
+cursor: pointer;
 }
 
 .messages_page {
@@ -6179,6 +6206,49 @@ justify-content: center;
   flex-shrink: 0;
 }
 
+.messages_composer_icon_btn.active,
+.messages_composer_icon_btn:hover {
+  background: #e5f6ff;
+}
+
+.messages_emoji_picker_wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.messages_emoji_picker {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  border-radius: 12px;
+  border: 1px solid rgba(3, 62, 79, 0.12);
+  background: #fff;
+  box-shadow: 0 16px 34px rgba(0, 39, 51, 0.16);
+  padding: 0;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.messages_emoji_picker::after {
+  content: "";
+  position: absolute;
+  right: 13px;
+  top: 100%;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-right: 1px solid rgba(3, 62, 79, 0.12);
+  border-bottom: 1px solid rgba(3, 62, 79, 0.12);
+  transform: translateY(-6px) rotate(45deg);
+}
+
+.messages_emoji_picker .EmojiPickerReact {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 .messages_upload_tooltip_wrap {
   position: relative;
   display: flex;
@@ -6827,6 +6897,9 @@ justify-content: center;
     overflow: hidden;
   }
   .messages_composer_icon_btn {
+    display: none;
+  }
+  .messages_emoji_picker_wrap {
     display: none;
   }
   .messages_send_btn {

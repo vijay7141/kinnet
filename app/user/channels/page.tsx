@@ -1,5 +1,6 @@
 'use client';
 
+import EmojiPicker, { Theme, type EmojiClickData } from 'emoji-picker-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 
 type ChannelMember = {
@@ -287,6 +288,7 @@ export default function ChannelsPage() {
   const [attachedFile, setAttachedFile] = useState<{ name: string; size: string; type: string } | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploadHintVisible, setIsUploadHintVisible] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -300,6 +302,30 @@ export default function ChannelsPage() {
     window.addEventListener('resize', syncMobileState);
 
     return () => window.removeEventListener('resize', syncMobileState);
+  }, []);
+
+  useEffect(() => {
+    function handlePointerDown(event: MouseEvent) {
+      const target = event.target;
+
+      if (!(target instanceof Element) || !target.closest('.messages_emoji_picker_wrap')) {
+        setIsEmojiPickerOpen(false);
+      }
+    }
+
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsEmojiPickerOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
   }, []);
 
   const selectedChannel = useMemo(
@@ -341,6 +367,7 @@ export default function ChannelsPage() {
     setDirectoryTab('chat');
     setView('directory');
     setShowDetails(false);
+    setIsEmojiPickerOpen(false);
     if (typeof window !== 'undefined' && window.innerWidth <= 768) {
       setIsMobileChannelOpen(true);
     }
@@ -389,6 +416,12 @@ export default function ChannelsPage() {
     setDraftMessage('');
     setAttachedFile(null);
     setIsDragActive(false);
+    setIsEmojiPickerOpen(false);
+  };
+
+  const addEmojiToDraft = (emojiData: EmojiClickData) => {
+    setDraftMessage((current) => `${current}${emojiData.emoji}`);
+    setIsEmojiPickerOpen(false);
   };
 
   const storeAttachedFile = (file: File | null) => {
@@ -411,6 +444,39 @@ export default function ChannelsPage() {
     storeAttachedFile(event.target.files?.[0] ?? null);
     event.target.value = '';
   };
+
+  const renderEmojiPicker = () => (
+    <div className="messages_emoji_picker_wrap">
+      <button
+        type="button"
+        className={`messages_composer_icon_btn ${isEmojiPickerOpen ? 'active' : ''}`}
+        aria-label="Emoji"
+        aria-expanded={isEmojiPickerOpen}
+        onClick={() => setIsEmojiPickerOpen((current) => !current)}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8.25" stroke="#374957" strokeWidth="1.5" />
+          <circle cx="7.25" cy="8" r="1" fill="#374957" />
+          <circle cx="12.75" cy="8" r="1" fill="#374957" />
+          <path d="M6.5 12C7.26739 13.0232 8.50441 13.6667 10 13.6667C11.4956 13.6667 12.7326 13.0232 13.5 12" stroke="#374957" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      {isEmojiPickerOpen ? (
+        <div className="messages_emoji_picker" aria-label="Choose emoji">
+          <EmojiPicker
+            onEmojiClick={addEmojiToDraft}
+            theme={Theme.LIGHT}
+            width={320}
+            height={360}
+            lazyLoadEmojis
+            previewConfig={{ showPreview: false }}
+            searchPlaceholder="Search emoji"
+          />
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
     <section className={`channels_page ${isMobileChannelOpen ? 'mobile_channel_open' : ''}`}>
@@ -794,14 +860,7 @@ export default function ChannelsPage() {
                             placeholder="Type a message..."
                           />
 
-                          <button type="button" className="messages_composer_icon_btn" aria-label="Emoji">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                              <circle cx="10" cy="10" r="8.25" stroke="#374957" strokeWidth="1.5" />
-                              <circle cx="7.25" cy="8" r="1" fill="#374957" />
-                              <circle cx="12.75" cy="8" r="1" fill="#374957" />
-                              <path d="M6.5 12C7.26739 13.0232 8.50441 13.6667 10 13.6667C11.4956 13.6667 12.7326 13.0232 13.5 12" stroke="#374957" strokeWidth="1.5" strokeLinecap="round" />
-                            </svg>
-                          </button>
+                          {renderEmojiPicker()}
 
                           <button type="button" className="messages_send_btn" onClick={sendMessage}>
                             Send
@@ -931,14 +990,7 @@ export default function ChannelsPage() {
                             placeholder="Type a message..."
                           />
 
-                          <button type="button" className="messages_composer_icon_btn" aria-label="Emoji">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                              <circle cx="10" cy="10" r="8.25" stroke="#374957" strokeWidth="1.5" />
-                              <circle cx="7.25" cy="8" r="1" fill="#374957" />
-                              <circle cx="12.75" cy="8" r="1" fill="#374957" />
-                              <path d="M6.5 12C7.26739 13.0232 8.50441 13.6667 10 13.6667C11.4956 13.6667 12.7326 13.0232 13.5 12" stroke="#374957" strokeWidth="1.5" strokeLinecap="round" />
-                            </svg>
-                          </button>
+                          {renderEmojiPicker()}
 
                           <button type="button" className="messages_send_btn" onClick={sendMessage}>
                             Send

@@ -1,5 +1,6 @@
 'use client';
 
+import EmojiPicker, { Theme, type EmojiClickData } from "emoji-picker-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 
@@ -513,6 +514,7 @@ export default function MessagesPage() {
   const [copiedToast, setCopiedToast] = useState("");
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploadHintVisible, setIsUploadHintVisible] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [openMessageActionsId, setOpenMessageActionsId] = useState<number | null>(null);
   const [modalPreviewAttachment, setModalPreviewAttachment] = useState<SharedAttachment | null>(null);
   const [typingConversationId] = useState<string | null>("sarah");
@@ -524,6 +526,7 @@ export default function MessagesPage() {
     avatar: "/avatar-1.png",
   });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const emojiPickerRef = useRef<HTMLDivElement | null>(null);
   const groupImageInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedConversation = useMemo(
@@ -679,6 +682,10 @@ export default function MessagesPage() {
       if (!(target instanceof Element) || !target.closest(".messages_sidebar_create_actions")) {
         setIsCreateMenuOpen(false);
       }
+
+      if (!(target instanceof Element) || !target.closest(".messages_emoji_picker_wrap")) {
+        setIsEmojiPickerOpen(false);
+      }
     }
 
     function handleEscape(event: KeyboardEvent) {
@@ -686,6 +693,7 @@ export default function MessagesPage() {
         setOpenMessageActionsId(null);
         setModalPreviewAttachment(null);
         setIsCreateMenuOpen(false);
+        setIsEmojiPickerOpen(false);
       }
     }
 
@@ -725,6 +733,7 @@ export default function MessagesPage() {
     setAttachedFile(null);
     setReplyingTo(null);
     setIsDragActive(false);
+    setIsEmojiPickerOpen(false);
     setOpenMessageActionsId(null);
     setModalPreviewAttachment(null);
   };
@@ -1378,7 +1387,13 @@ export default function MessagesPage() {
     setIsDragActive(false);
     setIsSearchOpen(false);
     setIsInfoOpen(false);
+    setIsEmojiPickerOpen(false);
     setActiveTab("chat");
+  };
+
+  const addEmojiToDraft = (emojiData: EmojiClickData) => {
+    setDraftMessage((current) => `${current}${emojiData.emoji}`);
+    setIsEmojiPickerOpen(false);
   };
 
   const renderSidebarConversation = (conversation: Conversation, options?: { pinned?: boolean }) => {
@@ -2745,14 +2760,36 @@ export default function MessagesPage() {
                       placeholder="Type a message..."
                     />
 
-                    <button type="button" className="messages_composer_icon_btn" aria-label="Emoji">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="8.25" stroke="#374957" strokeWidth="1.5" />
-                        <circle cx="7.25" cy="8" r="1" fill="#374957" />
-                        <circle cx="12.75" cy="8" r="1" fill="#374957" />
-                        <path d="M6.5 12C7.26739 13.0232 8.50441 13.6667 10 13.6667C11.4956 13.6667 12.7326 13.0232 13.5 12" stroke="#374957" strokeWidth="1.5" strokeLinecap="round" />
-                      </svg>
-                    </button>
+                    <div className="messages_emoji_picker_wrap" ref={emojiPickerRef}>
+                      <button
+                        type="button"
+                        className={`messages_composer_icon_btn ${isEmojiPickerOpen ? "active" : ""}`}
+                        aria-label="Emoji"
+                        aria-expanded={isEmojiPickerOpen}
+                        onClick={() => setIsEmojiPickerOpen((current) => !current)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <circle cx="10" cy="10" r="8.25" stroke="#374957" strokeWidth="1.5" />
+                          <circle cx="7.25" cy="8" r="1" fill="#374957" />
+                          <circle cx="12.75" cy="8" r="1" fill="#374957" />
+                          <path d="M6.5 12C7.26739 13.0232 8.50441 13.6667 10 13.6667C11.4956 13.6667 12.7326 13.0232 13.5 12" stroke="#374957" strokeWidth="1.5" strokeLinecap="round" />
+                        </svg>
+                      </button>
+
+                      {isEmojiPickerOpen ? (
+                        <div className="messages_emoji_picker" aria-label="Choose emoji">
+                          <EmojiPicker
+                            onEmojiClick={addEmojiToDraft}
+                            theme={Theme.LIGHT}
+                            width={320}
+                            height={360}
+                            lazyLoadEmojis
+                            previewConfig={{ showPreview: false }}
+                            searchPlaceholder="Search emoji"
+                          />
+                        </div>
+                      ) : null}
+                    </div>
 
                     <button type="button" className="messages_send_btn" onClick={sendMessage}>
                       Send

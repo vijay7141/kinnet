@@ -1,89 +1,148 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
+import {
+  CameraVideo,
+  Check2All,
+  ChevronRight,
+  Plus,
+  Send,
+  Telephone,
+  X,
+} from "react-bootstrap-icons";
+
+const initialMessages = [
+  {
+    id: 1,
+    side: "left",
+    author: "Dr. Sarah Jenkins",
+    time: "10:42 AM",
+    text: "I've reviewed Buddy's latest blood work. His liver enzymes are slightly elevated, but consistent with his current medication protocol.",
+  },
+  {
+    id: 2,
+    side: "left",
+    author: "Dr. Sarah Jenkins",
+    time: "10:42 AM",
+    text: "Yes, everything looks stable. Here is the comprehensive report and the referral history CSV for the records.",
+  },
+  {
+    id: 3,
+    side: "right",
+    author: "Me",
+    time: "11:30 AM",
+    text: "Thanks for sharing",
+  },
+];
 
 export default function ReferralChat() {
+  const [isOpen, setIsOpen] = useState(true);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState(initialMessages);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const text = message.trim();
+
+    if (!text) {
+      return;
+    }
+
+    setMessages((currentMessages) => [
+      ...currentMessages,
+      {
+        id: Date.now(),
+        side: "right",
+        author: "Me",
+        time: new Date().toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+        }),
+        text,
+      },
+    ]);
+    setMessage("");
+  };
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div className="ref_chat_wrap">
       <div className="ref_chat_card">
-
-        {/* Header */}
         <div className="ref_chat_header">
           <div className="ref_chat_user">
-             <div className="image">
-               <img src="/icn/Dr.Sarah.svg" alt="" />
-             </div>
+            <div className="image">
+              <img src="/icn/Dr.Sarah.svg" alt="" />
+            </div>
             <div>
-              <h6>Dr. Sarah Jenkins <svg xmlns="http://www.w3.org/2000/svg" width="6" height="11" viewBox="0 0 6 11" fill="none">
-  <path d="M4.72185 3.6606L1.27935 0.218094C1.13883 0.0784062 0.948738 0 0.750599 0C0.552459 0 0.362371 0.0784062 0.221849 0.218094C0.151552 0.287817 0.0957569 0.370767 0.0576804 0.462162C0.0196039 0.553556 0 0.651586 0 0.750594C0 0.849603 0.0196039 0.947633 0.0576804 1.03903C0.0957569 1.13042 0.151552 1.21337 0.221849 1.28309L3.67185 4.7181C3.74215 4.78782 3.79794 4.87077 3.83602 4.96216C3.87409 5.05356 3.8937 5.15159 3.8937 5.2506C3.8937 5.3496 3.87409 5.44763 3.83602 5.53903C3.79794 5.63042 3.74215 5.71337 3.67185 5.7831L0.221849 9.2181C0.080621 9.35833 0.000884937 9.54892 0.000181675 9.74794C-0.000521587 9.94697 0.0778661 10.1381 0.218099 10.2793C0.358333 10.4206 0.548924 10.5003 0.747947 10.501C0.94697 10.5017 1.13812 10.4233 1.27935 10.2831L4.72185 6.8406C5.1432 6.41872 5.37987 5.84685 5.37987 5.2506C5.37987 4.65434 5.1432 4.08247 4.72185 3.6606V3.6606Z" fill="#374957"/>
-</svg></h6>
+              <h6>
+                Dr. Sarah Jenkins <ChevronRight size={12} aria-hidden="true" />
+              </h6>
               <span>Available</span>
             </div>
           </div>
 
           <div className="ref_chat_actions">
-            <img src="/icn/audiocall_icn.svg" alt="" />
-            <img src="/icn/videocall_icn.svg" alt="" />
+            <button type="button" aria-label="Start audio call">
+              <Telephone size={18} aria-hidden="true" />
+            </button>
+            <button type="button" aria-label="Start video call">
+              <CameraVideo size={19} aria-hidden="true" />
+            </button>
           </div>
 
-          <div className="ref_chat_close">×</div>
+          <button
+            type="button"
+            className="ref_chat_close"
+            aria-label="Close chat"
+            onClick={() => setIsOpen(false)}
+          >
+            <X size={14} aria-hidden="true" />
+          </button>
         </div>
 
-        {/* Body */}
         <div className="ref_chat_body">
-
-          <div className="ref_chat_date"><span>TODAY, OCTOBER 24</span></div>
-
-          {/* LEFT */}
-          <div className="ref_msg left">
-                          <img src="/icn/Dr.Sarah.svg" alt="" />
-            <div>
-              <div className="ref_msg_head">
-                <b>Dr. Sarah Jenkins </b>
-                <span>10:42 AM</span>
-              </div>
-              <div className="ref_msg_box">
-                I’ve reviewed Buddy's latest blood work. His liver enzymes are slightly elevated, but consistent with his current medication protocol.
-              </div>
-            </div>
+          <div className="ref_chat_date">
+            <span>TODAY, OCTOBER 24</span>
           </div>
 
-          {/* LEFT */}
-          <div className="ref_msg left">
-                        <img src="/icn/Dr.Sarah.svg" alt="" />
-            <div>
-              <div className="ref_msg_head">
-                <b>Dr. Sarah Jenkins</b>
-                <span>10:42 AM</span>
-              </div>
-              <div className="ref_msg_box">
-                Yes, everything looks stable. Here is the comprehensive report and the referral history CSV for the records.
+          {messages.map((item) => (
+            <div key={item.id} className={`ref_msg ${item.side}`}>
+              {item.side === "left" ? <img src="/icn/Dr.Sarah.svg" alt="" /> : null}
+              <div>
+                <div className={`ref_msg_head ${item.side === "right" ? "right" : ""}`}>
+                  {item.side === "right" ? <span>{item.time}</span> : null}
+                  <b>{item.author}</b>
+                  {item.side === "left" ? <span>{item.time}</span> : null}
+                </div>
+                <div className={`ref_msg_box ${item.side === "right" ? "dark" : ""}`}>
+                  {item.text}
+                </div>
+                {item.side === "right" ? (
+                  <div className="ref_read">
+                    <Check2All size={12} aria-hidden="true" /> Read
+                  </div>
+                ) : null}
               </div>
             </div>
-          </div>
-
-          {/* RIGHT */}
-          <div className="ref_msg right">
-            <div>
-              <div className="ref_msg_head right">
-                <span>11:30 AM</span>
-                <b>Me</b>
-              </div>
-              <div className="ref_msg_box dark">
-                Thanks for sharing
-              </div>
-              <div className="ref_read"><img src="/icn/read_icn.svg" alt="" /> Read</div>
-            </div>
-          </div>
-
+          ))}
         </div>
 
-        {/* Footer */}
-        <div className="ref_chat_footer">
-          <button className="ref_plus"><img src="/icn/plus_icn1.svg" alt="" /></button>
-          <input placeholder="Type a message..." />
-          <button className="ref_send"><img src="/icn/send_icn.svg" alt="" /></button>
-        </div>
-
+        <form className="ref_chat_footer" onSubmit={handleSubmit}>
+          <button type="button" className="ref_plus" aria-label="Add attachment">
+            <Plus size={20} aria-hidden="true" />
+          </button>
+          <input
+            placeholder="Type a message..."
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
+          <button type="submit" className="ref_send" aria-label="Send message">
+            <Send size={18} aria-hidden="true" />
+          </button>
+        </form>
       </div>
     </div>
   );
