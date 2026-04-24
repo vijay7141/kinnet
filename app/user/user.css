@@ -6866,7 +6866,7 @@ background: #FFDAD6;
 @media screen and (max-width: 992px) { 
   .dash_sidebar{
     transform: translateX(-250%);
-    transition: all ease 1s;
+    transition: all ease 0.6s;
      z-index: 8888
   }
   .mobile_side_show{
@@ -6937,7 +6937,7 @@ background: #FFDAD6;
 .dash_sidebar.active{
     transform: translateX(0%);
     z-index: 8888;
-       transition: all ease 1s;
+       transition: all ease 0.6s;
 
 
 }

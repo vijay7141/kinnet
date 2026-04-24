@@ -34,10 +34,10 @@ export default function ResetSuccess() {
 
                 {/* Button */}
                 <div className="d-flex gap-3">
-                <Link href="/forgot-password/reset-link-expired"
+                <Link href="/referral-signup"
                   className="commen_btn2 border-0 w-100 d-block">Done
                 </Link>
-                <Link href="/forgot-password/reset-link-expired"
+                <Link href="/referral-signup"
                   className="auth_btn w-100 d-block">
                   Create Account
                 </Link>
