@@ -1048,16 +1048,17 @@ line-height: 24px;
   padding: 16px 20px;
   border-radius: 8px; 
   color: #FFF;
-text-align: center; 
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px;   
-display: flex;
-align-content: center;
-width: fit-content;
+  text-align: center; 
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;   
+  display: flex;
+  align-content: center;
+  width: fit-content;
     align-items: center;
     gap: 12px;
+    text-wrap: nowrap;
 }
 .commen_btn2{
 background: var(--Light-Blue, #9CEDED);
@@ -6868,7 +6869,7 @@ padding-left: 60px;
 
 @media screen and (max-width: 1300px) {
 ._referrals_list_wrap .ref_scroll, .dash_cards_area {
-  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 }
@@ -7051,9 +7052,9 @@ padding-left: 60px;
     max-width: 600px;
             justify-content: space-between;
   }
-  .das_area_inner .commen_btn, .das_area_inner .commen_btn2{
+  /* .das_area_inner .commen_btn, .das_area_inner .commen_btn2{
     width: 48%;
-  }
+  } */
   .referral_request_reason p {
     font-size: 15px;
     line-height: 1.7;
@@ -7071,12 +7072,12 @@ padding-left: 60px;
   flex-wrap: wrap;
 }
   ._referrals_list_wrap .ref_scroll {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     display: grid;
 }
     .dash_cards_area {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
     .dash_layout{
       display: block;
@@ -7367,7 +7368,7 @@ min-height: 400px;
     flex-direction: column;
   }
     ._referrals_list_wrap .ref_scroll {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
    
 }
   .auth_modal .modal-body {
