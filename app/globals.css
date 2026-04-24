@@ -24,7 +24,7 @@ div {
 }
 
 body {
-    font-family: var(--manrope_font);
+    font-family: var(--font-manrope), sans-serif;
     font-optical-sizing: auto;
     background-color: var(--white);
     width: 100%;
