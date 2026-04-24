@@ -37,10 +37,10 @@ const callDirectory: Record<string, CallContact> = {
     isGroup: true,
     incomingCaller: "Andrew Wilson",
     participants: [
-      { id: "1", name: "Cameron Wilson", role: "Doctor", avatar: "/avatar-1.png" },
-      { id: "2", name: "Jerome Bell", role: "Doctor", avatar: "/avatar-2.png" },
-      { id: "3", name: "Brooklyn Simmons", role: "Doctor", avatar: "/icn/user_avatar.svg" },
-      { id: "4", name: "Wade Warren", role: "Doctor", avatar: "/icn/Dr.Sarah.svg", muted: true, cameraOff: true },
+      { id: "1", name: "Cameron Wilson", role: "Doctor", avatar: "/group_video_call1.png" },
+      { id: "2", name: "Jerome Bell", role: "Doctor", avatar: "/group_video_call2.png" },
+      { id: "3", name: "Brooklyn Simmons", role: "Doctor", avatar: "/group_video_call3.png" },
+      { id: "4", name: "Wade Warren", role: "Doctor", avatar: "/group_video_call4.png", muted: true, cameraOff: true },
       { id: "5", name: "Jenny Wilson", role: "Doctor", avatar: "/avatar-2.png" },
       { id: "6", name: "Bessie Cooper", role: "Doctor", avatar: "/avatar-1.png" },
     ],
@@ -76,7 +76,7 @@ const callDirectory: Record<string, CallContact> = {
 
 const selfPreview = {
   name: "You",
-  avatar: "/avatar-2.png",
+  avatar: "/group_video_call5.png",
 };
 
 const initialGroupMessages = [
@@ -407,7 +407,16 @@ export default function CallPage() {
         <div className="calls_group_video_shell">
           <div className="calls_group_video_head">
             <button type="button" className="calls_group_video_back" onClick={() => router.push("/user/messages")}>
-              ←
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <g clip-path="url(#clip0_871_11332)">
+    <path d="M1.17372 18.7865L6.33372 23.9999C6.45767 24.1248 6.60514 24.224 6.76762 24.2917C6.9301 24.3594 7.10437 24.3943 7.28039 24.3943C7.4564 24.3943 7.63068 24.3594 7.79316 24.2917C7.95563 24.224 8.1031 24.1248 8.22705 23.9999C8.35202 23.8759 8.45122 23.7284 8.51891 23.566C8.5866 23.4035 8.62145 23.2292 8.62145 23.0532C8.62145 22.8772 8.5866 22.7029 8.51891 22.5404C8.45122 22.378 8.35202 22.2305 8.22705 22.1065L3.48039 17.3332H30.6671C31.0207 17.3332 31.3598 17.1927 31.6099 16.9427C31.8599 16.6926 32.0004 16.3535 32.0004 15.9999C32.0004 15.6462 31.8599 15.3071 31.6099 15.0571C31.3598 14.807 31.0207 14.6665 30.6671 14.6665H3.40039L8.22705 9.83987C8.46344 9.5919 8.59531 9.26245 8.59531 8.91987C8.59531 8.57728 8.46344 8.24784 8.22705 7.99987C8.1031 7.8749 7.95563 7.7757 7.79316 7.70801C7.63068 7.64032 7.4564 7.60547 7.28039 7.60547C7.10437 7.60547 6.9301 7.64032 6.76762 7.70801C6.60514 7.7757 6.45767 7.8749 6.33372 7.99987L1.17372 13.1332C0.424651 13.8832 0.00390625 14.8999 0.00390625 15.9599C0.00390625 17.0199 0.424651 18.0365 1.17372 18.7865V18.7865Z" fill="#374957"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_871_11332">
+      <rect width="32" height="32" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
             </button>
             <div className="calls_group_video_head_identity">
               <div className="calls_group_video_icon">
@@ -428,7 +437,9 @@ export default function CallPage() {
                   {index === 0 ? <span className="calls_group_video_badge">Active Speaker</span> : null}
                   <div className="calls_group_video_label">
                     <span>{participant.name}</span>
-                    {participant.muted ? <MicIcon off /> : <MicIcon />}
+                    {participant.muted ? <MicIcon off /> : <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
+  <path d="M2.33333 9.33333V2.33333H3.5V9.33333H2.33333ZM4.66667 11.6667V0H5.83333V11.6667H4.66667ZM0 7V4.66667H1.16667V7H0ZM7 9.33333V2.33333H8.16667V9.33333H7ZM9.33333 7V4.66667H10.5V7H9.33333Z" fill="#9FF0F0"/>
+</svg>}
                   </div>
                 </article>
               ))}
