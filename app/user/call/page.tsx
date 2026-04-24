@@ -263,6 +263,7 @@ export default function CallPage() {
   const [groupChatMessages, setGroupChatMessages] = useState(initialGroupMessages);
   const [groupChatInput, setGroupChatInput] = useState("");
   const [groupNotes, setGroupNotes] = useState("Key decisions and follow-up notes can be captured here.");
+  const [isGroupSidebarOpen, setIsGroupSidebarOpen] = useState(false);
 
   const subtitle = useMemo(() => {
     if (screen === "outgoing") {
@@ -299,6 +300,21 @@ export default function CallPage() {
 
     return () => window.clearTimeout(timeout);
   }, [router, screen]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1200px)");
+
+    const syncSidebarState = (event?: MediaQueryListEvent) => {
+      if (event?.matches ?? mediaQuery.matches) {
+        setIsGroupSidebarOpen(false);
+      }
+    };
+
+    syncSidebarState();
+    mediaQuery.addEventListener("change", syncSidebarState);
+
+    return () => mediaQuery.removeEventListener("change", syncSidebarState);
+  }, []);
 
   const openActive = () => setScreen("active");
 
@@ -408,7 +424,7 @@ export default function CallPage() {
           <div className="calls_group_video_head">
             <button type="button" className="calls_group_video_back" onClick={() => router.push("/user/messages")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-  <g clip-path="url(#clip0_871_11332)">
+  <g clipPath="url(#clip0_871_11332)">
     <path d="M1.17372 18.7865L6.33372 23.9999C6.45767 24.1248 6.60514 24.224 6.76762 24.2917C6.9301 24.3594 7.10437 24.3943 7.28039 24.3943C7.4564 24.3943 7.63068 24.3594 7.79316 24.2917C7.95563 24.224 8.1031 24.1248 8.22705 23.9999C8.35202 23.8759 8.45122 23.7284 8.51891 23.566C8.5866 23.4035 8.62145 23.2292 8.62145 23.0532C8.62145 22.8772 8.5866 22.7029 8.51891 22.5404C8.45122 22.378 8.35202 22.2305 8.22705 22.1065L3.48039 17.3332H30.6671C31.0207 17.3332 31.3598 17.1927 31.6099 16.9427C31.8599 16.6926 32.0004 16.3535 32.0004 15.9999C32.0004 15.6462 31.8599 15.3071 31.6099 15.0571C31.3598 14.807 31.0207 14.6665 30.6671 14.6665H3.40039L8.22705 9.83987C8.46344 9.5919 8.59531 9.26245 8.59531 8.91987C8.59531 8.57728 8.46344 8.24784 8.22705 7.99987C8.1031 7.8749 7.95563 7.7757 7.79316 7.70801C7.63068 7.64032 7.4564 7.60547 7.28039 7.60547C7.10437 7.60547 6.9301 7.64032 6.76762 7.70801C6.60514 7.7757 6.45767 7.8749 6.33372 7.99987L1.17372 13.1332C0.424651 13.8832 0.00390625 14.8999 0.00390625 15.9599C0.00390625 17.0199 0.424651 18.0365 1.17372 18.7865V18.7865Z" fill="#374957"/>
   </g>
   <defs>
@@ -427,6 +443,16 @@ export default function CallPage() {
                 <p>General discussion and announcements</p>
               </div>
             </div>
+            <button
+              type="button"
+              className="calls_group_video_sidebar_toggle"
+              aria-label="Toggle participants panel"
+              aria-expanded={isGroupSidebarOpen}
+              onClick={() => setIsGroupSidebarOpen((current) => !current)}
+            >
+              <GroupIcon />
+              <span>Participants</span>
+            </button>
           </div>
 
           <div className="calls_group_video_body">
@@ -451,10 +477,14 @@ export default function CallPage() {
               </div>
             </div>
 
-            <aside className="calls_group_video_sidebar">
+            <div
+              className={`calls_group_video_sidebar_overlay ${isGroupSidebarOpen ? "is_visible" : ""}`}
+              onClick={() => setIsGroupSidebarOpen(false)}
+            />
+            <aside className={`calls_group_video_sidebar ${isGroupSidebarOpen ? "is_open" : ""}`}>
               <div className="calls_group_video_sidebar_head">
                 <h3>Participants ({groupParticipants.length})</h3>
-                <button type="button" onClick={() => router.push("/user/messages")}>
+                <button type="button" aria-label="Close participants panel" onClick={() => setIsGroupSidebarOpen(false)}>
                   ×
                 </button>
               </div>
