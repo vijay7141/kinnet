@@ -1648,14 +1648,10 @@ export default function MessagesPage() {
         <div className="messages_group_flow">
           <div className="messages_group_success">
             <div className="messages_group_success_icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <circle cx="21" cy="21" r="21" fill="#9CEDED" />
-                <path d="M12.5 21.5L18.25 27.25L30 15.5" stroke="#033E4F" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <span>Messages - group created</span>
-            <h3>{groupName || selectedConversation?.name || "New Group"} Created</h3>
-            <p>Your care team group is ready. You can open the group chat or adjust group settings.</p>
+             <img src="/icn/review_icn.svg" alt="" />
+            </div> 
+            <h3>Your Group Created</h3>
+            <p>Your group has been created successfully.</p>
             <div className="messages_group_flow_actions">
               <button
                 type="button"
@@ -1665,18 +1661,9 @@ export default function MessagesPage() {
                   setIsInfoOpen(false);
                 }}
               >
-                Open New Group
+                Continue to Chat
               </button>
-              <button
-                type="button"
-                className="kinnect-btn-secondary"
-                onClick={() => {
-                  setIsCreateGroupOpen(false);
-                  setIsInfoOpen(true);
-                }}
-              >
-                Group Info
-              </button>
+             
             </div>
           </div>
         </div>
@@ -1697,7 +1684,8 @@ export default function MessagesPage() {
             </svg>
           </button>
         </div>
-
+      <div className="grounp_inside_inn">
+        
         <div className="messages_consult_group_body">
           <button
             type="button"
@@ -1725,14 +1713,22 @@ export default function MessagesPage() {
           <input ref={groupImageInputRef} type="file" accept="image/*" hidden onChange={handleGroupImageChange} />
 
           <div className="messages_consult_group_fields">
-            <label>
+            <div className="form_new_bx ">
+   <label>
               Group Name <span>*</span>
-              <input value={groupName} onChange={(event) => setGroupName(event.target.value)} />
+           
             </label>
-            <label>
+               <input value={groupName} onChange={(event) => setGroupName(event.target.value)} />
+               
+            </div>
+         <div className="form_new_bx">
+   <label>
               Short Description
-              <textarea value={groupDescription} onChange={(event) => setGroupDescription(event.target.value)} />
+            
             </label>
+              <textarea value={groupDescription} onChange={(event) => setGroupDescription(event.target.value)} />
+               </div>
+         
           </div>
         </div>
 
@@ -1792,12 +1788,14 @@ export default function MessagesPage() {
                 </button>
           ))}
         </div>
-
-        <div className="messages_consult_actions">
+          <div className="messages_consult_actions">
           <button type="button" disabled={!canCreate} onClick={createGroupConversation}>
             Create Group
           </button>
         </div>
+      </div>
+
+      
       </div>
     );
   };

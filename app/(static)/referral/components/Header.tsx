@@ -169,12 +169,12 @@ export default function Header({ toggleSidebar }: HeaderProps) {
 
         <div className="dash_vertical_line"></div>
 
-        <Link href="/user/profile" className="dash_user_info">
+        <Link href="" className="dash_user_info">
           <h4 className="dash_user_name">Dr. Elena Rodriguez</h4>
           <p className="dash_user_role">Lead Surgeon</p>
         </Link>
 
-        <Link href="/user/profile" className="dash_user_avatar">
+        <Link href="" className="dash_user_avatar">
           <img src="/icn/user_avatar.svg" alt="user" />
         </Link>
 

@@ -3450,7 +3450,16 @@ line-height: 16px;
   justify-content: center;
   flex-shrink: 0;
 }
-
+.messages_group_header_avatar{
+   width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #bfefff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 .messages_chat_identity h2 {
   margin: 0;
   color: #000;
@@ -3791,7 +3800,7 @@ line-height: 16px; /* 133.333% */
   flex: 1;
   min-height: 0;
   width: 100%;
-  padding: 16px 13px 24px;
+  padding: 0 0 24px;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -3999,22 +4008,31 @@ line-height: 16px; /* 133.333% */
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 36px;
+ 
+padding: 15px 32px;
+  background: rgba(248, 249, 255, 0.80);
+backdrop-filter: blur(6px);
 }
 
 .messages_consult_group_head h3 {
-  margin: 0;
-  color: #191c1d;
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 28px;
-}
+  margin: 0; 
 
+  color: #181C21; 
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 32px; /* 133.333% */
+}
+.grounp_inside_inn{
+  padding: 0 32px;
+}
 .messages_consult_group_head p {
-  margin: 2px 0 0;
-  color: #41484b;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
+  margin: 2px 0 0; 
+  color: #3E494A; 
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
 }
 
 .messages_consult_group_head button {
@@ -4025,13 +4043,14 @@ line-height: 16px; /* 133.333% */
 
 .messages_consult_group_body {
   display: grid;
-  grid-template-columns: 124px minmax(0, 1fr);
+  grid-template-columns: 154px minmax(0, 1fr);
   gap: 19px;
   margin-bottom: 20px;
 }
 
 .messages_group_photo_upload {
-  height: 122px;
+  height: 150px;
+  width: 150px;
   border-radius: 8px;
   border: 1px dashed #9ceded;
   background: #f3f3f3;
@@ -4069,13 +4088,15 @@ line-height: 16px; /* 133.333% */
 }
 
 .messages_consult_group_fields label {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  color: #41484b;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
+  display: flex; 
+  margin: 0; 
+  color: #3E494A; 
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: 16.5px; 
+gap: 5px;
+
 }
 
 .messages_consult_group_fields label span {
@@ -4182,7 +4203,7 @@ line-height: 16px; /* 133.333% */
 .messages_consult_member_grid .messages_avatar {
   width: 34px;
   height: 34px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .messages_consult_selected_list h4,
@@ -4296,6 +4317,8 @@ line-height: 16px; /* 133.333% */
   font-size: 14px;
   font-weight: 800;
   line-height: 20px;
+  height: 48px;
+
 }
 
 .messages_consult_actions button:disabled {
@@ -8898,6 +8921,7 @@ width: 100%;
   z-index: 9996;
   margin: 0;
   background: #fff;
+  overflow-y: auto;
 }
 
 .webinar_head {
@@ -12001,8 +12025,8 @@ background: rgba(255, 255, 255, 0.10);
 }
 
 .calls_group_video_sidebar_toggle svg {
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
 }
 
 .calls_group_video_back {

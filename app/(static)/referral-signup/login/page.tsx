@@ -150,7 +150,7 @@ export default function LoginPage() {
                   </Button>
                   <div className="forget_btn">
                      
-                  <Link href="/forgot-password"> Forgot Password? </Link>
+                  <Link href="/referral-signup/forgot-password"> Forgot Password? </Link>
                   </div>
 
                 </Form>

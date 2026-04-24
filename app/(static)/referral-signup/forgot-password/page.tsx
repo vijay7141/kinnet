@@ -39,7 +39,7 @@ export default function ForgotPassword() {
                   </Form.Group>
 
                   {/* Button */}
-                  <Link href="/forgot-password/forget-mail-sent">
+                  <Link href="/referral-signup/forgot-password/forget-mail-sent">
                   <Button className="auth_btn w-100 mb-4">
                     Send Reset Link
                   </Button>
@@ -50,7 +50,7 @@ export default function ForgotPassword() {
 
                   {/* Back to Login */}
                   <div className="text-center mt-3">
-                    <Link href="/login" className="back_login">
+                    <Link href="/referral-signup/login" className="back_login">
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
   <path d="M2.86875 6.75L7.06875 10.95L6 12L0 6L6 0L7.06875 1.05L2.86875 5.25H12V6.75H2.86875Z" fill="#E4432D"/>
 </svg> Back to Login
