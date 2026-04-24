@@ -38,7 +38,7 @@ const [showReviewModal, setShowReviewModal] = useState(false);
                 Join Kinnect for communication, collaboration, and referrals.
               </p>
 
-              <Row className="mt-4 g-3">
+              <Row className="mt-4 g-3 d-md-flex d-none">
                 <Col md={6}>
                   <Card className="auth_card p-3 border-0">
                     <Card.Body>

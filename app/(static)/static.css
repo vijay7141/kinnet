@@ -462,6 +462,7 @@ footer{
 }
 .new-referral-pagex{
     max-width: 900px;
+    padding: 0 20px;
 }
 .new-referral-pagex h1{
     color: var(--Primary, #033E4F);
@@ -1015,4 +1016,22 @@ footer{
         width: 40px;
     height: 40px;
   }
+  .new-referral-pagex{ 
+    padding: 0  0px;
+}
+    header {
+        padding: 0 0px;
+    }
+    .new-referral-pagex .kinnect-btn-primary{
+       white-space: pre;
+       padding-left: 0;
+       padding-right: 0;
+       width: 50%;
+    }
+    .new-referral-pagex .kinnect-btn-secondary{
+            white-space: pre;
+       padding-left: 0;
+       padding-right: 0;
+       width: 50%;
+    }
 }

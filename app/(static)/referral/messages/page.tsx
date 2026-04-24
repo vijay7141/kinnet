@@ -42,6 +42,8 @@ type MessageReply = {
   text: string;
 };
 
+type DeliveryStatus = "Sending..." | "Sent" | "Delivered" | "Read";
+
 type MessageItem = {
   id: number;
   sender: "contact" | "me";
@@ -51,7 +53,7 @@ type MessageItem = {
   read?: boolean;
   pinned?: boolean;
   pinnedTitle?: string;
-  deliveryStatus?: "Read" | "Delivered";
+  deliveryStatus?: DeliveryStatus;
   attachment?: MessageAttachment;
   attachments?: MessageAttachment[];
   replyTo?: MessageReply;
@@ -582,11 +584,20 @@ export default function MessagesPage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const emojiPickerRef = useRef<HTMLDivElement | null>(null);
   const groupImageInputRef = useRef<HTMLInputElement | null>(null);
+  const messageStatusTimeoutsRef = useRef<number[]>([]);
 
   const selectedConversation = useMemo(
     () => conversations.find((conversation) => conversation.id === selectedConversationId) ?? null,
     [conversations, selectedConversationId]
   );
+
+  useEffect(() => {
+    const timeoutIds = messageStatusTimeoutsRef.current;
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, []);
 
   const openCallScreen = (type: "audio" | "video", conversation: Conversation | null = selectedConversation) => {
     if (!conversation) {
@@ -1442,6 +1453,7 @@ export default function MessagesPage() {
 
   const sendMessage = () => {
     const trimmedMessage = draftMessage.trim();
+    const messageId = Date.now();
 
     if ((!trimmedMessage && !attachedFile) || !selectedConversationId) {
       return;
@@ -1459,12 +1471,13 @@ export default function MessagesPage() {
               messages: [
                 ...conversation.messages,
                 {
-                  id: Date.now(),
+                  id: messageId,
                   sender: "me",
                   author: "Me",
                   text: trimmedMessage,
                   time: "Now",
                   read: true,
+                  deliveryStatus: "Sending...",
                   attachment: attachedFile ?? undefined,
                   replyTo: replyingTo ?? undefined,
                 },
@@ -1482,6 +1495,27 @@ export default function MessagesPage() {
     setIsInfoOpen(false);
     setIsEmojiPickerOpen(false);
     setActiveTab("chat");
+
+    const deliveryStatuses: DeliveryStatus[] = ["Sent", "Delivered", "Read"];
+
+    const statusTimeouts = deliveryStatuses.map((status, index) =>
+      window.setTimeout(() => {
+        setConversations((current) =>
+          current.map((conversation) =>
+            conversation.id === selectedConversationId
+              ? {
+                  ...conversation,
+                  messages: conversation.messages.map((message) =>
+                    message.id === messageId ? { ...message, deliveryStatus: status } : message
+                  ),
+                }
+              : conversation
+          )
+        );
+      }, 2000 * (index + 1))
+    );
+
+    messageStatusTimeoutsRef.current.push(...statusTimeouts);
   };
 
   const addEmojiToDraft = (emojiData: EmojiClickData) => {

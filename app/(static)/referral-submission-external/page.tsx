@@ -11,9 +11,12 @@ export default function ReferralSubmissionExternalPage() {
     <main className="">
       <Header/>
       <section className="new-referral-pagex m-auto">
-        <h1>New Referral</h1>
+        <div className="container-fluid">
+ <h1>New Referral</h1>
         <NewrefferlsFormEx />
         
+        </div>
+       
       </section>
       <Footer />
     </main>

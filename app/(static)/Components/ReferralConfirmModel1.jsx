@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { Modal, Button } from "react-bootstrap";
 
 export default function ReferralConfirmModel1({
@@ -34,8 +35,9 @@ export default function ReferralConfirmModel1({
                <Button className="kinnect-btn-secondary " onClick={handleClose}>
              Edit Form
             </Button> 
-    <Button className="kinnect-btn-primary" onClick={handleClose}>
-             Confirm
+    <Button className="kinnect-btn-primary"  >
+      <Link href="/referral/referrals">Confirm</Link>
+             
             </Button>
             </div>
         

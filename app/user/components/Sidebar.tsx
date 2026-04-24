@@ -23,7 +23,8 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
   return (
     <>
       <aside className={`dash_sidebar ${sidebarOpen ? "active" : ""}`}>
-        <img src="/logo_big.svg" alt="logo" className="logo" />
+     <div className="aside_inside">
+           <img src="/logo_big.svg" alt="logo" className="logo" />
 
         <ul className="dash_menu">
           <li className={isActive("/user/dashboard") ? "active" : ""}>
@@ -77,6 +78,7 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
             </Link>
           </li>
         </ul>
+     </div>
 
         <button type="button" className="dash_logout" onClick={() => setShowLogoutModal(true)}>
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
