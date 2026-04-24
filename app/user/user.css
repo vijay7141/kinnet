@@ -6856,7 +6856,12 @@ background: #FFDAD6;
 }
 }
 
-@media screen and (max-width: 1300px) {}
+@media screen and (max-width: 1300px) {
+._referrals_list_wrap .ref_scroll, .dash_cards_area {
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+
+}
 
 @media screen and (max-width: 1250px) { 
 }

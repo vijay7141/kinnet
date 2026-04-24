@@ -55,7 +55,7 @@ export default function HomePage() {
                   <br />
                   not the Paperwork
                 </h2>
-                <Link href="" className="kinnect-btn-secondary">Get Started</Link>
+                <Link href="" className="kinnect-btn-primary">Get Started</Link>
               </div>
               <div className="col-lg-6">
                 <div className="d-flex justify-content-lg-center gap-3">

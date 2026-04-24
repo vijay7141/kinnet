@@ -933,7 +933,7 @@ export default function ChannelsPage() {
                   <div><span>By</span><strong>{selectedChannel.createdBy}</strong></div>
                   <div><span>Files</span><strong>{selectedChannel.filesSize}</strong></div>
                 </div>
-                <button type="button" className="channels_leave_btn">Leave Channel</button>
+                {/* <button type="button" className="channels_leave_btn">Leave Channel</button> */}
               </aside>
             </div>
           ) : null}
@@ -961,7 +961,9 @@ export default function ChannelsPage() {
                   </div>
                 ))}
               </div>
-              <div className="channels_settings_footer_action"><button type="button" className="messages_group_leave_btn v2">Leave Channel</button></div>
+              {/* <div className="channels_settings_footer_action">
+                <button type="button" className="messages_group_leave_btn v2">Leave Channel</button>
+                </div> */}
             </div>
           ) : null}
 
@@ -985,7 +987,9 @@ export default function ChannelsPage() {
                   <span></span>
                 </button>
               </div>
-              <div className="channels_settings_footer_action"><button type="button" className="channels_leave_btn">Leave Channel</button></div>
+              {/* <div className="channels_settings_footer_action">
+                <button type="button" className="channels_leave_btn">Leave Channel</button>
+                </div> */}
             </div>
           ) : null}
         </div>
@@ -1443,7 +1447,7 @@ export default function ChannelsPage() {
                 ))}
               </div>
 
-              <button type="button" className="messages_group_leave_btn v2">Leave Channel</button>
+              {/* <button type="button" className="messages_group_leave_btn v2">Leave Channel</button> */}
             </aside>
           ) : null}
         </div>
