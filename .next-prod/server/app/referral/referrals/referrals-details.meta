@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(static)/layout,_N_T_/(static)/referral/layout,_N_T_/(static)/referral/referrals/layout,_N_T_/(static)/referral/referrals/referrals-details/layout,_N_T_/(static)/referral/referrals/referrals-details/page,_N_T_/referral/referrals/referrals-details"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHN0YXRpYyk/referral/referrals/referrals-details/__PAGE__",
+    "/!KHN0YXRpYyk/referral/referrals/referrals-details",
+    "/!KHN0YXRpYyk/referral/referrals",
+    "/!KHN0YXRpYyk/referral",
+    "/!KHN0YXRpYyk",
+    "/_index",
+    "/_head"
+  ]
+}

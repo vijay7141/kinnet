@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/user/layout,_N_T_/user/channels/layout,_N_T_/user/channels/page,_N_T_/user/channels"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/user/channels/__PAGE__",
+    "/user/channels",
+    "/user",
+    "/_index",
+    "/_head"
+  ]
+}

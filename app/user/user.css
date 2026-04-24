@@ -2937,6 +2937,14 @@ line-height: 15px; /* 150% */
   gap: 3px;
 }
 
+.ref_read.sent {
+  color: #5f6d75;
+}
+
+.ref_read.read {
+  color: #18A0AA;
+}
+
 /* FOOTER */
 .ref_chat_footer {
   padding: 10px;
@@ -3042,9 +3050,10 @@ margin: -6px -25px;
 }
 
 .dash_main:has(.channels_page) .channels_page {
-  height: calc(100vh - 72px);
-  min-height: calc(100vh - 72px);
+     height: calc(100vh - 72px);
+    min-height: calc(100vh - 72px);
   overflow: hidden;
+      margin: -6px -25px;
 }
 
 .dash_main:has(.messages_page) .messages_layout {
@@ -5203,8 +5212,16 @@ min-width: 300px;
   line-height: 15px;
 }
 
-.messages_read_status img {
-  width: 11px;
+.messages_read_status svg {
+  flex-shrink: 0;
+}
+
+.messages_read_status.sent {
+  color: #5f6d75;
+}
+
+.messages_read_status.read {
+  color: #18A0AA;
 }
 
 .messages_placeholder {
@@ -7267,8 +7284,20 @@ min-height: 400px;
   }
   .messages_sidebar_head,
   .messages_conversation_list {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .messages_chat_header{
+        padding-left: 30px;
+    padding-right: 30px;
+  }
+  .messages_composer_wrap{
+     padding-left: 30px;
+    padding-right: 30px;
+  }
+  .messages_panel_body{
+      padding-left: 30px;
+    padding-right: 30px;
   }
   .messages_conversation_item {
     gap: 12px;
@@ -12240,13 +12269,13 @@ background: #f2f4f5;
 .channels_sidebar_top h1,
 .channels_settings_hero h1,
 .channels_chat_identity h2 {
-  margin: 0; 
-  color: #002733; 
-font-size: 36px;
+  margin: 0;   
+color: var(--Black, #000); 
+font-size: 20px;
 font-style: normal;
 font-weight: 700;
-line-height: 40px; /* 111.111% */
-letter-spacing: -0.9px;
+line-height: 28px; /* 140% */
+letter-spacing: -0.5px;
 }
 
 .channels_add_btn {
@@ -12263,14 +12292,21 @@ letter-spacing: -0.9px;
   justify-content: center;
 }
 
-.channels_search_bar {
-  height: 40px;
-  border-radius: 8px;
+.channels_search_bar {  
   background: #dff4ff;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 14px;
+  gap: 10px;  
+  display: flex;
+height: 40px;
+padding: 8px 16px 9px 16px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0;
+align-self: stretch;
+border-radius: 8px;
+background: #E5F6FF;
 }
 
 .channels_mobile_back {
@@ -13277,7 +13313,24 @@ line-height: 20px; /* 142.857% */
   .channels_settings_general {
     grid-template-columns: 1fr;
   }
-
+  .channels_mobile_back{
+    color: #45535f;
+    background: none;
+    background: var(--primary);
+    border: 0;
+    border-radius: 9px;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    font-size: 30px;
+    line-height: 1;
+  }
+  .channels_mobile_back svg path{
+    fill: white;
+  }
   .channels_files_table_head,
   .channels_files_table_row {
     grid-template-columns: minmax(0, 1.4fr) 0.9fr 0.9fr 84px;

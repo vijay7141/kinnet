@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(auth-flow)/layout,_N_T_/(auth-flow)/forgot-password/layout,_N_T_/(auth-flow)/forgot-password/reset-successfully/layout,_N_T_/(auth-flow)/forgot-password/reset-successfully/page,_N_T_/forgot-password/reset-successfully"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGF1dGgtZmxvdyk/forgot-password/reset-successfully/__PAGE__",
+    "/!KGF1dGgtZmxvdyk/forgot-password/reset-successfully",
+    "/!KGF1dGgtZmxvdyk/forgot-password",
+    "/!KGF1dGgtZmxvdyk",
+    "/_index",
+    "/_head"
+  ]
+}
