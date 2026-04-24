@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type WebinarView = "list" | "create" | "waiting" | "live";
@@ -8,6 +9,7 @@ type WebinarType = "private" | "public";
 type LivePanel = "chat" | "attendees";
 type LiveRole = "attendee" | "host";
 type SelectorMode = "attendees" | "hosts" | null;
+type MobileLiveView = "stage" | "chat" | "attendees";
 
 type Person = {
   id: number;
@@ -38,6 +40,17 @@ type LiveAttendee = {
   image: string;
   muted: boolean;
   cameraOff: boolean;
+};
+
+type NotificationItem = {
+  id: number;
+  type: string;
+  title: string;
+  description: string;
+  time: string;
+  unread: boolean;
+  icon: "referral" | "message" | "call";
+  avatar?: string;
 };
 
 const attendeeDirectory: Person[] = [
@@ -98,6 +111,61 @@ const initialLiveAttendees: LiveAttendee[] = [
   { id: 3, name: "Elena Rodriguez", title: "Clinical Staff", image: "/avatar-2.png", muted: true, cameraOff: false },
   { id: 4, name: "Dr. James Wilson", title: "Observer", image: "/avatar-1.png", muted: false, cameraOff: false },
 ];
+
+const initialNotifications: NotificationItem[] = [
+  {
+    id: 1,
+    type: "New Referral",
+    title: "Luna (Persian Cat) - Sarah Miller",
+    description: "Claimed: Dr. Sarah Jenkins",
+    time: "2m ago",
+    unread: true,
+    icon: "referral",
+  },
+  {
+    id: 2,
+    type: "New Message",
+    title: "Dr. Sarah Jenkins",
+    description: '"The lab results for @Bella are back. Please check the thyroid levels before..."',
+    time: "15m ago",
+    unread: true,
+    icon: "message",
+    avatar: "/icn/user_avatar.svg",
+  },
+  {
+    id: 3,
+    type: "Missed Call",
+    title: "Owner: Marcus Wright (Luna)",
+    description: "Patient: Luna I Follow-up on post-op medication response.",
+    time: "1h ago",
+    unread: false,
+    icon: "call",
+  },
+];
+
+function NotificationIcon({ icon, avatar }: { icon: NotificationItem["icon"]; avatar?: string }) {
+  if (icon === "message" && avatar) {
+    return (
+      <span className="dash_notification_media dash_notification_media_avatar" aria-hidden="true">
+        <Image src="/icn/Dr.Sarah.svg" alt="" width={40} height={40} />
+      </span>
+    );
+  }
+
+  if (icon === "call") {
+    return (
+      <span className="dash_notification_media" aria-hidden="true">
+        <Image src="/icn/call_icn1.svg" alt="" width={20} height={20} />
+      </span>
+    );
+  }
+
+  return (
+    <span className="dash_notification_media" aria-hidden="true">
+      <Image src="/icn/referral_icn1.svg" alt="" width={20} height={20} />
+    </span>
+  );
+}
 
 function CalendarIcon() {
   return (
@@ -201,6 +269,15 @@ function RecordIcon() {
   );
 }
 
+function StopRecordIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="7.5" stroke="currentColor" strokeWidth="1.8" />
+      <rect x="9.25" y="9.25" width="5.5" height="5.5" rx="1.2" fill="currentColor" />
+    </svg>
+  );
+}
+
 function TrashIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -256,6 +333,7 @@ export default function WebinarPage() {
   const dateInputRef = useRef<HTMLInputElement | null>(null);
   const timeInputRef = useRef<HTMLInputElement | null>(null);
   const selectorRef = useRef<HTMLDivElement | null>(null);
+  const notificationRef = useRef<HTMLDivElement | null>(null);
   const [view, setView] = useState<WebinarView>("list");
   const [webinars, setWebinars] = useState<WebinarCard[]>(initialWebinars);
   const [title, setTitle] = useState("");
@@ -277,6 +355,9 @@ export default function WebinarPage() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>(initialChatMessages);
   const [chatInput, setChatInput] = useState("");
   const [liveAttendees, setLiveAttendees] = useState<LiveAttendee[]>(initialLiveAttendees);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const [mobileLiveView, setMobileLiveView] = useState<MobileLiveView>("stage");
 
   const selectedAttendees = useMemo(
     () => attendeeDirectory.filter((person) => selectedAttendeeIds.includes(person.id)),
@@ -288,6 +369,10 @@ export default function WebinarPage() {
   );
   const combinedDirectory = selectorMode === "attendees" ? attendeeDirectory : hostDirectory;
   const combinedSelectedIds = selectorMode === "attendees" ? selectedAttendeeIds : selectedHostIds;
+  const unreadCount = useMemo(
+    () => notifications.filter((notification) => notification.unread).length,
+    [notifications]
+  );
 
   const resetCreateForm = () => {
     setTitle("");
@@ -361,6 +446,8 @@ export default function WebinarPage() {
   const openLive = (role: LiveRole) => {
     setLiveRole(role);
     setView("live");
+    setMobileLiveView("stage");
+    setLivePanel("chat");
     setSelectorMode(null);
     setIsMicMuted(false);
     setIsVideoMuted(false);
@@ -406,6 +493,10 @@ export default function WebinarPage() {
     setChatInput("");
   };
 
+  const markAllAsRead = () => {
+    setNotifications((current) => current.map((item) => ({ ...item, unread: false })));
+  };
+
   useEffect(() => {
     if (!selectorMode) {
       return;
@@ -424,7 +515,79 @@ export default function WebinarPage() {
     };
   }, [selectorMode]);
 
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!notificationRef.current?.contains(event.target as Node)) {
+        setIsNotificationsOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsNotificationsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
   const pageTitle = view === "create" ? "Create Webinar" : "Webinars";
+  const mobilePanelTitle = mobileLiveView === "attendees" ? "Attendees" : "Live Chat";
+
+  const webinarChatContent = (
+    <div className="webinar_chat_panel">
+      {chatMessages.map((message, index) => (
+        <div key={message.id}>
+          <div className="webinar_chat_head">
+            <strong>{message.author}</strong>
+            <span>{message.time}</span>
+          </div>
+          <div className="webinar_chat_bubble">{message.message}</div>
+          {index === 1 ? <div className="webinar_chat_notice">New Viewer Joined: Dr. Patel</div> : null}
+        </div>
+      ))}
+    </div>
+  );
+
+  const webinarAttendeeContent = (
+    <div className="webinar_attendee_panel">
+      {liveAttendees.map((person) => (
+        <div key={person.id} className="webinar_attendee_row">
+          <div className="webinar_attendee_identity">
+            <Image src={person.image} alt={person.name} width={58} height={58} />
+            <div>
+              <h5>{person.name}</h5>
+              <p>{person.title}</p>
+            </div>
+          </div>
+          <div className="webinar_attendee_actions">
+            <button
+              type="button"
+              className={`webinar_attendee_action_btn ${person.muted ? "muted" : ""}`}
+              onClick={() => toggleAttendeeAudio(person.id)}
+              aria-label={person.muted ? `Unmute ${person.name}` : `Mute ${person.name}`}
+            >
+              {person.muted ? <MutedMicIcon /> : <MicrophoneIcon />}
+            </button>
+            <button
+              type="button"
+              className={`webinar_attendee_action_btn ${person.cameraOff ? "muted" : ""}`}
+              onClick={() => toggleAttendeeVideo(person.id)}
+              aria-label={person.cameraOff ? `Turn on ${person.name} video` : `Turn off ${person.name} video`}
+            >
+              {person.cameraOff ? <CameraOffIcon /> : <CameraIcon />}
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <section className={`webinar_page ${view === "live" || view === "waiting" ? "webinar_page_full" : ""}`}>
@@ -456,7 +619,7 @@ export default function WebinarPage() {
             webinars.length ? (
               <div className="row webinar_cards">
                 {webinars.map((item) => (
-                  <div key={item.id} className="col-12 col-md-6 col-xl-4">
+                  <div key={item.id} className="col-md-6 col-xl-4">
                     <article className="webinar_card">
                       <div className="webinar_card_media">
                         <div className="webinar_card_media_icon">
@@ -717,10 +880,11 @@ export default function WebinarPage() {
 
       {view === "live" ? (
         <div className="webinar_live_room">
-          <div className="webinar_live_topbar">
+          <div className="webinar_live_topbar jusify-content-between">
+            <div className="webinar_live_inforgt">
             <button type="button" className="webinar_back_btn" onClick={() => setView("list")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <g clip-path="url(#clip0_818_269)">
+              <g clipPath="url(#clip0_818_269)">
                 <path d="M1.17372 18.7865L6.33372 23.9999C6.45767 24.1248 6.60514 24.224 6.76762 24.2917C6.9301 24.3594 7.10437 24.3943 7.28039 24.3943C7.4564 24.3943 7.63068 24.3594 7.79316 24.2917C7.95563 24.224 8.1031 24.1248 8.22705 23.9999C8.35202 23.8759 8.45122 23.7284 8.51891 23.566C8.5866 23.4035 8.62145 23.2292 8.62145 23.0532C8.62145 22.8772 8.5866 22.7029 8.51891 22.5404C8.45122 22.378 8.35202 22.2305 8.22705 22.1065L3.48039 17.3332H30.6671C31.0207 17.3332 31.3598 17.1927 31.6099 16.9427C31.8599 16.6926 32.0004 16.3535 32.0004 15.9999C32.0004 15.6462 31.8599 15.3071 31.6099 15.0571C31.3598 14.807 31.0207 14.6665 30.6671 14.6665H3.40039L8.22705 9.83987C8.46344 9.5919 8.59531 9.26245 8.59531 8.91987C8.59531 8.57728 8.46344 8.24784 8.22705 7.99987C8.1031 7.8749 7.95563 7.7757 7.79316 7.70801C7.63068 7.64032 7.4564 7.60547 7.28039 7.60547C7.10437 7.60547 6.9301 7.64032 6.76762 7.70801C6.60514 7.7757 6.45767 7.8749 6.33372 7.99987L1.17372 13.1332C0.424651 13.8832 0.00390625 14.8999 0.00390625 15.9599C0.00390625 17.0199 0.424651 18.0365 1.17372 18.7865V18.7865Z" fill="#374957"/>
               </g>
               <defs>
@@ -737,26 +901,62 @@ export default function WebinarPage() {
                 <path d="M0 10V8.6875C0 8.09028 0.305556 7.60417 0.916667 7.22917C1.52778 6.85417 2.33333 6.66667 3.33333 6.66667C3.51389 6.66667 3.6875 6.67014 3.85417 6.67708C4.02083 6.68403 4.18056 6.70139 4.33333 6.72917C4.13889 7.02083 3.99306 7.32639 3.89583 7.64583C3.79861 7.96528 3.75 8.29861 3.75 8.64583V10H0ZM5 10V8.64583C5 8.20139 5.12153 7.79514 5.36458 7.42708C5.60764 7.05903 5.95139 6.73611 6.39583 6.45833C6.84028 6.18056 7.37153 5.97222 7.98958 5.83333C8.60764 5.69444 9.27778 5.625 10 5.625C10.7361 5.625 11.4132 5.69444 12.0312 5.83333C12.6493 5.97222 13.1806 6.18056 13.625 6.45833C14.0694 6.73611 14.4097 7.05903 14.6458 7.42708C14.8819 7.79514 15 8.20139 15 8.64583V10H5ZM16.25 10V8.64583C16.25 8.28472 16.2049 7.94444 16.1146 7.625C16.0243 7.30556 15.8889 7.00694 15.7083 6.72917C15.8611 6.70139 16.0174 6.68403 16.1771 6.67708C16.3368 6.67014 16.5 6.66667 16.6667 6.66667C17.6667 6.66667 18.4722 6.85069 19.0833 7.21875C19.6944 7.58681 20 8.07639 20 8.6875V10H16.25ZM6.77083 8.33333H13.25C13.1111 8.05556 12.7257 7.8125 12.0938 7.60417C11.4618 7.39583 10.7639 7.29167 10 7.29167C9.23611 7.29167 8.53819 7.39583 7.90625 7.60417C7.27431 7.8125 6.89583 8.05556 6.77083 8.33333ZM3.33333 5.83333C2.875 5.83333 2.48264 5.67014 2.15625 5.34375C1.82986 5.01736 1.66667 4.625 1.66667 4.16667C1.66667 3.69444 1.82986 3.29861 2.15625 2.97917C2.48264 2.65972 2.875 2.5 3.33333 2.5C3.80556 2.5 4.20139 2.65972 4.52083 2.97917C4.84028 3.29861 5 3.69444 5 4.16667C5 4.625 4.84028 5.01736 4.52083 5.34375C4.20139 5.67014 3.80556 5.83333 3.33333 5.83333ZM16.6667 5.83333C16.2083 5.83333 15.816 5.67014 15.4896 5.34375C15.1632 5.01736 15 4.625 15 4.16667C15 3.69444 15.1632 3.29861 15.4896 2.97917C15.816 2.65972 16.2083 2.5 16.6667 2.5C17.1389 2.5 17.5347 2.65972 17.8542 2.97917C18.1736 3.29861 18.3333 3.69444 18.3333 4.16667C18.3333 4.625 18.1736 5.01736 17.8542 5.34375C17.5347 5.67014 17.1389 5.83333 16.6667 5.83333ZM10 5C9.30556 5 8.71528 4.75694 8.22917 4.27083C7.74306 3.78472 7.5 3.19444 7.5 2.5C7.5 1.79167 7.74306 1.19792 8.22917 0.71875C8.71528 0.239583 9.30556 0 10 0C10.7083 0 11.3021 0.239583 11.7812 0.71875C12.2604 1.19792 12.5 1.79167 12.5 2.5C12.5 3.19444 12.2604 3.78472 11.7812 4.27083C11.3021 4.75694 10.7083 5 10 5ZM10 3.33333C10.2361 3.33333 10.434 3.25347 10.5938 3.09375C10.7535 2.93403 10.8333 2.73611 10.8333 2.5C10.8333 2.26389 10.7535 2.06597 10.5938 1.90625C10.434 1.74653 10.2361 1.66667 10 1.66667C9.76389 1.66667 9.56597 1.74653 9.40625 1.90625C9.24653 2.06597 9.16667 2.26389 9.16667 2.5C9.16667 2.73611 9.24653 2.93403 9.40625 3.09375C9.56597 3.25347 9.76389 3.33333 10 3.33333Z" fill="#033E4F"/>
               </svg> &nbsp;
               128 Viewers</span>
-            <div className="webinar_live_topbar_right">
-              <button type="button" className="webinar_live_bell" aria-label="Notifications">
-                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                  <path
-                    d="M10 17.5C10.92 17.5 11.667 16.753 11.667 15.833H8.333C8.333 16.753 9.08 17.5 10 17.5ZM15 14.167V9.167C15 6.608 13.608 4.467 11.167 3.887V3.333C11.167 2.642 10.691 2.167 10 2.167C9.309 2.167 8.833 2.642 8.833 3.333V3.887C6.383 4.467 5 6.6 5 9.167V14.167L3.333 15.833V16.667H16.667V15.833L15 14.167Z"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <div className="webinar_live_userline"></div>
-              <div className="webinar_live_user">
-                <div>
-                  <h4>Dr. Elena Rodriguez</h4>
-                  <p>Lead Surgeon</p>
-                </div>
-                <Image src="/icn/user_avatar.svg" alt="Dr. Elena Rodriguez" width={48} height={48} />
               </div>
+            <div className="dash_header_right_area">
+              <div className="dash_notification_wrap" ref={notificationRef}>
+                <button
+                  type="button"
+                  className={`dash_notify_icon ${isNotificationsOpen ? "active" : ""}`}
+                  onClick={() => setIsNotificationsOpen((current) => !current)}
+                  aria-label="Open notifications"
+                  aria-expanded={isNotificationsOpen}
+                >
+                  <Image src="/icn/fi-rr-bell.svg" alt="" width={25} height={25} />
+                  {unreadCount ? <span className="dash_notify_badge">{unreadCount}</span> : null}
+                </button>
+
+                {isNotificationsOpen ? (
+                  <div className="dash_notification_panel">
+                    <div className="dash_notification_panel_head">
+                      <h3>Notifications</h3>
+                      <button type="button" onClick={markAllAsRead}>
+                        Mark all as read
+                      </button>
+                    </div>
+
+                    <div className="dash_notification_list">
+                      {notifications.map((notification) => (
+                        <article
+                          key={notification.id}
+                          className={`dash_notification_item ${notification.unread ? "unread" : ""}`}
+                        >
+                          <NotificationIcon icon={notification.icon} avatar={notification.avatar} />
+
+                          <div className="dash_notification_content">
+                            <div className="dash_notification_meta">
+                              <span className="dash_notification_type">{notification.type}</span>
+                              <span className="dash_notification_time">{notification.time}</span>
+                            </div>
+                            <h4>{notification.title}</h4>
+                            <p>{notification.description}</p>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="dash_vertical_line"></div>
+
+              <Link href="/user/profile" className="dash_user_info">
+                <h4 className="dash_user_name">Dr. Elena Rodriguez</h4>
+                <p className="dash_user_role">Lead Surgeon</p>
+              </Link>
+
+              <Link href="/user/profile" className="dash_user_avatar">
+                <Image src="/icn/user_avatar.svg" alt="user" width={45} height={45} />
+              </Link>
             </div>
           </div>
 
@@ -807,26 +1007,59 @@ export default function WebinarPage() {
                   {isVideoMuted ? <CameraOffIcon /> : <CameraIcon />}
                 </button>
                 {liveRole === "host" ? (
-                  <button
-                    type="button"
-                    className={`webinar_control_btn webinar_share_btn ${isScreenSharing ? "active" : ""}`}
-                    onClick={() => setIsScreenSharing((current) => !current)}
-                  >
-                    <ShareIcon />
-                    <span>{isScreenSharing ? "Stop Sharing" : "Share Screen"}</span>
-                  </button>
+                  <div className="webinar_share_wrap">
+                    {!isScreenSharing ? <div className="webinar_share_tooltip">Share Screen</div> : null}
+                    <button
+                      type="button"
+                      className={`webinar_control_btn webinar_share_btn ${isScreenSharing ? "active" : ""}`}
+                      onClick={() => setIsScreenSharing((current) => !current)}
+                      aria-label={isScreenSharing ? "Stop sharing screen" : "Share screen"}
+                    >
+                      <ShareIcon />
+                      {isScreenSharing ? <span>Stop Sharing</span> : null}
+                    </button>
+                  </div>
                 ) : null}
                 <button
                   type="button"
                   className={`webinar_control_btn ${isRecording ? "recording" : ""}`}
                   onClick={() => setIsRecording((current) => !current)}
+                  aria-label={isRecording ? "Stop recording" : "Start recording"}
                 >
-                  <RecordIcon />
+                  {isRecording ? <StopRecordIcon /> : <RecordIcon />}
                 </button>
                 <button type="button" className="webinar_leave_btn" onClick={() => setView("list")}>
                   {liveRole === "host" ? "End Webinar" : "Leave Webinar"}
                 </button>
-                {liveRole === "host" && isRecording ? <div className="webinar_recording_badge">Recording 01:42:08</div> : null}
+                {liveRole === "host" && isRecording ? (
+                  <div className="webinar_recording_badge">
+                    <span>Recording</span>
+                    <strong>01:42:08</strong>
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="webinar_live_mobile_tabs">
+                <button
+                  type="button"
+                  className={livePanel === "chat" ? "active" : ""}
+                  onClick={() => {
+                    setLivePanel("chat");
+                    setMobileLiveView("chat");
+                  }}
+                >
+                  Live Chat
+                </button>
+                <button
+                  type="button"
+                  className={livePanel === "attendees" ? "active" : ""}
+                  onClick={() => {
+                    setLivePanel("attendees");
+                    setMobileLiveView("attendees");
+                  }}
+                >
+                  Attendees
+                </button>
               </div>
             </div>
 
@@ -841,50 +1074,9 @@ export default function WebinarPage() {
               </div>
 
               {livePanel === "chat" ? (
-                <div className="webinar_chat_panel">
-                  {chatMessages.map((message, index) => (
-                    <div key={message.id}>
-                      <div className="webinar_chat_head">
-                        <strong>{message.author}</strong>
-                        <span>{message.time}</span>
-                      </div>
-                      <div className="webinar_chat_bubble">{message.message}</div>
-                      {index === 1 ? <div className="webinar_chat_notice">New Viewer Joined: Dr. Patel</div> : null}
-                    </div>
-                  ))}
-                </div>
+                webinarChatContent
               ) : (
-                <div className="webinar_attendee_panel">
-                  {liveAttendees.map((person) => (
-                    <div key={person.id} className="webinar_attendee_row">
-                      <div className="webinar_attendee_identity">
-                        <Image src={person.image} alt={person.name} width={58} height={58} />
-                        <div>
-                          <h5>{person.name}</h5>
-                          <p>{person.title}</p>
-                        </div>
-                      </div>
-                      <div className="webinar_attendee_actions">
-                        <button
-                          type="button"
-                          className={`webinar_attendee_action_btn ${person.muted ? "muted" : ""}`}
-                          onClick={() => toggleAttendeeAudio(person.id)}
-                          aria-label={person.muted ? `Unmute ${person.name}` : `Mute ${person.name}`}
-                        >
-                          {person.muted ? <MutedMicIcon /> : <MicrophoneIcon />}
-                        </button>
-                        <button
-                          type="button"
-                          className={`webinar_attendee_action_btn ${person.cameraOff ? "muted" : ""}`}
-                          onClick={() => toggleAttendeeVideo(person.id)}
-                          aria-label={person.cameraOff ? `Turn on ${person.name} video` : `Turn off ${person.name} video`}
-                        >
-                          {person.cameraOff ? <CameraOffIcon /> : <CameraIcon />}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                webinarAttendeeContent
               )}
 
               {livePanel === "chat" ? (
@@ -907,6 +1099,71 @@ export default function WebinarPage() {
               ) : null}
             </aside>
           </div>
+
+          {mobileLiveView !== "stage" ? (
+            <div className="webinar_mobile_overlay">
+              <div className="webinar_mobile_overlay_head">
+                <button type="button" className="webinar_mobile_overlay_back" onClick={() => setMobileLiveView("stage")}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M10.35 18.75L3.59998 12L10.35 5.25M4.53748 12H20.4"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <h3>{mobilePanelTitle}</h3>
+              </div>
+
+              <div className="webinar_mobile_overlay_tabs">
+                <button
+                  type="button"
+                  className={mobileLiveView === "chat" ? "active" : ""}
+                  onClick={() => {
+                    setLivePanel("chat");
+                    setMobileLiveView("chat");
+                  }}
+                >
+                  Live Chat
+                </button>
+                <button
+                  type="button"
+                  className={mobileLiveView === "attendees" ? "active" : ""}
+                  onClick={() => {
+                    setLivePanel("attendees");
+                    setMobileLiveView("attendees");
+                  }}
+                >
+                  Attendees
+                </button>
+              </div>
+
+              <div className="webinar_mobile_overlay_body">
+                {mobileLiveView === "chat" ? webinarChatContent : webinarAttendeeContent}
+              </div>
+
+              {mobileLiveView === "chat" ? (
+                <div className="webinar_chat_input webinar_mobile_overlay_input">
+                  <input
+                    placeholder="Type a message..."
+                    value={chatInput}
+                    onChange={(event) => setChatInput(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                  />
+                  <button type="button" onClick={handleSendMessage} aria-label="Send message">
+                    <Image src="/icn/send-red.svg" alt="send" width={40} height={37} />
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : null}
 
