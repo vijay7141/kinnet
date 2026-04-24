@@ -4,7 +4,7 @@
     --primary: #033E4F;
     --red_color:#E4432D;
     --light_primary:#E5F6FF; 
-    --manrope_font: "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+    --manrope_font: var(--font-manrope), sans-serif; 
 
 } 
 

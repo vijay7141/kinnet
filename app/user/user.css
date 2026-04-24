@@ -194,7 +194,7 @@ padding: 16px;
 }
 .alert-danger span{
   color: var(--red_color);
-font-family: Manrope;
+
 font-size: 14px;
 font-style: normal;
 font-weight: 500;
@@ -392,7 +392,7 @@ padding: 24px 0 0;
 
  .back_login{
 color: var(--red_color);
-font-family: Manrope;
+
 font-size: 14px;
 font-style: normal;
 font-weight: 700;
@@ -1284,7 +1284,7 @@ border-radius: 16px;
  
   margin-bottom: 10px;
   color: var(--Black, #000);
-font-family: Manrope;
+
 font-size: 15px;
 font-style: normal;
 font-weight: 500;
@@ -1402,7 +1402,7 @@ color: var(--Primary, #033E4F);
   align-items: center;
   gap: 5px;
   color: var(--primary);
-font-family: Manrope;
+
 font-size: 10px;
 font-style: normal;
 font-weight: 500;
@@ -3617,7 +3617,7 @@ line-height: 28px;
   max-width: 322px;
   color: #494949;
 text-align: center;
-font-family: Manrope;
+
 font-size: 15px;
 font-style: normal;
 font-weight: 400;
@@ -9693,7 +9693,7 @@ text-align: left;
   bottom: 16px;
   left: 0;
   color: #FFF;
-  font-family: Manrope;
+  
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -9963,7 +9963,7 @@ font-weight: 700;
 
 .webinar_chat_head strong {
   color: #006A6A;
-  font-family: Manrope;
+  
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
