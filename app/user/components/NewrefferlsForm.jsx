@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import ReferralConfirmModel from "./ReferralConfirmModel";
 
 export function NewrefferlsForm() {
+  const router = useRouter();
   const [phone, setPhone] = useState("");
   const [files, setFiles] = useState([]);
   const [open, setOpen] = useState(false);
@@ -204,8 +206,8 @@ const [showConfirm, setShowConfirm] = useState(false);
   show={showConfirm}
   handleClose={() => setShowConfirm(false)}
   handleConfirm={() => {
-    console.log("Form Submitted 🚀");
     setShowConfirm(false);
+    router.push("/user/referrals");
   }}
 />
     </>

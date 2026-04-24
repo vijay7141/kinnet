@@ -609,6 +609,7 @@ export default function WebinarPage() {
                     setSelectorMode(null);
                   }}
                 >
+                  <img src="/icn/plus_icn.svg" alt="" />
                   Create Webinar
                 </button>
               </div>

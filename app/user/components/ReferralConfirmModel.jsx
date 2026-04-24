@@ -34,7 +34,7 @@ export default function ReferralConfirmModel({
                <Button className="kinnect-btn-secondary " onClick={handleClose}>
              Edit Form
             </Button> 
-    <Button className="kinnect-btn-primary" onClick={handleClose}>
+    <Button className="kinnect-btn-primary" onClick={handleConfirm}>
              Confirm
             </Button>
             </div>
