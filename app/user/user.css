@@ -8753,6 +8753,9 @@ width: 100%;
   .settings_time_box {
     max-width: 100%;
   }
+  .settings_time_box input {
+  padding: 10px;
+}
 
   .settings_notification_row {
     padding: 16px 0;
