@@ -5,4 +5,4 @@
 :HL["icn/linkedin.svg","image"]
 :HL["icn/facebook.svg","image"]
 :HL["icn/instagram.svg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(static)","param":null,"prefetchHints":0,"slots":{"children":{"name":"terms-of-use","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"Gorq97nQFXuxxTD84nQls"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(static)","param":null,"prefetchHints":0,"slots":{"children":{"name":"terms-of-use","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"Cyz4epNX30pp3Mqa8iZnz"}
