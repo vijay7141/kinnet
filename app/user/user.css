@@ -6515,7 +6515,7 @@ text-transform: capitalize;
   display: flex;
   align-items: center;
   gap: 10px;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .messages_reply_preview {
@@ -12564,6 +12564,11 @@ background: #f2f4f5;
     width: auto;
     padding: 16px;
   }
+.messages_incoming_call_decline, .messages_incoming_call_accept {
+  width: 36px;
+  height: 36px;
+}
+
 }
 
 /* Channels Page */
