@@ -7167,6 +7167,9 @@ background: #FFDAD6;
 
       justify-content: center;
     }
+    .messages_incoming_call_identity{
+      flex-wrap: wrap;
+    }
 }
 
 @media screen and (max-width: 375px) { 
@@ -7174,8 +7177,8 @@ background: #FFDAD6;
         padding: 0 15px !important;
     }
       .messages_page {
-        margin-left: -15px;
-        margin-right: -15px;
+        margin-left: -26px;
+        margin-right: -26px;
     }
        .ref_chat_wrap {
     position: fixed;
