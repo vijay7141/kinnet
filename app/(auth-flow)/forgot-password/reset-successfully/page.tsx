@@ -32,12 +32,11 @@ export default function ResetSuccess() {
                 </p>
 
                 {/* Button */}
-                <Button
-                  as={Link}
-                  href="/forgot-password/reset-link-expired"
+                <Button 
                   className="auth_btn w-100"
                 >
-                  Back to Login
+                  <Link   href="/forgot-password/reset-link-expired">     Back to Login</Link>
+             
                 </Button>
 
               </Card.Body>
