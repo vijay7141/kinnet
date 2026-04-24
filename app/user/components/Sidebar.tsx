@@ -4,12 +4,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Sidebar({ sidebarOpen }) {
+type SidebarProps = {
+  sidebarOpen?: boolean;
+};
+
+export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const isActive = (path) => pathname === path;
+  const isActive = (path: string) => pathname === path;
 
   const handleLogout = () => {
     setShowLogoutModal(false);
