@@ -8808,6 +8808,9 @@ width: 100%;
   .settings_secondary_btn {
     width: 100%;
   }
+  .settings_time_dash {
+    display: none;
+}
 }
 
 /*==============================
