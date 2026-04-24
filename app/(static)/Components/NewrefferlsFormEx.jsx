@@ -64,14 +64,14 @@ const [showConfirm, setShowConfirm] = useState(false);
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Patient Name *</Form.Label>
+                <Form.Label>Patient Name <span>*</span></Form.Label>
                 <Form.Control placeholder="e.g., Buddy" />
               </Form.Group>
             </Col>
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Owner Name *</Form.Label>
+                <Form.Label>Owner Name <span>*</span></Form.Label>
                 <Form.Control placeholder="e.g., Jane Doe" />
               </Form.Group>
             </Col>
@@ -79,7 +79,7 @@ const [showConfirm, setShowConfirm] = useState(false);
             {/* 🔹 Phone */}
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Pet Owner Phone Number *</Form.Label>
+                <Form.Label>Pet Owner Phone Number <span>*</span></Form.Label>
 
                 <PhoneInput
                   country={"us"}
@@ -94,7 +94,7 @@ const [showConfirm, setShowConfirm] = useState(false);
             {/* 🔥 CUSTOM URGENCY DROPDOWN */}
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Urgency *</Form.Label>
+                <Form.Label>Urgency <span>*</span></Form.Label>
 
                 <div className="urgency_dropdown">
 
@@ -149,14 +149,41 @@ const [showConfirm, setShowConfirm] = useState(false);
                 </Form.Select>
               </Form.Group>
             </Col>
+              <h5 className="pt-3 m-0">rVet Details</h5>
+      <Col md={6}>
+              <Form.Group>
+                <Form.Label>Name <span>*</span> </Form.Label>
+                <Form.Control placeholder="e.g., Jane Doe" />
+              </Form.Group>
+            </Col>
 
+            {/* 🔹 Phone */}
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Phone <span>*</span></Form.Label>
+
+                <PhoneInput
+                  country={"us"}
+                  value={phone}
+                  onChange={(value) => setPhone(value)}
+                  inputClass="phone_input_custom"
+                  containerClass="phone_container"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Email <span>*</span> </Form.Label>
+                <Form.Control placeholder="e.g., Jane Doe" />
+              </Form.Group>
+            </Col>
             <Col md={12}>
               <Form.Group>
                 <Form.Label>Reason for Referral</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  placeholder="Describe reason for referral..."
+                  placeholder="Please feel free to be brief, ie acute vomiting, CCL rupture, etc."
                 />
               </Form.Group>
             </Col>
