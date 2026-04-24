@@ -35,8 +35,7 @@ const initialMessages = [
   },
 ];
 
-export default function ReferralChat() {
-  const [isOpen, setIsOpen] = useState(true);
+export default function ReferralChat({ isOpen = true, onClose }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
 
@@ -97,7 +96,7 @@ export default function ReferralChat() {
             type="button"
             className="ref_chat_close"
             aria-label="Close chat"
-            onClick={() => setIsOpen(false)}
+            onClick={() => onClose?.()}
           >
             <X size={14} aria-hidden="true" />
           </button>

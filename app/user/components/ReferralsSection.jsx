@@ -5,6 +5,7 @@ import {
   Droppable,
   Draggable,
 } from "@hello-pangea/dnd";
+import Link from "next/link";
 export default function ReferralsSection() {
   const [open, setOpen] = useState(false);
 
@@ -93,7 +94,8 @@ export default function ReferralsSection() {
                               index={index}
                             >
                               {(provided) => (
-                                <div
+                                <Link href="/user/referrals/referrals-details">
+                                 <div
                                   className={`ref_card ${colKey === "confirmed" ? "muted" : ""}`}
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
@@ -151,6 +153,8 @@ export default function ReferralsSection() {
                                     </div>
                                   )}
                                 </div>
+                                </Link>
+                               
                               )}
                             </Draggable>
                           ))}

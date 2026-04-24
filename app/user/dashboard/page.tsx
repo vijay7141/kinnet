@@ -13,7 +13,7 @@ export default function Dashboard() {
           <p className="dashboard_sub">Welcome back, Dr. Rodriguez.</p>
               </div>
               <div className="sec">
-                  <Link href="/" className="commen_btn"> <img src="/icn/plus_icn.svg" alt="" />
+                  <Link href="/user/referrals/new-referral" className="commen_btn"> <img src="/icn/plus_icn.svg" alt="" />
 New Referral</Link>
               </div>
             </div>
@@ -26,4 +26,4 @@ New Referral</Link>
       </>
      
   );
-}
+}          

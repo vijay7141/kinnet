@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import StatsCard from "../components/StatsCard";
 import ReferralsSection from "../components/ReferralsSection";
+import Link from "next/link";
 
 /* 🔹 Custom Input (FULL BOX CLICKABLE) */
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -48,11 +49,13 @@ const Referrals = () => {
           </button>
 
           <button
-            className="commen_btn"
-            onClick={() => console.log("Open New Referral")}
+            className="commen_btn" 
           >
-            <img src="/icn/plus_icn.svg" alt="" />
+            <Link href="/user/referrals/new-referral">
+                 <img src="/icn/plus_icn.svg" alt="" />
             New Referral
+            </Link>
+       
           </button>
 
         </div>

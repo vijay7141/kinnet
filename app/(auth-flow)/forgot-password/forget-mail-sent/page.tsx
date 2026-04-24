@@ -11,7 +11,7 @@ export default function ForgotMailSent() {
 
             {/* Logo */}
             <div className="text-center mb-4">
-              <img src="/logo_big.svg" alt="logo" className="auth_logo" />
+             <Link href="/login"> <img src="/logo_big.svg" alt="logo" className="auth_logo" /></Link>
             </div>
 
             {/* Card */}
@@ -32,8 +32,9 @@ export default function ForgotMailSent() {
                 </p>
 
                 {/* Button */}
-                <Button as={Link} href="/forgot-password/reset-password" className="auth_btn w-100 mb-4">
-                  Back to Login
+                <Button    className="auth_btn w-100 mb-4">
+                <Link href="/forgot-password/reset-password">
+                </Link>  Back to Login
                 </Button>
 
                 <hr />

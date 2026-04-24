@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ReferralTable() {
   return (
      <div className="dash_table_wrap">
@@ -23,7 +25,7 @@ export default function ReferralTable() {
             <td><span className="dash_badge dark">In Review</span></td>
             <td className="dash_high">High</td>
                       <td className="date">23 Oct, 16:45</td>
-                    <td className="date"><img src="/icn/eye_icn.svg" alt="" /></td>
+                    <td className="date"><Link href="/user/referrals/referral-request"><img src="/icn/eye_icn.svg" alt="" /></Link></td>
           </tr>
 
           <tr>
@@ -34,7 +36,7 @@ export default function ReferralTable() {
             <td><span className="dash_badge blue">Incoming</span></td>
             <td className="dash_stable">Stable</td>
                         <td className="date">23 Oct, 16:45</td>
-                      <td className="date"><img src="/icn/eye_icn.svg" alt="" /></td>
+                      <td className="date"><Link href="/user/referrals/referral-request"><img src="/icn/eye_icn.svg" alt="" /></Link></td>
 
           </tr>
 
@@ -46,7 +48,7 @@ export default function ReferralTable() {
             <td><span className="dash_badge gray">Claimed</span></td>
             <td className="dash_moderate">Moderate</td>
             <td className="date">23 Oct, 16:45</td>
-                          <td className="date"><img src="/icn/eye_icn.svg" alt="" /></td>
+                          <td className="date"><Link href="/user/referrals/referral-request"><img src="/icn/eye_icn.svg" alt="" /></Link></td>
 
           </tr>
         </tbody>

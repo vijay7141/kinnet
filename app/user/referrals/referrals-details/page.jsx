@@ -8,6 +8,7 @@ import ChatWidget from "../../components/ChatWidget";
 export default function ReferralsDetails() {
    const [showSMS, setShowSMS] = useState(false);
 const [showSuccess, setShowSuccess] = useState(false);
+const [isSmallChatOpen, setIsSmallChatOpen] = useState(false);
   return (
     <>
     <div className="ref_details_exact2">
@@ -164,7 +165,9 @@ const [showSuccess, setShowSuccess] = useState(false);
                         <p>Referred by Dr. Aris Thorne</p>
                         <span>Urgency: Priority 1–2 · Emergency</span>
                       </div>
-                      <img src="/icn/meassege_new.svg" alt="" />
+                      <button type="button" className="open_smal_cht" onClick={() => setIsSmallChatOpen(true)}>
+                        <img src="/icn/meassege_new.svg" alt="" />
+                      </button>
 
                 </div>
                  <div className="quick_card2_inner">
@@ -237,7 +240,7 @@ const [showSuccess, setShowSuccess] = useState(false);
   show={showSuccess}
   handleClose={() => setShowSuccess(false)}
 />
-<ChatWidget />
+<ChatWidget isOpen={isSmallChatOpen} onClose={() => setIsSmallChatOpen(false)} />
     </>
     
 
