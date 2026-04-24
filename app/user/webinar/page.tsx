@@ -1016,7 +1016,11 @@ export default function WebinarPage() {
                       aria-label={isScreenSharing ? "Stop sharing screen" : "Share screen"}
                     >
                       <ShareIcon />
-                      {isScreenSharing ? <span>Stop Sharing</span> : null}
+                      {isScreenSharing ? (
+                        <span className="webinar_share_btn_label" data-mobile-label="Stop">
+                          Stop Sharing
+                        </span>
+                      ) : null}
                     </button>
                   </div>
                 ) : null}
@@ -1028,8 +1032,13 @@ export default function WebinarPage() {
                 >
                   {isRecording ? <StopRecordIcon /> : <RecordIcon />}
                 </button>
-                <button type="button" className="webinar_leave_btn" onClick={() => setView("list")}>
-                  {liveRole === "host" ? "End Webinar" : "Leave Webinar"}
+                <button
+                  type="button"
+                  className="webinar_leave_btn"
+                  onClick={() => setView("list")}
+                >
+                  <span className="webinar_leave_btn_text">{liveRole === "host" ? "End Webinar" : "Leave Webinar"}</span>
+                  <span className="webinar_leave_btn_mobile">{liveRole === "host" ? "End" : "Leave Webinar"}</span>
                 </button>
                 {liveRole === "host" && isRecording ? (
                   <div className="webinar_recording_badge">
