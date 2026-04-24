@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-
 :root {
     --white: #ffffff;
     --black: #000000;
     --primary: #033E4F;
     --red_color:#E4432D;
     --light_primary:#E5F6FF; 
-    --manrope_font: "Manrope", sans-serif; 
+    --manrope_font: "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
 
 } 
 
@@ -84,4 +82,3 @@ nav ul li a {
 .container-fluid{
   padding:0 40px !important;
 }
-

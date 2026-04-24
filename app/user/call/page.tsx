@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 type CallMode = "audio" | "video";
@@ -243,7 +243,7 @@ function renderName(name: string) {
   return name.length > 16 ? `${name.slice(0, 13)}...` : name;
 }
 
-export default function CallPage() {
+function CallPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -778,5 +778,13 @@ export default function CallPage() {
         </>
       ) : null}
     </section>
+  );
+}
+
+export default function CallPage() {
+  return (
+    <Suspense fallback={null}>
+      <CallPageContent />
+    </Suspense>
   );
 }

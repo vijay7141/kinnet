@@ -1,0 +1,18 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(static)/layout,_N_T_/(static)/referral-signup/layout,_N_T_/(static)/referral-signup/forgot-password/layout,_N_T_/(static)/referral-signup/forgot-password/reset-successfully/layout,_N_T_/(static)/referral-signup/forgot-password/reset-successfully/page,_N_T_/referral-signup/forgot-password/reset-successfully"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHN0YXRpYyk/referral-signup/forgot-password/reset-successfully/__PAGE__",
+    "/!KHN0YXRpYyk/referral-signup/forgot-password/reset-successfully",
+    "/!KHN0YXRpYyk/referral-signup/forgot-password",
+    "/!KHN0YXRpYyk/referral-signup",
+    "/!KHN0YXRpYyk",
+    "/_index",
+    "/_head"
+  ]
+}

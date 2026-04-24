@@ -1,0 +1,10 @@
+{
+  "app": {
+    "[project]/app/(static)/referral/referrals/page": [],
+    "[project]/app/user/dashboard/page": [],
+    "[project]/app/user/referrals/page": []
+  },
+  "appUsingSizeAdjust": false,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

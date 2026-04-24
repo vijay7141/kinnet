@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(auth-flow)/layout,_N_T_/(auth-flow)/signup/layout,_N_T_/(auth-flow)/signup/page,_N_T_/signup"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGF1dGgtZmxvdyk/signup/__PAGE__",
+    "/!KGF1dGgtZmxvdyk/signup",
+    "/!KGF1dGgtZmxvdyk",
+    "/_index",
+    "/_head"
+  ]
+}

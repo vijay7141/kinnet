@@ -1,0 +1,3 @@
+{
+  "/(auth-flow)/forgot-password/reset-password/page": "app/(auth-flow)/forgot-password/reset-password/page.js"
+}

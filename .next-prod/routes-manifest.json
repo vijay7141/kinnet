@@ -1,0 +1,279 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/forgot-password",
+      "regex": "^/forgot\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password(?:/)?$"
+    },
+    {
+      "page": "/forgot-password/forget-mail-sent",
+      "regex": "^/forgot\\-password/forget\\-mail\\-sent(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password/forget\\-mail\\-sent(?:/)?$"
+    },
+    {
+      "page": "/forgot-password/reset-link-expired",
+      "regex": "^/forgot\\-password/reset\\-link\\-expired(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password/reset\\-link\\-expired(?:/)?$"
+    },
+    {
+      "page": "/forgot-password/reset-password",
+      "regex": "^/forgot\\-password/reset\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password/reset\\-password(?:/)?$"
+    },
+    {
+      "page": "/forgot-password/reset-successfully",
+      "regex": "^/forgot\\-password/reset\\-successfully(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password/reset\\-successfully(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/privacy-policy",
+      "regex": "^/privacy\\-policy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/privacy\\-policy(?:/)?$"
+    },
+    {
+      "page": "/referral/messages",
+      "regex": "^/referral/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral/messages(?:/)?$"
+    },
+    {
+      "page": "/referral/referrals",
+      "regex": "^/referral/referrals(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral/referrals(?:/)?$"
+    },
+    {
+      "page": "/referral/referrals/new-referral",
+      "regex": "^/referral/referrals/new\\-referral(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral/referrals/new\\-referral(?:/)?$"
+    },
+    {
+      "page": "/referral/referrals/referral-request",
+      "regex": "^/referral/referrals/referral\\-request(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral/referrals/referral\\-request(?:/)?$"
+    },
+    {
+      "page": "/referral/referrals/referrals-details",
+      "regex": "^/referral/referrals/referrals\\-details(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral/referrals/referrals\\-details(?:/)?$"
+    },
+    {
+      "page": "/referral-signup",
+      "regex": "^/referral\\-signup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/forgot-password",
+      "regex": "^/referral\\-signup/forgot\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/forgot\\-password(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/forgot-password/forget-mail-sent",
+      "regex": "^/referral\\-signup/forgot\\-password/forget\\-mail\\-sent(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/forgot\\-password/forget\\-mail\\-sent(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/forgot-password/reset-link-expired",
+      "regex": "^/referral\\-signup/forgot\\-password/reset\\-link\\-expired(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/forgot\\-password/reset\\-link\\-expired(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/forgot-password/reset-password",
+      "regex": "^/referral\\-signup/forgot\\-password/reset\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/forgot\\-password/reset\\-password(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/forgot-password/reset-successfully",
+      "regex": "^/referral\\-signup/forgot\\-password/reset\\-successfully(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/forgot\\-password/reset\\-successfully(?:/)?$"
+    },
+    {
+      "page": "/referral-signup/login",
+      "regex": "^/referral\\-signup/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-signup/login(?:/)?$"
+    },
+    {
+      "page": "/referral-submission-external",
+      "regex": "^/referral\\-submission\\-external(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/referral\\-submission\\-external(?:/)?$"
+    },
+    {
+      "page": "/signup",
+      "regex": "^/signup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/signup/profile-step",
+      "regex": "^/signup/profile\\-step(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/signup/profile\\-step(?:/)?$"
+    },
+    {
+      "page": "/terms-of-use",
+      "regex": "^/terms\\-of\\-use(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/terms\\-of\\-use(?:/)?$"
+    },
+    {
+      "page": "/user",
+      "regex": "^/user(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user(?:/)?$"
+    },
+    {
+      "page": "/user/call",
+      "regex": "^/user/call(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/call(?:/)?$"
+    },
+    {
+      "page": "/user/channels",
+      "regex": "^/user/channels(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/channels(?:/)?$"
+    },
+    {
+      "page": "/user/dashboard",
+      "regex": "^/user/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/dashboard(?:/)?$"
+    },
+    {
+      "page": "/user/messages",
+      "regex": "^/user/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/messages(?:/)?$"
+    },
+    {
+      "page": "/user/profile",
+      "regex": "^/user/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/profile(?:/)?$"
+    },
+    {
+      "page": "/user/recordings",
+      "regex": "^/user/recordings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/recordings(?:/)?$"
+    },
+    {
+      "page": "/user/referrals",
+      "regex": "^/user/referrals(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/referrals(?:/)?$"
+    },
+    {
+      "page": "/user/referrals/new-referral",
+      "regex": "^/user/referrals/new\\-referral(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/referrals/new\\-referral(?:/)?$"
+    },
+    {
+      "page": "/user/referrals/referral-request",
+      "regex": "^/user/referrals/referral\\-request(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/referrals/referral\\-request(?:/)?$"
+    },
+    {
+      "page": "/user/referrals/referrals-details",
+      "regex": "^/user/referrals/referrals\\-details(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/referrals/referrals\\-details(?:/)?$"
+    },
+    {
+      "page": "/user/settings",
+      "regex": "^/user/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/settings(?:/)?$"
+    },
+    {
+      "page": "/user/webinar",
+      "regex": "^/user/webinar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user/webinar(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

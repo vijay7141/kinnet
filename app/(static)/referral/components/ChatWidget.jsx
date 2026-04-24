@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   CameraVideo,
+  Check2,
   Check2All,
   ChevronRight,
   Plus,
@@ -32,16 +33,71 @@ const initialMessages = [
     author: "Me",
     time: "11:30 AM",
     text: "Thanks for sharing",
+    deliveryStatus: "Read",
   },
 ];
+
+const getStatusMeta = (deliveryStatus) => {
+  if (deliveryStatus === "Delivered") {
+    return {
+      label: "Delivered",
+      icon: <Check2 size={12} aria-hidden="true" />,
+      className: "delivered",
+    };
+  }
+
+  if (deliveryStatus === "Sent") {
+    return {
+      label: "Sent",
+      icon: <Check2All size={12} aria-hidden="true" />,
+      className: "sent",
+    };
+  }
+
+  return {
+    label: "Read",
+    icon: <Check2All size={12} aria-hidden="true" />,
+    className: "read",
+  };
+};
 
 export default function ReferralChat({ isOpen = true, onClose }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
+  const statusTimeoutsRef = useRef([]);
+
+  useEffect(() => {
+    const timeoutIds = statusTimeoutsRef.current;
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, []);
+
+  const queueMessageStatusUpdates = (messageId) => {
+    const sentTimeout = window.setTimeout(() => {
+      setMessages((currentMessages) =>
+        currentMessages.map((item) =>
+          item.id === messageId ? { ...item, deliveryStatus: "Sent" } : item
+        )
+      );
+    }, 2000);
+
+    const readTimeout = window.setTimeout(() => {
+      setMessages((currentMessages) =>
+        currentMessages.map((item) =>
+          item.id === messageId ? { ...item, deliveryStatus: "Read" } : item
+        )
+      );
+    }, 4000);
+
+    statusTimeoutsRef.current.push(sentTimeout, readTimeout);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const text = message.trim();
+    const messageId = Date.now();
 
     if (!text) {
       return;
@@ -50,7 +106,7 @@ export default function ReferralChat({ isOpen = true, onClose }) {
     setMessages((currentMessages) => [
       ...currentMessages,
       {
-        id: Date.now(),
+        id: messageId,
         side: "right",
         author: "Me",
         time: new Date().toLocaleTimeString([], {
@@ -58,8 +114,10 @@ export default function ReferralChat({ isOpen = true, onClose }) {
           minute: "2-digit",
         }),
         text,
+        deliveryStatus: "Delivered",
       },
     ]);
+    queueMessageStatusUpdates(messageId);
     setMessage("");
   };
 
@@ -107,7 +165,10 @@ export default function ReferralChat({ isOpen = true, onClose }) {
             <span>TODAY, OCTOBER 24</span>
           </div>
 
-          {messages.map((item) => (
+          {messages.map((item) => {
+            const statusMeta = item.side === "right" ? getStatusMeta(item.deliveryStatus) : null;
+
+            return (
             <div key={item.id} className={`ref_msg ${item.side}`}>
               {item.side === "left" ? <img src="/icn/Dr.Sarah.svg" alt="" /> : null}
               <div>
@@ -120,13 +181,13 @@ export default function ReferralChat({ isOpen = true, onClose }) {
                   {item.text}
                 </div>
                 {item.side === "right" ? (
-                  <div className="ref_read">
-                    <Check2All size={12} aria-hidden="true" /> Read
+                  <div className={`ref_read ${statusMeta?.className ?? ""}`}>
+                    {statusMeta?.icon} {statusMeta?.label}
                   </div>
                 ) : null}
               </div>
             </div>
-          ))}
+          )})}
         </div>
 
         <form className="ref_chat_footer" onSubmit={handleSubmit}>

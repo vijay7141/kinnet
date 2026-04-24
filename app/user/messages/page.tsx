@@ -51,7 +51,7 @@ type MessageItem = {
   read?: boolean;
   pinned?: boolean;
   pinnedTitle?: string;
-  deliveryStatus?: "Read" | "Delivered";
+  deliveryStatus?: "Delivered" | "Sent" | "Read";
   attachment?: MessageAttachment;
   attachments?: MessageAttachment[];
   replyTo?: MessageReply;
@@ -474,6 +474,25 @@ const getAttachmentKind = (fileName: string) => {
 const truncateAttachmentName = (fileName: string) =>
   fileName.length > 20 ? `${fileName.slice(0, 17)}...` : fileName;
 
+const MessageStatusIcon = ({ deliveryStatus }: { deliveryStatus: "Delivered" | "Sent" | "Read" }) => {
+  const stroke = deliveryStatus === "Read" ? "#18A0AA" : "#033E4F";
+
+  if (deliveryStatus === "Delivered") {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <path d="M2 6.5L4.4 8.9L10 3.3" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true">
+      <path d="M1 6.4L3.3 8.7L8.1 3.9" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5.2 6.4L7.5 8.7L12.3 3.9" stroke={stroke} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};
+
 function ContactAvatar({
   name,
   avatar,
@@ -582,11 +601,20 @@ export default function MessagesPage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const emojiPickerRef = useRef<HTMLDivElement | null>(null);
   const groupImageInputRef = useRef<HTMLInputElement | null>(null);
+  const messageStatusTimeoutsRef = useRef<number[]>([]);
 
   const selectedConversation = useMemo(
     () => conversations.find((conversation) => conversation.id === selectedConversationId) ?? null,
     [conversations, selectedConversationId]
   );
+
+  useEffect(() => {
+    const timeoutIds = messageStatusTimeoutsRef.current;
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, []);
 
   const openCallScreen = (type: "audio" | "video", conversation: Conversation | null = selectedConversation) => {
     if (!conversation) {
@@ -1442,6 +1470,7 @@ export default function MessagesPage() {
 
   const sendMessage = () => {
     const trimmedMessage = draftMessage.trim();
+    const messageId = Date.now();
 
     if ((!trimmedMessage && !attachedFile) || !selectedConversationId) {
       return;
@@ -1459,12 +1488,13 @@ export default function MessagesPage() {
               messages: [
                 ...conversation.messages,
                 {
-                  id: Date.now(),
+                  id: messageId,
                   sender: "me",
                   author: "Me",
                   text: trimmedMessage,
                   time: "Now",
                   read: true,
+                  deliveryStatus: "Delivered",
                   attachment: attachedFile ?? undefined,
                   replyTo: replyingTo ?? undefined,
                 },
@@ -1482,6 +1512,38 @@ export default function MessagesPage() {
     setIsInfoOpen(false);
     setIsEmojiPickerOpen(false);
     setActiveTab("chat");
+
+    const sentTimeout = window.setTimeout(() => {
+      setConversations((current) =>
+        current.map((conversation) =>
+          conversation.id === selectedConversationId
+            ? {
+                ...conversation,
+                messages: conversation.messages.map((message) =>
+                  message.id === messageId ? { ...message, deliveryStatus: "Sent" } : message
+                ),
+              }
+            : conversation
+        )
+      );
+    }, 2000);
+
+    const readTimeout = window.setTimeout(() => {
+      setConversations((current) =>
+        current.map((conversation) =>
+          conversation.id === selectedConversationId
+            ? {
+                ...conversation,
+                messages: conversation.messages.map((message) =>
+                  message.id === messageId ? { ...message, deliveryStatus: "Read" } : message
+                ),
+              }
+            : conversation
+        )
+      );
+    }, 4000);
+
+    messageStatusTimeoutsRef.current.push(sentTimeout, readTimeout);
   };
 
   const addEmojiToDraft = (emojiData: EmojiClickData) => {
@@ -2476,8 +2538,8 @@ a new message to begin communicating</p>
               </div>
 
               {message.sender === "me" && message.deliveryStatus ? (
-                <div className="messages_read_status">
-                  <img src="/icn/read_icn.svg" alt="" />
+                <div className={`messages_read_status ${message.deliveryStatus.toLowerCase()}`}>
+                  <MessageStatusIcon deliveryStatus={message.deliveryStatus} />
                   {message.deliveryStatus}
                 </div>
               ) : null}
@@ -3019,9 +3081,16 @@ a new message to begin communicating</p>
       {memberPendingRemoval ? (
         <div className="messages_group_confirm_modal" role="dialog" aria-modal="true">
           <div className="messages_preview_backdrop" onClick={() => setMemberPendingRemoval(null)}></div>
-          <div className="messages_group_confirm_card">
-            <span className="messages_group_frame_label">Messages - Group Remove Member</span>
-            <h3>Remove {memberPendingRemoval.name}?</h3>
+          <div className="messages_group_confirm_card messages_group_confirm_card_leave">
+             <div className="messages_group_confirm_icon" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+  <path d="M22.7503 4.33333H19.392C19.1406 3.1107 18.4753 2.01212 17.5083 1.22278C16.5414 0.433431 15.3319 0.00157573 14.0837 0L11.917 0C10.6688 0.00157573 9.45925 0.433431 8.4923 1.22278C7.52535 2.01212 6.8601 3.1107 6.60866 4.33333H3.25033C2.96301 4.33333 2.68746 4.44747 2.48429 4.65063C2.28113 4.8538 2.16699 5.12935 2.16699 5.41667C2.16699 5.70398 2.28113 5.97953 2.48429 6.1827C2.68746 6.38586 2.96301 6.5 3.25033 6.5H4.33366V20.5833C4.33538 22.0194 4.90661 23.3961 5.92206 24.4116C6.93751 25.427 8.31426 25.9983 9.75032 26H16.2503C17.6864 25.9983 19.0631 25.427 20.0786 24.4116C21.094 23.3961 21.6653 22.0194 21.667 20.5833V6.5H22.7503C23.0376 6.5 23.3132 6.38586 23.5164 6.1827C23.7195 5.97953 23.8337 5.70398 23.8337 5.41667C23.8337 5.12935 23.7195 4.8538 23.5164 4.65063C23.3132 4.44747 23.0376 4.33333 22.7503 4.33333V4.33333ZM11.917 2.16667H14.0837C14.7556 2.16749 15.4109 2.37616 15.9596 2.76406C16.5083 3.15197 16.9235 3.70012 17.1484 4.33333H8.85224C9.07712 3.70012 9.49238 3.15197 10.0411 2.76406C10.5898 2.37616 11.245 2.16749 11.917 2.16667V2.16667ZM19.5003 20.5833C19.5003 21.4453 19.1579 22.2719 18.5484 22.8814C17.9389 23.4909 17.1123 23.8333 16.2503 23.8333H9.75032C8.88837 23.8333 8.06172 23.4909 7.45223 22.8814C6.84274 22.2719 6.50033 21.4453 6.50033 20.5833V6.5H19.5003V20.5833Z" fill="#033E4F"/>
+  <path d="M10.8333 19.4997C11.1206 19.4997 11.3962 19.3855 11.5994 19.1824C11.8025 18.9792 11.9167 18.7036 11.9167 18.4163V11.9163C11.9167 11.629 11.8025 11.3535 11.5994 11.1503C11.3962 10.9471 11.1206 10.833 10.8333 10.833C10.546 10.833 10.2705 10.9471 10.0673 11.1503C9.86414 11.3535 9.75 11.629 9.75 11.9163V18.4163C9.75 18.7036 9.86414 18.9792 10.0673 19.1824C10.2705 19.3855 10.546 19.4997 10.8333 19.4997Z" fill="#033E4F"/>
+  <path d="M15.1663 19.4997C15.4537 19.4997 15.7292 19.3855 15.9324 19.1824C16.1355 18.9792 16.2497 18.7036 16.2497 18.4163V11.9163C16.2497 11.629 16.1355 11.3535 15.9324 11.1503C15.7292 10.9471 15.4537 10.833 15.1663 10.833C14.879 10.833 14.6035 10.9471 14.4003 11.1503C14.1971 11.3535 14.083 11.629 14.083 11.9163V18.4163C14.083 18.7036 14.1971 18.9792 14.4003 19.1824C14.6035 19.3855 14.879 19.4997 15.1663 19.4997Z" fill="#033E4F"/>
+</svg>
+            </div>
+           
+            <h3>Remove this member from the group?</h3>
             <p>This member will lose access to future updates in this group conversation.</p>
             <div className="messages_group_flow_actions">
               <button type="button" className="kinnect-btn-secondary" onClick={() => setMemberPendingRemoval(null)}>

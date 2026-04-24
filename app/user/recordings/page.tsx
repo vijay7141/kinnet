@@ -272,7 +272,7 @@ export default function RecordingsPage() {
         <div className="recordings_filters">
           <DatePicker
             selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
+            onChange={(date: Date | null) => setSelectedDate(date)}
             dateFormat="MMM dd, yyyy"
             isClearable
             customInput={<DateFilterInput />}
