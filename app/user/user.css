@@ -7011,7 +7011,7 @@ background: #FFDAD6;
     }
         .dashboard_mn {
         height: 100%;
-        padding: 88px 10px 16px;
+        padding: 88px  0px 16px;
     }
     .dash_main:has(.messages_page) .dashboard_mn {
       height: 100vh;
@@ -7212,7 +7212,29 @@ min-height: 400px;
     margin-top: 15px !important;
 
   }
+  .auth_title{
+    display: none;
+  }
+  .forgot_password_area .auth_form_box{
+    margin-top: 0;
+  }
+  .auth_card{
+    display: none;
+  }
+  .auth_subtitle{
+    display: none;
 
+  }
+  .dash_card_value{
+    font-size: 22px;
+  }
+  .dash_card_icon{
+        width: 40px;
+    height: 40px;
+  }
+.dash_single_card{
+  padding: 14px;
+}
   .calls_group_video_stage{
     height: 100% !important;
   }
@@ -7423,7 +7445,7 @@ min-height: 400px;
       height: 180px;
     }
       .dash_cards_area {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
     .reffrel_form_area .form_card{
       padding:20px 15px;
