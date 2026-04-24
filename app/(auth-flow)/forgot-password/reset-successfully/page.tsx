@@ -11,7 +11,7 @@ export default function ResetSuccess() {
 
             {/* Logo */}
             <div className="text-center mb-4">
-              <img src="/logo_big.svg" alt="logo" className="auth_logo" />
+             <Link href="/login"> <img src="/logo_big.svg" alt="logo" className="auth_logo" /></Link>
             </div>
 
             {/* Card */}
@@ -32,12 +32,11 @@ export default function ResetSuccess() {
                 </p>
 
                 {/* Button */}
-                <Button
-                  as={Link}
-                  href="/forgot-password/reset-link-expired"
+                <Button 
                   className="auth_btn w-100"
                 >
-                  Back to Login
+                  <Link   href="/forgot-password/reset-link-expired">     Back to Login</Link>
+             
                 </Button>
 
               </Card.Body>

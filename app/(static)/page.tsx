@@ -24,7 +24,7 @@ export default function HomePage() {
 
                   <div className="d-flex flex-wrap gap-3">
                     <Link
-                      href="/signup"
+                      href="/referral-submission-external"
                       className="btn kinnect-btn-primary"
                     >
                      Submit Referral
@@ -167,7 +167,7 @@ export default function HomePage() {
                     Get Started
                   </Link>
                   <Link
-                    href="/login"
+                    href="/referral-submission-external"
                     className="kinnect-btn-primary"
                   >
                     Submit Referral

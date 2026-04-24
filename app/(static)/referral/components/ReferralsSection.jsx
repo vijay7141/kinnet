@@ -10,13 +10,11 @@ export default function ReferralsSection() {
   const [open, setOpen] = useState(false);
 
   const [data, setData] = useState({
-    incoming: [
+    Referred: [
       { id: "1", name: "Luna", owner: "Sarah Miller", time: "2h ago", priority: "red" },
       { id: "2", name: "Cooper", owner: "John Wick", time: "4h ago", priority: "red" },
     ],
-    claimed: [
-      { id: "3", name: "Bella", owner: "Maria Garcia", time: "6h ago", priority: "orange" },
-    ],
+   
     review: [
       { id: "4", name: "Oliver", owner: "David Chen", time: "1h ago", priority: "green" },
     ],
@@ -94,7 +92,7 @@ export default function ReferralsSection() {
                               index={index}
                             >
                               {(provided) => (
-                                <Link href="/user/referrals/referrals-details">
+                                <Link href="/referral/referrals/referrals-details">
                                  <div
                                   className={`ref_card ${colKey === "confirmed" ? "muted" : ""}`}
                                   ref={provided.innerRef}
@@ -104,11 +102,11 @@ export default function ReferralsSection() {
                                     {item.priority && (
                                       <span className={`badge ${item.priority}`}>
                                         {item.priority === "red"
-                                          ? "Priority 1-2"
+                                          ? "High"
                                           : item.priority === "orange"
-                                          ? "Priority 2-3"
+                                          ? "Medium"
                                           : item.priority === "green"
-                                          ? "Priority 4"
+                                          ? "High"
                                           : "Info Only"}
                                       </span>
                                     )}
@@ -127,12 +125,12 @@ export default function ReferralsSection() {
                                   <p>{item.owner}</p>
 
                                   {/* CONDITIONAL UI SAME AS DESIGN */}
-                                  {colKey === "incoming" && (
+                                  {/* {colKey === "incoming" && (
                                     <button className="btn claim_btn">
                                       <img src="/icn/clame_icn.svg" alt="" />
                                       Claim Case
                                     </button>
-                                  )}
+                                  )} */}
 
                                   {colKey === "claimed" && (
                                     <div className="extra">

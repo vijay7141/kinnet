@@ -1384,6 +1384,7 @@ font-size: 11px;
 font-style: normal;
 font-weight: 500;
 line-height: 11.25px;  
+color: var(--Primary, #033E4F);
 }
 
 ._referrals_list_wrap .status.review {
@@ -1441,6 +1442,10 @@ opacity: 0.5;
   outline: none;
   width: 120px; 
 }
+.open_smal_cht{
+  background-color: transparent;
+  border: 0;
+}
 
 /* 🔹 Icon */
 .das_area_inner .filter_box img {
@@ -1458,7 +1463,12 @@ opacity: 0.5;
   border-radius: 10px;
   border: none;
 }
- 
+ .das_area_inner .commen_btn a,
+.das_area_inner .commen_btn2 a{
+ display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 /* 🔹 Calendar Popup */
 .react-datepicker {
@@ -5554,6 +5564,15 @@ background: var(--Light-Blue, #9CEDED);
   line-height: 20px;
 }
 
+.open_smal_cht {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .messages_group_info_panel .messages_info_profile .messages_avatar {
   background: linear-gradient(135deg, #033e4f 0%, #9ceded 100%);
 }
@@ -6846,7 +6865,7 @@ background: #FFDAD6;
 @media screen and (max-width: 992px) { 
   .dash_sidebar{
     transform: translateX(-250%);
-    transition: all ease 1s;
+    transition: all ease 0.6s;
      z-index: 8888
   }
   .mobile_side_show{
@@ -6917,7 +6936,7 @@ background: #FFDAD6;
 .dash_sidebar.active{
     transform: translateX(0%);
     z-index: 8888;
-       transition: all ease 1s;
+       transition: all ease 0.6s;
 
 
 }

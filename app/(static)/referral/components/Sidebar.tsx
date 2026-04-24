@@ -17,7 +17,7 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
 
   const handleLogout = () => {
     setShowLogoutModal(false);
-    router.push("/login");
+    router.push("/");
   };
 
   return (
@@ -26,56 +26,23 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
         <img src="/logo_big.svg" alt="logo" className="logo" />
 
         <ul className="dash_menu">
-          <li className={isActive("/user/dashboard") ? "active" : ""}>
-            <Link href="/user/dashboard">
-              <img src="/icn/home_icn.svg" alt="" />
-              Dashboard
-            </Link>
-          </li>
+         
 
-          <li className={isActive("/user/referrals") ? "active" : ""}>
-            <Link href="/user/referrals">
+          <li className={isActive("/referral/referrals") ? "active" : ""}>
+            <Link href="/referral/referrals">
               <img src="/icn/referrals_icn.svg" alt="" />
               Referrals
             </Link>
           </li>
 
-          <li className={isActive("/user/messages") ? "active" : ""}>
-            <Link href="/user/messages">
+          <li className={isActive("/referral/messages") ? "active" : ""}>
+            <Link href="/referral/messages">
               <img src="/icn/messages_icn.svg" alt="" />
               Messages
             </Link>
             <span>2</span>
           </li>
-
-          <li className={isActive("/user/channels") ? "active" : ""}>
-            <Link href="/user/channels">
-              <img src="/icn/channels_icn.svg" alt="" />
-              Channels
-            </Link>
-            <span>7</span>
-          </li>
-
-          <li className={isActive("/user/webinar") ? "active" : ""}>
-            <Link href="/user/webinar">
-              <img src="/icn/webinar_icn.svg" alt="" />
-              Webinar
-            </Link>
-          </li>
-
-          <li className={isActive("/user/recordings") ? "active" : ""}>
-            <Link href="/user/recordings">
-              <img src="/icn/recordings_icn.svg" alt="" />
-              Recordings
-            </Link>
-          </li>
-
-          <li className={isActive("/user/settings") ? "active" : ""}>
-            <Link href="/user/settings">
-              <img src="/icn/settings_icn.svg" alt="" />
-              Settings
-            </Link>
-          </li>
+ 
         </ul>
 
         <button type="button" className="dash_logout" onClick={() => setShowLogoutModal(true)}>

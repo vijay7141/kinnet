@@ -24,7 +24,7 @@ export default function LoginPage() {
             setShowAlert(true);
           } else {
             // Second click → redirect
-            router.push("/login"); // apna route daal dena
+            router.push("/referral/referrals"); // apna route daal dena
           }
         };
   return (

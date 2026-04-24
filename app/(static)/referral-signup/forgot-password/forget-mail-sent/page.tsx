@@ -32,8 +32,10 @@ export default function ForgotMailSent() {
                 </p>
 
                 {/* Button */}
-                <Button as={Link} href="/forgot-password/reset-password" className="auth_btn w-100 mb-4">
+                <Button  className="auth_btn w-100 mb-4">
+                <Link href="/forgot-password/reset-password" >
                   Back to Login
+                </Link> 
                 </Button>
 
                 <hr />

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Modal, Button } from "react-bootstrap";
 
 export default function ExternalCompleteModel({ show, handleClose }: any) {
@@ -16,16 +17,19 @@ export default function ExternalCompleteModel({ show, handleClose }: any) {
         </div>
 
         {/* Heading */}
-        <h5 className="fw-bold">Your profile completed</h5>
+        <h5 className="fw-bold">Account created</h5>
 
         {/* Text */}
         <p className="text-muted small mt-2 mb-4">
-          Your profile is now complete. You’re all set to explore and make the most of all features available to you.
+          You can now Kinnect with the Kin team and manage referrals!
         </p>
 
         {/* Button */}
-        <Button className="auth_btn w-100" onClick={handleClose}>
-          Continue to Dashboard
+        <Button className="auth_btn w-100"  >
+          <Link href="/referral-signup/login">
+          Continue
+          </Link>
+          
         </Button>
 
       </Modal.Body>

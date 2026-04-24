@@ -11,7 +11,8 @@ export default function LinkExpired() {
 
             {/* Logo */}
             <div className="text-center mb-4">
-              <img src="/logo_big.svg" alt="logo" className="auth_logo" />
+              <Link href="/login"> <img src="/logo_big.svg" alt="logo" className="auth_logo" /></Link>
+             
             </div>
 
             {/* Card */}

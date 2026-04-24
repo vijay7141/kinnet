@@ -2594,10 +2594,10 @@ a new message to begin communicating</p>
           </div>
 
           <div className="messages_conversation_list">
-            <div className="messages_list_section_label">Pinned</div>
+            {/* <div className="messages_list_section_label">Pinned</div>
             {pinnedSidebarConversations.map((conversation) =>
               renderSidebarConversation(conversation, { pinned: true })
-            )}
+            )} */}
             <div className="messages_list_section_label all_messages">All Messages</div>
             {allSidebarConversations.map((conversation) => renderSidebarConversation(conversation))}
           </div>

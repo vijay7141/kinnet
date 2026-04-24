@@ -25,33 +25,19 @@ const Referrals = () => {
       <div className="das_area_inner">
 
         <div className="first">
-          <h2 className="dashboard_title">Referrals</h2>
+          <h2 className="dashboard_title">Care Vet Clinic Referrals</h2>
+          <p>Track the status of your submitted referrals and stay updated on patient progress.</p>
         </div>
 
         <div className="sec">
 
-          {/* 🔹 Date Picker */}
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="yyyy-MM-dd"
-            customInput={<CustomInput />}
-            popperPlacement="bottom-end"
-          />
+       
 
-          {/* 🔹 Buttons */}
-          <button
-            className="commen_btn2"
-            onClick={() => console.log("Sync API call")}
-          >
-            <img src="/icn/sync_icn.svg" alt="" />
-            Sync with Instinct
-          </button>
-
+       
           <button
             className="commen_btn" 
           >
-            <Link href="/user/referrals/new-referral">
+            <Link href="/referral/referrals/new-referral">
                  <img src="/icn/plus_icn.svg" alt="" />
             New Referral
             </Link>
