@@ -250,6 +250,7 @@ export default function SettingsPage() {
                     onChange={() => toggleNotificationChannel(item.id, "email")}
                   />
                   <span></span>
+                  <strong className="settings_square_check_label">Email</strong>
                 </label>
 
                 <label className="settings_square_check">
@@ -259,6 +260,7 @@ export default function SettingsPage() {
                     onChange={() => toggleNotificationChannel(item.id, "push")}
                   />
                   <span></span>
+                  <strong className="settings_square_check_label">Push</strong>
                 </label>
 
                 <label className="settings_square_check">
@@ -268,6 +270,7 @@ export default function SettingsPage() {
                     onChange={() => toggleNotificationChannel(item.id, "browser")}
                   />
                   <span></span>
+                  <strong className="settings_square_check_label">Browser</strong>
                 </label>
               </div>
             ))}
