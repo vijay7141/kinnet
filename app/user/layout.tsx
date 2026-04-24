@@ -15,7 +15,13 @@ export default function UserLayout({ children }: UserLayoutProps) {
   return (
     <div className={`dash_layout ${sidebarOpen ? "sidebar_open" : ""}`}>
       
-      <Sidebar sidebarOpen={sidebarOpen} />
+      <Sidebar sidebarOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <button
+        type="button"
+        className={`dash_sidebar_overlay ${sidebarOpen ? "active" : ""}`}
+        onClick={() => setSidebarOpen(false)}
+        aria-label="Close sidebar"
+      />
 
       <div className="dash_main">
         <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />

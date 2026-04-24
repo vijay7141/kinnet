@@ -6,14 +6,21 @@ import { useState } from "react";
 
 type SidebarProps = {
   sidebarOpen?: boolean;
+  onClose?: () => void;
 };
 
-export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
+export default function Sidebar({ sidebarOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const isActive = (path: string) => pathname === path;
+
+  const handleMobileClose = () => {
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 991px)").matches) {
+      onClose?.();
+    }
+  };
 
   const handleLogout = () => {
     setShowLogoutModal(false);
@@ -28,21 +35,21 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
 
         <ul className="dash_menu">
           <li className={isActive("/user/dashboard") ? "active" : ""}>
-            <Link href="/user/dashboard">
+            <Link href="/user/dashboard" onClick={handleMobileClose}>
               <img src="/icn/home_icn.svg" alt="" />
               Dashboard
             </Link>
           </li>
 
           <li className={isActive("/user/referrals") ? "active" : ""}>
-            <Link href="/user/referrals">
+            <Link href="/user/referrals" onClick={handleMobileClose}>
               <img src="/icn/referrals_icn.svg" alt="" />
               Referrals
             </Link>
           </li>
 
           <li className={isActive("/user/messages") ? "active" : ""}>
-            <Link href="/user/messages">
+            <Link href="/user/messages" onClick={handleMobileClose}>
               <img src="/icn/messages_icn.svg" alt="" />
               Messages
             </Link>
@@ -50,7 +57,7 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
           </li>
 
           <li className={isActive("/user/channels") ? "active" : ""}>
-            <Link href="/user/channels">
+            <Link href="/user/channels" onClick={handleMobileClose}>
               <img src="/icn/channels_icn.svg" alt="" />
               Channels
             </Link>
@@ -58,21 +65,21 @@ export default function Sidebar({ sidebarOpen = false }: SidebarProps) {
           </li>
 
           <li className={isActive("/user/webinar") ? "active" : ""}>
-            <Link href="/user/webinar">
+            <Link href="/user/webinar" onClick={handleMobileClose}>
               <img src="/icn/webinar_icn.svg" alt="" />
               Webinar
             </Link>
           </li>
 
           <li className={isActive("/user/recordings") ? "active" : ""}>
-            <Link href="/user/recordings">
+            <Link href="/user/recordings" onClick={handleMobileClose}>
               <img src="/icn/recordings_icn.svg" alt="" />
               Recordings
             </Link>
           </li>
 
           <li className={isActive("/user/settings") ? "active" : ""}>
-            <Link href="/user/settings">
+            <Link href="/user/settings" onClick={handleMobileClose}>
               <img src="/icn/settings_icn.svg" alt="" />
               Settings
             </Link>
