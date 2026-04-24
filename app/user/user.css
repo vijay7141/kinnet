@@ -6870,7 +6870,12 @@ padding-left: 60px;
 ._referrals_list_wrap .ref_scroll, .dash_cards_area {
   grid-template-columns: repeat(5, 1fr) !important;
 }
-
+.channels_list_copy p, .channels_chat_identity p, .channels_select_state p, .channels_details_panel p, .channels_member_identity p, .channels_message_bubble p, .channels_pinned_card p, .channels_settings_hero p, .channels_settings_notifications p, .channels_settings_private p, .channels_file_name p, .channels_notify_row p{
+      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 190px;
+}
 }
 
 @media screen and (max-width: 1250px) { 
@@ -6891,6 +6896,12 @@ padding-left: 60px;
     white-space: nowrap;
     gap: 40px;
 }
+.channels_list_copy p, .channels_chat_identity p, .channels_select_state p, .channels_details_panel p, .channels_member_identity p, .channels_message_bubble p, .channels_pinned_card p, .channels_settings_hero p, .channels_settings_notifications p, .channels_settings_private p, .channels_file_name p, .channels_notify_row p{
+      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+}
   .dash_cards_area {
     grid-template-columns: repeat(3, 1fr);
  
@@ -6902,6 +6913,12 @@ padding-left: 60px;
 
 
 @media screen and (max-width: 1150px) { 
+  .channels_list_copy p, .channels_chat_identity p, .channels_select_state p, .channels_details_panel p, .channels_member_identity p, .channels_message_bubble p, .channels_pinned_card p, .channels_settings_hero p, .channels_settings_notifications p, .channels_settings_private p, .channels_file_name p, .channels_notify_row p{
+      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
 }
 
 
@@ -12778,7 +12795,7 @@ background: #f2f4f5;
 }
 
 .channels_directory.details_open {
-  grid-template-columns: 356px minmax(0, 1fr) 324px;
+  /* grid-template-columns: 356px minmax(0, 1fr) 324px; */
 }
 
 .channels_sidebar {
@@ -13529,6 +13546,15 @@ background: #E6E8E9;
   flex-direction: column;
   min-height: 0;
   overflow-y: auto;
+      position: fixed;
+    top: 70px;
+    right: 0;
+    overflow-y: auto;
+    padding-bottom: 40px !important;
+    z-index: 22;
+    width: 100%;
+    max-width: 335px;
+    height: 94vh;
 }
 
 .channels_details_head {
