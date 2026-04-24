@@ -451,6 +451,7 @@ const getAttachmentTone = (fileName: string) => {
 
 const imageExtensions = new Set(["jpg", "jpeg", "png", "gif", "webp"]);
 const videoExtensions = new Set(["mp4", "mov", "webm"]);
+const pdfExtensions = new Set(["pdf"]);
 
 const getAttachmentKind = (fileName: string) => {
   const extension = getAttachmentExtension(fileName);
@@ -461,6 +462,10 @@ const getAttachmentKind = (fileName: string) => {
 
   if (videoExtensions.has(extension)) {
     return "video";
+  }
+
+  if (pdfExtensions.has(extension)) {
+    return "pdf";
   }
 
   return "file";
@@ -1141,14 +1146,14 @@ export default function MessagesPage() {
   };
 
   const renderDownloadIcon = () => (
-   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-  <g clipPath="url(#clip0_841_6714)">
-    <path d="M7.40843 13.5915C7.61738 13.8006 7.86548 13.9664 8.13855 14.0796C8.41163 14.1928 8.70433 14.251 8.99993 14.251C9.29552 14.251 9.58822 14.1928 9.8613 14.0796C10.1344 13.9664 10.3825 13.8006 10.5914 13.5915L12.9997 11.1833C13.1288 11.0404 13.1981 10.8535 13.1931 10.661C13.1882 10.4685 13.1094 10.2853 12.9731 10.1494C12.8368 10.0134 12.6535 9.93499 12.461 9.93045C12.2685 9.92592 12.0817 9.99558 11.9392 10.125L9.74468 12.3203L9.74992 0.75C9.74992 0.551088 9.67091 0.360322 9.53025 0.21967C9.3896 0.0790176 9.19884 0 8.99993 0V0C8.80101 0 8.61025 0.0790176 8.4696 0.21967C8.32894 0.360322 8.24993 0.551088 8.24993 0.75L8.24318 12.306L6.06068 10.125C5.91995 9.98437 5.72911 9.9054 5.53016 9.90547C5.33121 9.90554 5.14043 9.98465 4.9998 10.1254C4.85917 10.2661 4.7802 10.4569 4.78027 10.6559C4.78034 10.8548 4.85944 11.0456 5.00018 11.1863L7.40843 13.5915Z" fill="#374957"/>
-    <path d="M17.25 12C17.0511 12 16.8603 12.079 16.7197 12.2197C16.579 12.3603 16.5 12.5511 16.5 12.75V15.75C16.5 15.9489 16.421 16.1397 16.2803 16.2803C16.1397 16.421 15.9489 16.5 15.75 16.5H2.25C2.05109 16.5 1.86032 16.421 1.71967 16.2803C1.57902 16.1397 1.5 15.9489 1.5 15.75V12.75C1.5 12.5511 1.42098 12.3603 1.28033 12.2197C1.13968 12.079 0.948912 12 0.75 12V12C0.551088 12 0.360322 12.079 0.21967 12.2197C0.0790176 12.3603 0 12.5511 0 12.75L0 15.75C0 16.3467 0.237053 16.919 0.65901 17.341C1.08097 17.7629 1.65326 18 2.25 18H15.75C16.3467 18 16.919 17.7629 17.341 17.341C17.7629 16.919 18 16.3467 18 15.75V12.75C18 12.5511 17.921 12.3603 17.7803 12.2197C17.6397 12.079 17.4489 12 17.25 12Z" fill="#374957"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <g clip-path="url(#clip0_871_4177)">
+    <path d="M9.87725 18.122C10.1559 18.4008 10.4867 18.6219 10.8508 18.7728C11.2149 18.9237 11.6051 19.0014 11.9992 19.0014C12.3934 19.0014 12.7836 18.9237 13.1477 18.7728C13.5118 18.6219 13.8426 18.4008 14.1212 18.122L17.3322 14.911C17.5044 14.7206 17.5968 14.4713 17.5902 14.2147C17.5836 13.958 17.4786 13.7138 17.2969 13.5325C17.1151 13.3512 16.8707 13.2467 16.614 13.2406C16.3574 13.2346 16.1083 13.3274 15.9182 13.5L12.9922 16.427L12.9992 1C12.9992 0.734784 12.8939 0.48043 12.7064 0.292893C12.5188 0.105357 12.2645 0 11.9992 0V0C11.734 0 11.4797 0.105357 11.2921 0.292893C11.1046 0.48043 10.9992 0.734784 10.9992 1L10.9902 16.408L8.08025 13.5C7.89261 13.3125 7.63817 13.2072 7.3729 13.2073C7.10763 13.2074 6.85326 13.3129 6.66575 13.5005C6.47824 13.6881 6.37295 13.9426 6.37305 14.2079C6.37314 14.4731 6.47861 14.7275 6.66625 14.915L9.87725 18.122Z" fill="#033E4F"/>
+    <path d="M23 16C22.7348 16 22.4804 16.1054 22.2929 16.2929C22.1054 16.4804 22 16.7348 22 17V21C22 21.2652 21.8946 21.5196 21.7071 21.7071C21.5196 21.8946 21.2652 22 21 22H3C2.73478 22 2.48043 21.8946 2.29289 21.7071C2.10536 21.5196 2 21.2652 2 21V17C2 16.7348 1.89464 16.4804 1.70711 16.2929C1.51957 16.1054 1.26522 16 1 16C0.734784 16 0.48043 16.1054 0.292893 16.2929C0.105357 16.4804 0 16.7348 0 17L0 21C0 21.7956 0.31607 22.5587 0.87868 23.1213C1.44129 23.6839 2.20435 24 3 24H21C21.7956 24 22.5587 23.6839 23.1213 23.1213C23.6839 22.5587 24 21.7956 24 21V17C24 16.7348 23.8946 16.4804 23.7071 16.2929C23.5196 16.1054 23.2652 16 23 16Z" fill="#033E4F"/>
   </g>
   <defs>
-    <clipPath id="clip0_841_6714">
-      <rect width="18" height="18" fill="white"/>
+    <clipPath id="clip0_871_4177">
+      <rect width="24" height="24" fill="white"/>
     </clipPath>
   </defs>
 </svg>
@@ -1259,11 +1264,17 @@ export default function MessagesPage() {
             onClick={() => setModalPreviewAttachment(null)}
             aria-label="Close preview"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="9.25" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M8 8L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M14 8L8 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <g clip-path="url(#clip0_871_8725)">
+    <path d="M15.9994 8.00031C15.8119 7.81284 15.5576 7.70752 15.2924 7.70752C15.0273 7.70752 14.773 7.81284 14.5854 8.00031L11.9995 10.5863L9.41346 8.00031C9.22486 7.81815 8.97226 7.71735 8.71006 7.71963C8.44786 7.72191 8.19705 7.82708 8.01164 8.01249C7.82623 8.1979 7.72107 8.44871 7.71879 8.7109C7.71651 8.9731 7.8173 9.2257 7.99946 9.41431L10.5855 12.0003L7.99946 14.5863C7.8173 14.7749 7.71651 15.0275 7.71879 15.2897C7.72107 15.5519 7.82623 15.8027 8.01164 15.9881C8.19705 16.1735 8.44786 16.2787 8.71006 16.281C8.97226 16.2833 9.22486 16.1825 9.41346 16.0003L11.9995 13.4143L14.5854 16.0003C14.7741 16.1825 15.0267 16.2833 15.2888 16.281C15.551 16.2787 15.8019 16.1735 15.9873 15.9881C16.1727 15.8027 16.2778 15.5519 16.2801 15.2897C16.2824 15.0275 16.1816 14.7749 15.9994 14.5863L13.4135 12.0003L15.9994 9.41431C16.1869 9.22678 16.2922 8.97247 16.2922 8.70731C16.2922 8.44214 16.1869 8.18783 15.9994 8.00031Z" fill="#033E4F"/>
+    <path d="M12 0C9.62663 0 7.30655 0.703788 5.33316 2.02236C3.35977 3.34094 1.8217 5.21509 0.913451 7.4078C0.00519943 9.60051 -0.232441 12.0133 0.230582 14.3411C0.693605 16.6689 1.83649 18.8071 3.51472 20.4853C5.19295 22.1635 7.33115 23.3064 9.65892 23.7694C11.9867 24.2324 14.3995 23.9948 16.5922 23.0866C18.7849 22.1783 20.6591 20.6402 21.9776 18.6668C23.2962 16.6935 24 14.3734 24 12C23.9966 8.81846 22.7312 5.76821 20.4815 3.51852C18.2318 1.26883 15.1815 0.00344108 12 0V0ZM12 22C10.0222 22 8.08879 21.4135 6.4443 20.3147C4.79981 19.2159 3.51809 17.6541 2.76121 15.8268C2.00433 13.9996 1.8063 11.9889 2.19215 10.0491C2.578 8.10929 3.53041 6.32746 4.92894 4.92893C6.32746 3.53041 8.10929 2.578 10.0491 2.19215C11.9889 1.8063 13.9996 2.00433 15.8268 2.7612C17.6541 3.51808 19.2159 4.79981 20.3147 6.4443C21.4135 8.08879 22 10.0222 22 12C21.9971 14.6513 20.9426 17.1931 19.0679 19.0679C17.1931 20.9426 14.6513 21.9971 12 22Z" fill="#033E4F"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_871_8725">
+      <rect width="24" height="24" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
           </button>
           {renderMediaPreview(modalPreviewAttachment)}
         </div>
@@ -1278,16 +1289,10 @@ export default function MessagesPage() {
       return (
         <div className="messages_media_preview image_view">
           <div className="messages_media_preview_head">
-            <div>
-              <span>Messages - Image View</span>
-              <h3>{attachment.name}</h3>
-              <p>
-                {attachment.size} &bull; Shared by {attachment.author} at {attachment.time}
-              </p>
-            </div>
+          
             <button type="button" onClick={() => handleDownloadAttachment(attachment)}>
               {renderDownloadIcon()}
-              Download
+               
             </button>
           </div>
           <div className="messages_image_stage">
@@ -1305,16 +1310,10 @@ export default function MessagesPage() {
       return (
         <div className="messages_media_preview video_view">
           <div className="messages_media_preview_head">
-            <div>
-              <span>Messages - Video Preview</span>
-              <h3>{attachment.name}</h3>
-              <p>
-                {attachment.size} &bull; Shared by {attachment.author} at {attachment.time}
-              </p>
-            </div>
+       
             <button type="button" onClick={() => handleDownloadAttachment(attachment)}>
               {renderDownloadIcon()}
-              Download
+               
             </button>
           </div>
           <div className="messages_video_stage">
@@ -1337,19 +1336,40 @@ export default function MessagesPage() {
       );
     }
 
+    if (kind === "pdf") {
+      return (
+        <div className="messages_media_preview pdf_view">
+          <div className="messages_media_preview_head">
+       
+            <button type="button" onClick={() => handleDownloadAttachment(attachment)}>
+              {renderDownloadIcon()}
+               
+            </button>
+          </div>
+          <div className="messages_pdf_stage">
+            {attachment.url ? (
+              <iframe
+                src={attachment.url}
+                title={attachment.name}
+                className="messages_pdf_frame"
+              />
+            ) : (
+              <div className="messages_missing_media">
+                PDF preview unavailable. Attach a real PDF URL to render it here, or download the document.
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="messages_media_preview file_view">
         <div className="messages_media_preview_head">
-          <div>
-            <span>Messages - File Preview</span>
-            <h3>{attachment.name}</h3>
-            <p>
-              {attachment.size} &bull; {getAttachmentTypeLabel(attachment.name)} &bull; Shared by {attachment.author}
-            </p>
-          </div>
+         
           <button type="button" onClick={() => handleDownloadAttachment(attachment)}>
             {renderDownloadIcon()}
-            Download
+             
           </button>
         </div>
         <div className="messages_file_preview_stage">
