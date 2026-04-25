@@ -7047,6 +7047,17 @@ padding-left: 60px;
       .referral_request_top {
     grid-template-columns: 1fr;
   }
+  .messages_file_list_item{
+    flex-wrap: wrap;
+  }
+  .messages_sidebar_head{
+        margin-top: 13px;
+            padding: 14px 18px 14px;
+  }
+  .messages_feed,
+.messages_search_state {
+          padding: 0px 18px 0;
+}
   .messages_main_panel{
     height: 100dvh;
   }
@@ -7178,6 +7189,56 @@ padding-left: 60px;
       z-index: 12;
       background: #fff;
       min-height: 72px;
+              position: fixed;
+        top: 70px;
+        width: 100%;
+        left: 0;
+    }
+    .messages_file_preview_stage{
+      flex-wrap: wrap;
+    }
+    .messages_panel_body{
+      overflow: visible !important;
+    }
+    .messages_file_preview_stage{
+      min-height: 100%;
+      padding-top: 80px;
+    }
+    .messages_files_view{
+      margin-top: -50px;
+    }
+    .messages_preview_dialog{
+      height: fit-content;
+    }
+    .messages_panel_primary{
+      overflow: visible;
+
+    }
+    .channels_files_table_head, .channels_files_table_row{
+      flex-wrap: wrap;
+    }
+    .messages_panel_body {
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height: 61dvh;
+    top: 201px;
+}
+    .messages_info_panel{
+      height: 100dvh;
+          padding-bottom: 80px !important;
+    }
+        .messages_pinned_strip {
+ 
+        left: 0;
+        position: fixed;
+        top: 210px;
+        z-index: 22;
     }
   .messages_mobile_back {
     display: inline-flex;
@@ -7252,6 +7313,13 @@ padding-left: 60px;
     .messages_composer_wrap {
       padding-left: 16px;
       padding-right: 16px;
+    }
+    .messages_search_state{
+      padding: 10px;
+    }
+    .messages_feed{
+      padding-left: 0;
+      padding-right: 0;
     }
     .messages_placeholder_art {
       width: 150px;
@@ -7441,8 +7509,8 @@ min-height: 400px;
   }
   .messages_sidebar_head,
   .messages_conversation_list {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .messages_chat_header{
         padding-left: 30px;
@@ -8013,7 +8081,9 @@ width: 100%;
   .recordings_page_intro {
     margin-bottom: 20px;
   }
-
+.messages_files_view{
+  padding: 18px 0px;
+}
   .recordings_tabs {
     margin-bottom: 22px;
   }
