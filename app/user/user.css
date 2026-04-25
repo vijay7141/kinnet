@@ -8992,9 +8992,9 @@ width: 100%;
 /*==============================
   Webinar Page
 ==============================*/
-.webinar_page {
+/* .webinar_page {
   padding-bottom: 40px;
-}
+} */
 
 .webinar_page_full {
   position: fixed;
@@ -11499,16 +11499,16 @@ border: 2px solid #BAEAFF;
 }
 
 .calls_self_preview {
-  position: absolute;
-  top: 138px;
-  right: 38px;
   z-index: 2;
-  width: 320px;
-  height: 408px;
-  border-radius: 22px;
-  border: 3px solid rgba(129, 200, 208, 0.52);
-  overflow: hidden;
   background: rgba(12, 42, 54, 0.74);
+  border: 3px solid rgba(129, 200, 208, 0.52);
+  border-radius: 22px;
+  width: 170px;
+  height: 200px;
+  position: absolute;
+  top: 120px;
+  right: 38px;
+  overflow: hidden;
 }
 
 .calls_self_preview_image {
@@ -11729,12 +11729,15 @@ background: rgba(255, 255, 255, 0.10);
 }
 
 .calls_status_text {
-  margin-top: 72px;
-  color: #191919;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 30px;
-  text-align: center;
+color: #191919;
+text-align: center;
+font-size: 16px;
+font-weight: 400;
+line-height: 30px;
+position: fixed;
+bottom: 180px;
+text-align: center;
+width: 100%;
 }
 
 .calls_dual_actions {
