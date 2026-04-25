@@ -87,20 +87,20 @@ const initialChatMessages: ChatMessage[] = [
   {
     id: 1,
     author: "Dr. Mark Chen",
-    time: "14:02",
+    time: "11:02AM",
     message:
       "Excellent point about the mitral valve regurgitation metrics. Are we seeing these trends in younger breeds now?",
   },
   {
     id: 2,
     author: "Sarah Jennings, RVT",
-    time: "14:04",
+    time: "11:02AM",
     message: "The resolution on this slide is incredible. Makes it much easier to see the subtle lesions.",
   },
   {
     id: 3,
     author: "Dr. Alex Voss",
-    time: "14:05",
+    time: "12:02AM",
     message: "Will the recording be available in the library after this?",
   },
 ];
