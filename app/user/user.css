@@ -3427,7 +3427,7 @@ line-height: 16px;
 
 .messages_mobile_back {
   display: none;
-  width: 34px;
+  /* width: 34px; */
   height: 34px;
   border: 0;
   background: transparent;
@@ -3438,7 +3438,7 @@ line-height: 16px;
   justify-content: center;
   padding: 0;
   flex-shrink: 0;
-      background: var(--primary); 
+     
     border-radius: 9px;
 }
 .messages_mobile_back  
@@ -4613,7 +4613,7 @@ overflow: hidden;
 }
 
 .messages_attachment_row {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 12px;
@@ -6504,7 +6504,7 @@ text-transform: capitalize;
 }
 
 .messages_composer_wrap {
-  padding: 0 18px 18px;
+  padding: 0 0px 0px 11px;
   padding-top: 0;
   flex-shrink: 0;
   background: #fff;
@@ -7047,6 +7047,21 @@ padding-left: 60px;
       .referral_request_top {
     grid-template-columns: 1fr;
   }
+  .messages_main_panel{
+    height: 100dvh;
+  }
+  .messages_composer_wrap {
+    background: #fff;
+    flex-shrink: 0;
+    padding: 0 0 0 11px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.messages_composer_wrap{
+  padding: 10px !important;
+}
   :is(.dash_main:has(.channels_page) .channels_directory, .dash_main:has(.channels_page) .channels_settings_page){
     min-height: 100%;
     height: 100%;
@@ -7476,7 +7491,19 @@ min-height: 400px;
   }
   .messages_attachment_card {
     min-width: 0;
-    max-width: 100%;
+    max-width: 287px;
+  }
+  .messages_pinned_strip { 
+    margin: -18px 0px 22px; 
+    left: 0;
+  }
+  .messages_bubble{
+    max-width: 287px;
+
+  }
+  .messages_panel_body{
+    padding-left: 20px;
+        padding-right: 20px;
   }
   .messages_attachment_row {
     grid-template-columns: 1fr;
@@ -7503,7 +7530,7 @@ min-height: 400px;
     padding: 10px 12px;
   }
   .messages_composer_wrap {
-    padding-bottom: 14px;
+    padding-bottom: 0;
   }
   .messages_attachment_details strong,
   .messages_attachment_details span {
@@ -8924,10 +8951,25 @@ width: 100%;
    width: 100%;
         max-width: 100%;
   }
+  .messages_composer_icon_btn{
+    display: block;
+  }
+  .messages_composer_main{
+    padding: 0;
+  }
   .settings_notification_card, .settings_notification_table_panel{
     padding: 0;
   }
-
+._referrals_list_wrap .ref_summary_card .image{
+  width: 150px;
+    height: 150px;
+}
+._referrals_list_wrap .ref_summary_card h4{
+  font-size: 20px;
+}
+    ._referrals_list_wrap_inside {
+        padding: 0px 20px;
+    }
   .settings_profile_card h3,
   .settings_logout_modal h3 {
     font-size: 20px;
@@ -9986,7 +10028,7 @@ text-align: left;
   content: "";
   position: absolute;
   left: 50%;
-  top: calc(100% - 2px);
+  top: calc(100% - 8px);
   width: 12px;
   height: 12px;
   background: #9ce7eb;
@@ -13534,9 +13576,9 @@ background: #E6E8E9;
 }
 
 .channels_messages_composer_wrap {
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-bottom: 24px;
+padding-left: 11px;
+  padding-right: 0;
+  padding-bottom: 0;
   background: #fff;
 }
 
