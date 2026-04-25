@@ -254,12 +254,18 @@ function CameraOffIcon() {
 
 function ShareIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 15V5M12 5L8.5 8.5M12 5L15.5 8.5M5 15.5V18C5 19.105 5.895 20 7 20H17C18.105 20 19 19.105 19 18V15.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+  <path d="M9 12H11V7.85L12.6 9.425L14.025 8L10 4L6 8L7.425 9.4L9 7.825V12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H2ZM2 14H18V2H2V14ZM2 14V2V14Z" fill="white"/>
+</svg>
   );
 }
-
+function StopShareIcon() {
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
+  <path d="M5.25 8.25H6.75V6.75C6.75 6.5375 6.82187 6.35938 6.96562 6.21562C7.10938 6.07187 7.2875 6 7.5 6H9V7.5L11.25 5.25L9 3V4.5H7.5C6.875 4.5 6.34375 4.71875 5.90625 5.15625C5.46875 5.59375 5.25 6.125 5.25 6.75V8.25ZM2.25 11.25C1.8375 11.25 1.48438 11.1031 1.19062 10.8094C0.896875 10.5156 0.75 10.1625 0.75 9.75V1.5C0.75 1.0875 0.896875 0.734375 1.19062 0.440625C1.48438 0.146875 1.8375 0 2.25 0H14.25C14.6625 0 15.0156 0.146875 15.3094 0.440625C15.6031 0.734375 15.75 1.0875 15.75 1.5V9.75C15.75 10.1625 15.6031 10.5156 15.3094 10.8094C15.0156 11.1031 14.6625 11.25 14.25 11.25H2.25ZM2.25 9.75H14.25V1.5H2.25V9.75ZM2.25 9.75V1.5V9.75ZM0 13.5V12H16.5V13.5H0Z" fill="#033E4F"/>
+</svg>
+  )
+}
 function RecordIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -690,7 +696,7 @@ export default function WebinarPage() {
                 <div className="webinar_field webinar_field_full">
                   <label>Description</label>
                   <textarea
-                    placeholder="Webinar Title"
+                    placeholder="Webinar Description"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
                   />
@@ -1010,19 +1016,22 @@ export default function WebinarPage() {
                 {liveRole === "host" ? (
                   <div className="webinar_share_wrap">
                     {!isScreenSharing ? <div className="webinar_share_tooltip">Share Screen</div> : null}
-                    <button
-                      type="button"
-                      className={`webinar_control_btn webinar_share_btn ${isScreenSharing ? "active" : ""}`}
-                      onClick={() => setIsScreenSharing((current) => !current)}
-                      aria-label={isScreenSharing ? "Stop sharing screen" : "Share screen"}
-                    >
-                      <ShareIcon />
-                      {isScreenSharing ? (
-                        <span className="webinar_share_btn_label" data-mobile-label="Stop">
-                          Stop Sharing
-                        </span>
-                      ) : null}
-                    </button>
+                  <button 
+  type="button"
+  className={`webinar_control_btn webinar_share_btn ${isScreenSharing ? "active" : ""}`}
+  onClick={() => setIsScreenSharing((current) => !current)}
+  aria-label={isScreenSharing ? "Stop sharing screen" : "Share screen"}
+>
+  {/* First Icon */}
+  {!isScreenSharing && <ShareIcon />}
+
+  {/* Second State (Icon + Text) */}
+  {isScreenSharing && (
+    <span className="webinar_share_btn_label" data-mobile-label="Stop">
+      <StopShareIcon /> Stop Sharing
+    </span>
+  )}
+</button>
                   </div>
                 ) : null}
                 <button

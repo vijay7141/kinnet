@@ -404,7 +404,7 @@ line-height: 20px; /* 142.857% */
   margin-top: 40px;
 }
 .forgot_password_area .auth_form_box p span{
-  color: var(--red_color);
+  color: #033E4F;
   cursor: pointer;
 }
 .forgot_password_area .auth_form_box p span.refrl-copy{
@@ -11678,7 +11678,10 @@ text-transform: uppercase;
 .calls_control_btn.is_recording .calls_control_circle {
   color: var(--red_color);
 }
+.calls_control_btn.is_off .calls_control_circle svg path{
+  fill: var(--red_color);
 
+}
 .calls_control_btn.is_off span:last-child {
   color: #9ce7eb;
 }

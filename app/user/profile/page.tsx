@@ -245,7 +245,7 @@ export default function ProfilePage() {
 
             <div className="settings_info_block">
               <div className="settings_info_head">
-                <h4>Speciality</h4>
+                <h4>Clinics</h4>
               </div>
               <div className="settings_chip_list">
                 {profile.clinics.map((clinic) => (

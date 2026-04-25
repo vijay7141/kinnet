@@ -132,17 +132,9 @@ function MicIcon({ off = false }: { off?: boolean }) {
 
 function SpeakerIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M5.5 14.5H8.5L13 18V6L8.5 9.5H5.5C4.95 9.5 4.5 9.95 4.5 10.5V13.5C4.5 14.05 4.95 14.5 5.5 14.5Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M16 9.5C17.3 10.3 18.17 11.67 18.17 13.25C18.17 14.83 17.3 16.2 16 17" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M17.75 6.5C19.72 7.91 21 10.22 21 13C21 15.78 19.72 18.09 17.75 19.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <path d="M11 17.5V15.45C12.5 15.0167 13.7083 14.1833 14.625 12.95C15.5417 11.7167 16 10.3167 16 8.75C16 7.18333 15.5417 5.78333 14.625 4.55C13.7083 3.31667 12.5 2.48333 11 2.05V0C13.0667 0.466667 14.75 1.5125 16.05 3.1375C17.35 4.7625 18 6.63333 18 8.75C18 10.8667 17.35 12.7375 16.05 14.3625C14.75 15.9875 13.0667 17.0333 11 17.5ZM0 11.775V5.775H4L9 0.775V16.775L4 11.775H0ZM11 12.775V4.725C11.7833 5.09167 12.3958 5.64167 12.8375 6.375C13.2792 7.10833 13.5 7.90833 13.5 8.775C13.5 9.625 13.2792 10.4125 12.8375 11.1375C12.3958 11.8625 11.7833 12.4083 11 12.775Z" fill="#033E4F"/>
+</svg>
   );
 }
 

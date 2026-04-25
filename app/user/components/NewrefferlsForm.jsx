@@ -65,14 +65,14 @@ const [showConfirm, setShowConfirm] = useState(false);
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Patient Name *</Form.Label>
+                <Form.Label>Patient Name <span>*</span></Form.Label>
                 <Form.Control placeholder="e.g., Buddy" />
               </Form.Group>
             </Col>
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Owner Name *</Form.Label>
+                <Form.Label>Owner Name <span>*</span></Form.Label>
                 <Form.Control placeholder="e.g., Jane Doe" />
               </Form.Group>
             </Col>
@@ -80,7 +80,7 @@ const [showConfirm, setShowConfirm] = useState(false);
             {/* 🔹 Phone */}
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Pet Owner Phone Number *</Form.Label>
+                <Form.Label>Pet Owner Phone Number <span>*</span></Form.Label>
 
                 <PhoneInput
                   country={"us"}
@@ -95,7 +95,7 @@ const [showConfirm, setShowConfirm] = useState(false);
             {/* 🔥 CUSTOM URGENCY DROPDOWN */}
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Urgency *</Form.Label>
+                <Form.Label>Urgency <span>*</span></Form.Label>
 
                 <div className="urgency_dropdown">
 

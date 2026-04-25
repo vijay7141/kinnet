@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Modal, Button } from "react-bootstrap";
 
 export default function SignupUnderReviewModal({ show, handleClose }: any) {
@@ -24,10 +25,13 @@ export default function SignupUnderReviewModal({ show, handleClose }: any) {
         </p>
 
         {/* Button */}
-        <Button className="auth_btn w-100" onClick={handleClose}>
+
+        <Link href="/user/dashboard">
+       
+        <Button className="auth_btn w-100"  >
           Continue to Dashboard
         </Button>
-
+ </Link>
       </Modal.Body>
     </Modal>
   );
