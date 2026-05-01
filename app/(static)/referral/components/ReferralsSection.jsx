@@ -74,8 +74,8 @@ export default function ReferralsSection() {
                           {...provided.droppableProps}
                         >
                           <h6>
-                            {colKey === "incoming"
-                              ? "Incoming"
+                            {colKey === "Referred"
+                              ? "Referred"
                               : colKey === "claimed"
                               ? "Claimed"
                               : colKey === "review"

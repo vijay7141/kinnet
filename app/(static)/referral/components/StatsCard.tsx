@@ -1,7 +1,7 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 const data = [
-  { title: "Incoming", value: "12", icon: "incoming_icn.svg" }, 
-  { title: "Under Review", value: "08", icon: "inreview_icn.svg" },
+  { title: "Referred", value: "12", icon: "incoming_icn.svg" }, 
+  { title: "In Review", value: "08", icon: "inreview_icn.svg" },
   { title: "Accepted", value: "02", icon: "accepted_icn.svg" },
   { title: "Confirmed", value: "24", icon: "confirmed_icn.svg" },
 ];

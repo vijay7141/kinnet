@@ -33,7 +33,7 @@ export default function ReferralTable() {
               <h4>Luna (Persian Cat)</h4>
               <span>Owner: Sarah Miller</span>
               </div></td>
-            <td><span className="dash_badge blue">Incoming</span></td>
+            <td><span className="dash_badge blue">Referred</span></td>
             <td className="dash_stable">Stable</td>
                         <td className="date">23 Oct, 16:45</td>
                       <td className="date"><Link href="/user/referrals/referral-request"><img src="/icn/eye_icn.svg" alt="" /></Link></td>

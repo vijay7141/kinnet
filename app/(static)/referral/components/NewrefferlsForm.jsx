@@ -13,23 +13,19 @@ export function NewrefferlsForm() {
 const [showConfirm, setShowConfirm] = useState(false);
   const options = [
     {
-      title: "Priority 1–2 · Emergency",
-      desc: "Immediate ER/CC. Requires triage & stabilization",
+      title: "Emergency",
       color: "red",
     },
     {
-      title: "Priority 2–3 · Urgent",
-      desc: "Stable but needs same-day review",
+      title: "Urgent",
       color: "orange",
     },
     {
-      title: "Priority 4 · Stable",
-      desc: "Outpatient case",
+      title: "Stable",
       color: "green",
     },
     {
       title: "Info Only (No Referral)",
-      desc: "Advice or follow-up",
       color: "blue",
     },
   ];
