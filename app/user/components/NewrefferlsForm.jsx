@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
@@ -11,6 +11,7 @@ export function NewrefferlsForm() {
   const [phone, setPhone] = useState("");
   const [files, setFiles] = useState([]);
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
 const [showConfirm, setShowConfirm] = useState(false);
   const options = [
     {
@@ -51,6 +52,20 @@ const [showConfirm, setShowConfirm] = useState(false);
   const handleBrowse = (e) => {
     handleFiles(e.target.files);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
 
@@ -97,7 +112,7 @@ const [showConfirm, setShowConfirm] = useState(false);
               <Form.Group>
                 <Form.Label>Urgency <span>*</span></Form.Label>
 
-                <div className="urgency_dropdown">
+                <div className="urgency_dropdown" ref={dropdownRef}>
 
                   {/* head */}
                   <div className="dropdown_head" onClick={() => setOpen(!open)}>
