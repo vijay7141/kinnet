@@ -104,11 +104,11 @@ export default function ReferralsSection() {
                                     {item.priority && (
                                       <span className={`badge ${item.priority}`}>
                                         {item.priority === "red"
-                                          ? "Priority 1-2"
+                                          ? "Emergency"
                                           : item.priority === "orange"
-                                          ? "Priority 2-3"
+                                          ? "Urgent"
                                           : item.priority === "green"
-                                          ? "Priority 4"
+                                          ? "Stable"
                                           : "Info Only"}
                                       </span>
                                     )}
