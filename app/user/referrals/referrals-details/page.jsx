@@ -163,7 +163,7 @@ const [isSmallChatOpen, setIsSmallChatOpen] = useState(false);
                       <img src="/icn/i_icn.svg" alt="" />
                       <div className="content">
                         <p>Referred by Dr. Aris Thorne</p>
-                        <span>Urgency: Priority 1–2 · Emergency</span>
+                        <span>Urgency: Emergency</span>
                       </div>
                       <button type="button" className="open_smal_cht" onClick={() => setIsSmallChatOpen(true)}>
                         <img src="/icn/meassege_new.svg" alt="" />
