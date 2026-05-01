@@ -51,17 +51,18 @@ export default function SendSMSModel({ show, handleClose, handleSuccessOpen }) {
 
         {/* Radio */}
         <div className="sms_radio">
-          <label className="custom_radio">
-            <input type="radio" name="status" defaultChecked />
-            <span className="radio_ui"></span>
-            <span className="radio_label">Stable</span>
-          </label>
-
-          <label className="custom_radio">
+           <label className="custom_radio">
             <input type="radio" name="status" />
             <span className="radio_ui"></span>
             <span className="radio_label">Urgent</span>
           </label>
+          <label className="custom_radio">
+            <input type="radio" name="status" defaultChecked />
+            <span className="radio_ui"></span>
+            <span className="radio_label">Stable (Appt)</span>
+          </label>
+
+         
         </div>
 
         {/* Message */}

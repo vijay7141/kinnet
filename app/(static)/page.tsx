@@ -15,7 +15,7 @@ export default function HomePage() {
               <div className="row align-items-center g-4 g-lg-5">
                 <div className="col-lg-6">
                   <h1 className="mb-3">
-                    Faster Referrals, Better Communication with Kin<span className="kinnect-text-accent">nect</span>
+                    Faster Referrals, Better Communication with <span className="kinnect-text-accent">Kin</span>nect
                   </h1>
                   <h3>Improving the Referral Experience.</h3>
                   <p>

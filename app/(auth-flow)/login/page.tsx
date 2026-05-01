@@ -155,10 +155,11 @@ export default function LoginPage() {
 
                 </Form>
 
-                <p className="text-center mt-3 small text-muted">
+                         <p className="text-center mt-3 small text-muted">
                     
-                  Having trouble? <br />Contact us at  <span> contact@kinnect.com
-</span>                </p>
+                  Having trouble? <br />Contact us at  <span> info@kin.vet
+</span>     <br />Phone:  <span> +1 1234-123-145
+</span>             </p>
               </Card.Body>
 
             </Card>

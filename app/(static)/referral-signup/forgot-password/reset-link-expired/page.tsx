@@ -46,7 +46,7 @@ export default function LinkExpired() {
                   <Col xs={6}>
                     <p className="small text-muted mb-1">Contact us at</p>
                     <p className="bold contact_text">
-                      contact@kinnet.com
+                      info@kin.vet
                     </p>
                   </Col>
 

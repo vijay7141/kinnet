@@ -13,22 +13,22 @@ export function NewrefferlsFormEx() {
 const [showConfirm, setShowConfirm] = useState(false);
   const options = [
     {
-      title: "Priority 1–2 · Emergency",
+      title: "🔴 Emergency",
       desc: "Immediate ER/CC. Requires triage & stabilization",
       color: "red",
     },
     {
-      title: "Priority 2–3 · Urgent",
+      title: "🟠 Urgent",
       desc: "Stable but needs same-day review",
       color: "orange",
     },
     {
-      title: "Priority 4 · Stable",
+      title: "🟢 Stable",
       desc: "Outpatient case",
       color: "green",
     },
     {
-      title: "Info Only (No Referral)",
+      title: "🔵 Info Only (No Referral)",
       desc: "Advice or follow-up",
       color: "blue",
     },
@@ -101,7 +101,7 @@ const [showConfirm, setShowConfirm] = useState(false);
                   {/* head */}
                   <div className="dropdown_head" onClick={() => setOpen(!open)}>
                     <div className="left">
-                      <span className={`dot ${selected.color}`}></span>
+                      {/* <span className={`dot ${selected.color}`}></span> */}
                       {selected.title}
                     </div>
                     <span className="arrow"></span>
@@ -121,13 +121,12 @@ const [showConfirm, setShowConfirm] = useState(false);
                         >
                           <div className="left">
                             <div>
-<span className={`dot ${item.color}`}></span>
+{/* <span className={`dot ${item.color}`}></span> */}
  <strong>{item.title}</strong>
                             </div>
                             
                             <div>
-                             
-                              <p>{item.desc}</p>
+                              
                             </div>
                           </div>
 
@@ -149,14 +148,27 @@ const [showConfirm, setShowConfirm] = useState(false);
                 </Form.Select>
               </Form.Group>
             </Col>
-              <h5 className="pt-3 m-0">rVet Details</h5>
+              <h5 className="pt-3 m-0">Referral Partner Details</h5>
       <Col md={6}>
               <Form.Group>
-                <Form.Label>Name <span>*</span> </Form.Label>
+                <Form.Label>Referral Partner Practice Name <span>*</span> </Form.Label>
+                <Form.Control placeholder="e.g., Jane Doe" />
+              </Form.Group>
+            </Col>
+      <Col md={6}>
+              <Form.Group>
+                <Form.Label>Referring Doctor Name <span>*</span> </Form.Label>
                 <Form.Control placeholder="e.g., Jane Doe" />
               </Form.Group>
             </Col>
 
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Email <span>*</span> </Form.Label>
+                <Form.Control placeholder="e.g., Jane Doe" />
+              </Form.Group>
+            </Col>
+            
             {/* 🔹 Phone */}
             <Col md={6}>
               <Form.Group>
@@ -169,12 +181,6 @@ const [showConfirm, setShowConfirm] = useState(false);
                   inputClass="phone_input_custom"
                   containerClass="phone_container"
                 />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Email <span>*</span> </Form.Label>
-                <Form.Control placeholder="e.g., Jane Doe" />
               </Form.Group>
             </Col>
             <Col md={12}>

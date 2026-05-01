@@ -14,22 +14,22 @@ export function NewrefferlsForm() {
 const [showConfirm, setShowConfirm] = useState(false);
   const options = [
     {
-      title: "Priority 1–2 · Emergency",
+      title: "🔴 Emergency",
       desc: "Immediate ER/CC. Requires triage & stabilization",
       color: "red",
     },
     {
-      title: "Priority 2–3 · Urgent",
+      title: "🟠 Urgent",
       desc: "Stable but needs same-day review",
       color: "orange",
     },
     {
-      title: "Priority 4 · Stable",
+      title: "🟢 Stable",
       desc: "Outpatient case",
       color: "green",
     },
     {
-      title: "Info Only (No Referral)",
+      title: "🔵 Info Only (No Referral)",
       desc: "Advice or follow-up",
       color: "blue",
     },
@@ -102,7 +102,7 @@ const [showConfirm, setShowConfirm] = useState(false);
                   {/* head */}
                   <div className="dropdown_head" onClick={() => setOpen(!open)}>
                     <div className="left">
-                      <span className={`dot ${selected.color}`}></span>
+                      {/* <span className={`dot ${selected.color}`}></span> */}
                       {selected.title}
                     </div>
                     <span className="arrow"></span>
@@ -122,13 +122,13 @@ const [showConfirm, setShowConfirm] = useState(false);
                         >
                           <div className="left">
                             <div>
-<span className={`dot ${item.color}`}></span>
+{/* <span className={`dot ${item.color}`}></span> */}
  <strong>{item.title}</strong>
                             </div>
                             
                             <div>
                              
-                              <p>{item.desc}</p>
+                              {/* <p>{item.desc}</p> */}
                             </div>
                           </div>
 
@@ -142,11 +142,19 @@ const [showConfirm, setShowConfirm] = useState(false);
               </Form.Group>
             </Col>
 
-            <Col md={12}>
+            <Col md={6}>
               <Form.Group>
                 <Form.Label>Preferred Specialty</Form.Label>
                 <Form.Select>
                   <option>Critical Care</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+    <Col md={6}>
+              <Form.Group>
+                <Form.Label>Select Referral Partner</Form.Label>
+                <Form.Select>
+                  <option>Select Referral Partner</option>
                 </Form.Select>
               </Form.Group>
             </Col>
