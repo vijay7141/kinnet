@@ -33,7 +33,7 @@ export default function LoginPage() {
       <Container fluid>
         <Row className=" "> 
           <Col xl={6} className="auth_flow_left d-flex flex-column justify-content-center px-xl-5 px-0">
-            <img src="/logo_big.svg" alt="logo" className="logo" />
+           <Link href="/"> <img src="/logo_big.svg" alt="logo" className="logo" /></Link>
             <h1 className="auth_title ">
               Elevating Veterinary <br />
               <span className="text-danger">Communication.</span>

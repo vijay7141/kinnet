@@ -55,7 +55,7 @@ export default function Header() {
               </li>
               <li className="nav-item">
                 <Link
-                  href="#contact"
+                 href="/contact"
                   className="nav-link text-dark"
                   onClick={closeMenu}
                 >
