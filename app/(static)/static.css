@@ -854,6 +854,7 @@ footer{
 
 .contact-shell {
    padding: 0  0 0 111px;
+   background-color: white;
 }
 
 .contact-shell {
@@ -873,9 +874,10 @@ footer{
     padding: clamp(28px, 4vw, 42px);
    margin: 100px 0;
     border-radius: 20px;
-border: 1px solid rgba(192, 199, 204, 0.10);
-background: #F9F9F9;
-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+ 
+background: #fff;
+border: 1px solid #c0c7cc26 !important;
+    box-shadow: 0 12px 32px -4px #001f290f !important;
 }
 
 .contact-eyebrow {
