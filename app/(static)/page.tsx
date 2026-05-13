@@ -68,7 +68,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="journey">
+      <section className="journey" id="journey">
         <div className="container-fluid">
           <div className="row g-4 g-lg-5 align-items-center">
             <div className="col-lg-6">

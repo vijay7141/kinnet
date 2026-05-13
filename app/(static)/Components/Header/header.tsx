@@ -44,15 +44,28 @@ export default function Header() {
             }
           >
             <ul className="navbar-nav kinnect-nav-list align-items-center justify-content-end gap-2 gap-lg-3 small fw-semibold">
-              <li className="nav-item">
-                <Link
-                  href="#journey"
-                  className="nav-link text-dark"
-                  onClick={closeMenu}
-                >
-                  How it Works
-                </Link>
-              </li>
+          <li className="nav-item">
+  <a
+    href="#journey"
+    className="nav-link text-dark"
+    onClick={(e) => {
+      e.preventDefault();
+
+      const section = document.getElementById("journey");
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      closeMenu();
+    }}
+  >
+    How it Works
+  </a>
+</li>
               <li className="nav-item">
                 <Link
                  href="/contact"
@@ -69,7 +82,7 @@ export default function Header() {
               </li>
               <li className="nav-item">
                 <Link
-                  href="/signup"
+                  href="/referral-signup"
                   className="btn kinnect-btn-primary px-3 py-2"
                   onClick={closeMenu}
                 >
